@@ -1,0 +1,73 @@
+.vue-lb
+	&-container
+		background rgba(#000,.93)
+	&-button-close
+		display none
+	&-info
+		display flex
+		align-items center
+		bottom auto
+		top -50px
+		font-size 11px
+		line-height 1.8
+		font-weight normal
+		color textGreyColor
+		background transparent
+		img
+			margin-right 17px
+			width 30px
+			height @width
+			border-radius 5px
+			object-fit cover
+		span
+			margin-left 7px
+			color #e4004f
+	&-modal
+		&-image
+			border-radius 5px
+			@media tablet_desktop
+				max-width 540px !important
+		&-thumbnail
+			margin 3px
+			width 40px
+			height @width
+			border-radius 3px
+			border 1px solid transparent
+			box-shadow none
+			opacity .5
+			transition .2s border-color ease-in-out, .2s opacity ease-in-out 
+			&-active
+				margin 3px
+				width 40px
+				height @width
+				border-radius 3px
+				border 1px solid #E91E63
+				box-shadow none
+				opacity 1
+	&-footer
+		padding 20px 0 0
+		justify-content center
+		&-info
+			display none
+		&-count
+			padding 0
+			font-size 18px
+			line-height 1.11
+			font-weight normal
+			color #fff
+			opacity 0.5
+	&-left
+		@media md_lg
+			left 250px
+		@media sm
+			left 150px
+	&-right
+		@media md_lg
+			right 250px
+		@media sm
+			left 150px
+	&-thumbnail
+		&-wrapper
+			bottom 50px
+		&-arrow
+			opacity .5

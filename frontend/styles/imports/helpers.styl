@@ -1,0 +1,48 @@
+// hidden
+
+.hidden-phone
+	@media phone
+		display none
+
+.hidden-tablet
+	@media tablet
+		display none
+
+.hidden-desktop
+	@media desktop
+		display none
+
+
+// visible
+
+.visible-phone
+	@media tablet_desktop
+		display none
+
+.visible-tablet
+	@media phone
+		display none
+	@media desktop
+		display none
+
+.visible-desktop
+	@media phone_tablet
+		display none
+
+// mobile order
+
+.order-1
+	@media phone
+		order 1
+
+.order-2
+	@media phone
+		order 2
+
+.order-3
+	@media phone
+		order 3
+
+.order-4
+	@media phone
+		order 4

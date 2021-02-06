@@ -1,0 +1,200 @@
+<template>
+<section class="content" id="content">
+
+  <n-link :to="{ name: 'checkout-cart' }" title="Корзина" v-if="cartData">
+    <div class="mycart-container">
+      <div class="mycart"></div>
+      <div class="mycart-button"> {{cartData.price }} руб.(1)</div>
+    </div>
+  </n-link>
+
+  <div id="modal-1" class="modal-1" style="display: none;">
+  <h3>
+    Написать нам
+  </h3>
+  <form action="#">
+    <label>Ваше имя:</label>
+    <input type="text" name="name">
+    <label>Ваш E-Mail:</label>
+    <input type="email" name="email">
+    <label>Ваш вопрос:</label>
+    <textarea name="question" rows="10">
+      
+    </textarea>
+    <button type="submit">
+      Отправить
+    </button>
+  </form>
+  </div>
+
+  <div class="container">
+
+    <div class="img-vector">
+      <img src="/img/vector-left.png" alt="">
+      <img src="/img/vector-right.png" alt="">
+      <img src="/img/vector-left-bot.png" alt="">
+      <img src="/img/vector-bot-right.png" alt="">
+    </div>
+    <MenuMobile />   
+    <div class="row d-none d-lg-flex">
+       <Menu />
+      <div class="col-12">
+        <div class="bread">
+          <ul>
+            <li>
+              <n-link to="/">
+                Главная
+              </n-link>
+            </li>
+
+            <li>
+              <n-link to="/delivery">
+                 Доставка
+              </n-link>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12">
+          
+
+
+        <div class="marginleftright" id="contenttt" style="margin: 0 28px;">
+
+
+  <h1 style="color: #4C2011;
+    font-family: Georgia;
+    font-size: 30px;
+    font-style: italic;
+    font-weight: normal;">Доставка</h1>
+  
+    
+  <div style="font-family: arial, sans-serif; font-size: 13px; color: #4C2011;" >
+  <div>
+    Пожалуйста, внимательно читайте условия доставки товаров!</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    <strong>Самовывоз:</strong></div>
+  <div>
+    &nbsp;</div>
+  <div>
+    1. Самовывоз товара возможен по предварительной договорённости со склада Декор-Ретро:</div>
+  <div>
+    &nbsp; &nbsp; 127018 Россия, г. Москва, 3-й проезд Марьиной рощи, дом 40, строение 1.</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    2. Так же по предварительной договорённости, возможна бесплатная доставка ко входу ближайшей станции метро: метро Марьина Роща</div>
+  <div>
+    &nbsp; &nbsp; ( на станцию курьер не спускается ).</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    <strong>Доставка по Москве:</strong></div>
+  <div>
+    &nbsp;</div>
+  <div>
+    1. Доставка по Москве в пределах МКАД составляет <strong>400&nbsp;руб.</strong> при условии, что суммарный вес покупки не превышает 5(пяти) кг.,</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    &nbsp; &nbsp; а габариты не более 50х50х50см.&nbsp;</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    2. Доставка по Москве в пределах МКАД составляет <strong>500 руб.</strong> при условии, что суммарный вес покупки находится в пределах от 5кг. до 10кг.,&nbsp;</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    &nbsp; &nbsp;а габариты не более 100х100х100см.</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    3. Доставка по Москве в пределах МКАД составляет <strong>700 руб.</strong> при условии, что суммарный вес покупки превышает 10кг.,&nbsp;</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    &nbsp; &nbsp;а габариты более 100х100х100см.</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    4. <strong>Срочная доставка по Москве</strong> в пределах МКАД, оговаривается отдельно с менеджером по телефону.</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    5. Доставка за пределы МКАДа, оговаривается отдельно с менеджером по телефону.</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    6. Оплата за доставку происходит на момент получения заказанного товара.</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    <strong>Доставка по всей территории Российской Федерации:</strong></div>
+  <div>
+    &nbsp;</div>
+  <div>
+    1. Доставка по России за пределы Москвы и МО, осуществляется почтовой службой России.</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    2. Доставка осуществляется за счет заказчика по тарифам предусмотренными почтовой службой России, и рассчитывается отдельно в каждом конкретном случае.</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    3. Стоимость доставки зависят от выбранной Вами: срочности доставки, веса отправляемого товара, его габаритов, упаковки, а так же удаленности пункта назначения.</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    4. Доставка хрупкого товара и дорогостоящих изделий осуществляется с условием обязательного страхования от повреждений и потери за счёт Заказчика. (тариф 0,6% от общей суммы заказа).</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    5. Отправка товара происходит в течении трех рабочих дней после 100% предоплаты покупателем: суммы за товар + суммы за доставку.</div>
+  <div>
+    &nbsp;</div>
+  <div>
+    &nbsp;<strong>ВНИМАНИЕ!!! Доставка путём пересылки товара почтой осуществляется ТОЛЬКО по территории Российской Федерации.</strong></div>
+</div>
+<p>
+  &nbsp;</p>
+
+  </div>
+
+
+        
+      </div>
+    </div>
+  </div>
+</section>
+</template>
+
+<script>
+    import MenuMobile from './Menu/MenuMobile'
+    import Menu from './Menu/Menu'
+
+    export default {
+      components: {
+        MenuMobile,
+        Menu
+      },
+        data() {
+            return {
+                
+            };
+        },
+    }
+</script>
+
+<style scoped>
+
+</style>

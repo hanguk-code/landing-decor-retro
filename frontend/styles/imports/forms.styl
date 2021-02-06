@@ -1,0 +1,312 @@
+form
+	width 100%
+
+fieldset
+	padding 0
+	margin 0
+	border 0 none
+	min-width 0
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+	-webkit-appearance none
+	margin 0
+input[type=number]
+	-moz-appearance textfield
+
+.form-group
+	position relative
+	margin-bottom 25px
+
+.form-group-icon
+	position absolute
+	top 6px
+	left 0
+	width 16px
+	height @width
+	display flex
+	align-items center
+	img
+		max-width 100%
+		max-height @max-width
+
+.form-group-remove
+	.form-control
+		padding-right 20px
+
+.form-group-simple
+	&.active
+		.control-label
+			top -12px
+			font-size 11px
+	.form-control
+		position relative
+		z-index 2
+		background none
+		&:focus + .control-label
+			top -12px
+			font-size 11px
+	.control-label
+		position absolute
+		z-index 1
+		top 5px
+		left 0
+		font-size 13px
+		transition .2s top ease-in-out, .2s font-size ease-in-out
+
+.form-control
+	display block
+	width 100%
+	padding 5px 0
+	font-size 13px
+	color #000
+	border-top 0 none
+	border-right 0 none
+	border-bottom 1px solid #d8d8d8
+	border-left 0 none
+	outline 0 none
+	-webkit-appearance none
+	transition .2s border-bottom ease-in-out, .2s color ease-in-out
+	&:focus
+		color #000
+		border-color #000
+	.has-error &
+		border-bottom 1px solid #e12020
+	textarea&
+		height auto
+		resize vertical
+	& + .control-link
+		margin-top 5px
+	&-bordered
+		padding-left 12px
+		padding-right @padding-left
+		border 1px solid #d8d8d8
+
+textarea
+	padding 10px 15px
+	width 352px
+	height 125px
+	font-size 14px
+	color #39393a
+	border 1px solid #dadada
+	border-radius 2px
+	@media phone
+		width 100%
+	&:focus
+		outline none
+	.rate-block &
+		width 100%
+		font-size 15px
+		line-height 1.47
+		font-weight normal
+		color #263238
+
+.control-label
+	font-size 11px
+	color textGreyColor
+
+.error-message
+	display none
+	text-align right
+	color #E12020
+	.has-error &
+		display block
+
+.control-icon
+	position absolute
+	right -2px
+	bottom 10px
+	color #C4C4C4
+	cursor pointer
+	transition .2s color ease-in-out
+	.show &
+		color #000
+
+.control-remove
+	position absolute
+	right 0
+	bottom 10px
+	font-size 10px
+	color #c4c4c4
+	cursor pointer
+	transition .2s color ease-in-out
+	&:hover
+		color primaryColor
+	
+.control-desription
+	margin-top 7px
+	margin-bottom -7px
+	font-size 11px
+	color #C6C6C6
+	text-decoration none
+	&:hover
+		color primaryColor
+.control-link
+	display inline-block
+	vertical-align top
+	font-size 14px
+	line-height 1.42
+	color #4360ae
+	text-decoration none
+	transition .2s color ease-in-out
+	&:hover
+		color primaryColor
+.checkbox
+	position relative
+	&[disabled]
+	&.disabled
+		cursor not-allowed
+		span
+			opacity .3
+	label
+		display block
+		margin-bottom 0
+		font-weight normal
+		cursor pointer
+	input
+		position absolute
+		top 0
+		left 0
+		z-index 1
+		width 100%
+		height 100%
+		margin 0
+		opacity 0
+		cursor pointer
+		&+ span
+			position relative
+			display block
+			padding-left 25px
+			user-select none
+			// transition .2s color ease-in-out
+			&:before
+			&:after
+				position absolute
+				content ""
+				top 0
+				left 0
+				width 18px
+				height @width
+			&:before
+				background #fff
+				border 1px solid #c8cdd0
+				box-sizing border-box
+				box-shadow inset 0px 2px 0px rgba(200, 205, 208, 0.5), inset 0px 3px 0px rgba(200, 205, 208, 0.2)
+				transition .2s background-color ease-in-out, .2s border-color ease-in-out
+				border-radius 4px
+			&:after
+				visibility hidden
+				transform scale(1.5)
+				opacity 0
+				background url('/check.svg') center center no-repeat
+				transition .2s transform ease-in-out, .2s opacity ease-in-out
+		&:checked + span
+		// &[checked="checked"] + span
+			&:after
+				transform scale(1)
+				opacity 1
+				visibility visible
+	&__badge
+		margin-left 5px
+	&__title
+		preventTextOverflow()
+
+.radio
+	position relative
+	display block
+	&[disabled]
+	&.disabled
+		cursor not-allowed
+		label
+			cursor not-allowed
+	&_inline
+		display inline-block
+		vertical-align top
+		margin 0 60px 10px 0
+	a
+		position relative
+		z-index 3
+		color ratingColor
+		&:hover
+			color primaryColor
+	label
+		display block
+		min-height 20px
+		margin-bottom 0
+		font-weight normal
+		cursor pointer
+	input
+		position absolute
+		z-index 2
+		top 0
+		left 0
+		width 100%
+		height 100%
+		margin 0
+		opacity 0
+		cursor pointer
+		&+ span
+			position relative
+			display block
+			min-height 20px
+			padding 7px 0 0 34px
+			font-size 16px
+			font-weight 300
+			line-height 1
+			user-select none
+			&:before
+			&:after
+				content ""
+				position absolute
+			&:before
+				top 4px
+				left 0
+				width 20px
+				height @width
+				border 1px solid ratingColor
+				background-color #fff
+				transition .2s background-color ease-in-out, .2s border-color ease-in-out
+			&:after
+				visibility hidden
+				transform scale(1.5)
+				opacity 0
+				transition .2s transform ease-in-out, .2s opacity ease-in-out
+		&:checked + span
+		// &[checked="checked"] + span
+			&:after
+				transform scale(1)
+				opacity 1
+				visibility visible
+
+.radio
+	input
+		& + span
+			color #000
+			&:before
+				border-radius 50%
+			&:after
+				top 9px
+				left 5px
+				width 10px
+				height @width
+				border-radius 50%
+				background-color ratingColor
+
+
+.checkbox
+	input
+		& + span
+			&:after
+				visibility hidden
+				transform scale(1.5)
+				opacity 0
+				transition .2s transform ease-in-out, .2s opacity ease-in-out
+		// &:after
+		// 		border-radius 50%
+.input
+	width 100%
+	height 31px
+	margin-top 10px
+	border none
+	outline none
+	box-shadow 0 1px 0 0 #D8D8D8

@@ -1,0 +1,78 @@
+@require "global"
+
+@import "~normalize-styl"
+
+@import 'imports/grid'
+@import 'imports/typo'
+@import 'imports/buttons'
+@import 'imports/forms'
+@import 'imports/icons'
+@import 'imports/helpers'
+@import 'imports/picker'
+@import 'imports/lightBox'
+
+html
+	//box-sizing border-box
+	-ms-overflow-style scrollbar
+	-webkit-tap-highlight-color transparent
+
+*
+*:before
+*:after
+	box-sizing border-box
+
+html
+body
+	margin 0
+	padding 0
+	height 100%
+	font-family 'Roboto', sans-serif
+	background-color #f5f6f6
+	// adjust font size
+	font-size 100%
+	-webkit-text-size-adjust 100%
+	-ms-text-size-adjust 100%
+	// font varient
+	font-variant-ligatures none
+	-webkit-font-variant-ligatures none
+	// smoothing
+	text-rendering optimizeLegibility
+	-moz-osx-font-smoothing grayscale
+	font-smoothing antialiased
+	-webkit-font-smoothing antialiased
+	text-shadow rgba(0, 0, 0, .01) 0 0 1px
+
+body
+	position relative
+	font-size 14px
+	line-height 1.5
+	padding-top 56px
+	&.hidden
+		overflow hidden
+
+#__next
+	height 100%
+	display flex
+	flex-direction column
+
+.main
+	position relative
+	min-height 100%
+	margin-top 10px
+	z-index 100
+	flex-grow 1
+	flex-shrink 0
+	flex-basis auto
+
+.page-wrapper
+	display flex
+	&__aside
+		display flex
+		flex-shrink 0
+		width 220px
+		&_left
+			margin-right 20px
+		&_right
+			margin-left 20px
+	&__body
+		width calc(100% - 220px - 220px - 20px)

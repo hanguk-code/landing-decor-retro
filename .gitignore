@@ -1,0 +1,17 @@
+/.idea
+/.nuxt
+/frontend/.idea
+/public/hot
+/public/storage
+/public/image
+/storage/*.key
+/storage/api-docs
+/node_modules
+/vendor
+.env
+.env.backup
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log

@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<title>Корзина</title>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/media.css">
+</head>
+<body class="catalog-page">
+	<a href="#" title="Корзина">
+		<div class="mycart-container">
+			<div class="mycart"></div>
+			<div class="mycart-button">9 000  руб.(1)</div>
+		</div>
+	</a>
+<header class="header">
+	<div class="container">
+		<div class="row d-flex d-lg-none">
+			<div class="col-12 text-center">
+				<a href="#">
+					<img src="img/logo-mob.png" alt="Logo">
+				</a>
+			</div>
+			<div class="col-12 d-flex flex-column justify-content-center align-items-center">
+				<a href="tel:89067894567" class="header-phone">
+					<img src="img/phone-mob.png" alt="">
+					8 (906) 789 45 67
+				</a>
+				<a href="#" class="korzina">
+					<img src="img/korzina-mob.png" alt="">
+					Корзина (5)
+				</a>
+				<div id="search" class="search">
+					<input type="text" name="search" placeholder="Поиск" value="" />
+			        <a class="button-search">
+			        	<img src="img/lupa.png" alt="">
+			        </a>
+			  	</div>
+			</div>
+		</div>
+		<div class="row d-none d-lg-flex">
+			<div class="col-lg-3 d-flex align-items-center">
+				<a href="#">
+					<img src="img/logo.png" alt="" class="header-logo">
+				</a>
+			</div>
+			<div class="col-lg-6">
+				<a href="#" class="logo-main">
+					<img src="img/logo2.png" alt="">
+				</a>
+			</div>
+			<div class="col-lg-3 d-flex flex-column justify-content-center align-items-end p-0">
+				<a href="tel:89067894567" class="header-phone">
+					8 (906) <span>789 45 67</span>
+				</a>
+				<a href="#modal-1" class="btn-header">
+					Заказать звонок
+				</a>
+				<div id="search" class="search">
+					<input type="text" name="search" placeholder="Поиск" value="" />
+			        <a class="button-search">&nbsp;&nbsp;&nbsp;</a>
+			  	</div>
+			</div>
+		</div>
+	</div>
+</header>
+<!-- content -->
+<section class="content" id="content">
+	<div class="container">
+		<div class="img-vector">
+			<img src="img/vector-left.png" alt="">
+			<img src="img/vector-right.png" alt="">
+			<img src="img/vector-left-bot.png" alt="">
+			<img src="img/vector-bot-right.png" alt="">
+		</div>
+		<div class="row d-none d-lg-block">
+			<div class="col-12">
+				<ul class="menu">
+					<li>
+						<a href="#">
+							Главная
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Каталог
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Новинки
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Архив
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Доставка
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Контакты
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div class="row d-flex d-lg-none">
+			<div class="col-12">
+				<div class="menu-mobile">
+					<div class="menu-mobile__top">
+						<p>
+							Меню
+						</p>
+						<a href="#" class="gamburger-link">
+							<img src="img/hamburgermenu.svg" alt="Gamb" class="gumb">
+							<img src="img/Exit.png" alt="Exit" class="exit">
+						</a>
+					</div>
+					<nav class="menu-collapse">
+						<ul class="menu">
+							<li>
+								<a href="#">
+									Главная
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Каталог
+								</a>
+							</li>
+							<li>
+								<a href="#" class="menu__dropdown">
+									Категории
+									<img src="img/minus.png" alt="">
+								</a>
+								<ul>
+									<li>
+										<a href="#" class="menu__dropdown">
+											Предметы интерьера
+											<img src="img/minus.png" alt="">
+										</a>
+										<ul>
+											<li>
+												<a href="#">
+													 Люстры
+												</a>
+											</li>
+											<li>
+												<a href="#">
+													светильники
+												</a>
+											</li>
+											<li>
+												<a href="#">
+													 лампы
+												</a>
+											</li>
+											<li>
+												<a href="#">
+													лампы
+												</a>
+											</li>
+											<li>
+												<a href="#">
+													торшеры
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#">
+											Кухонная  и домашняя утварь
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Фарфор, фаянс, керамика
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Стекло, хрусталь
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Радиотехника, приборы и часы
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Книги, плакаты, открытки
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Одежда, аксессуары
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Антикварная мебель
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Живопись и графика
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Люстры, светильники, зеркала
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Ювелирные изделия
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Разное
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="#">
+									Новинки
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Архив
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Доставка
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Контакты
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>		
+		<div class="row">
+			<div class="col-md-3">
+				<ul class="left-menu d-none d-lg-block">
+					<li>
+						<a href="#" class="open-submenu menu__dropdown">
+							Предметы интерьера
+							<img src="img/minus.png" alt="">
+						</a>
+						<ul class="sub-menu">
+							<li>
+								<a href="#">
+									 Люстры
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									светильники
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									 лампы
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									лампы
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									торшеры
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="#">
+							Кухонная  и домашняя утварь
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Фарфор, фаянс, керамика
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Стекло, хрусталь
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Радиотехника, приборы и часы
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Книги, плакаты, открытки
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Одежда, аксессуары
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Антикварная мебель
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Живопись и графика
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Люстры, светильники, зеркала
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Ювелирные изделия
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Разное
+						</a>
+					</li>
+				</ul>
+				
+			</div>
+			<div class="col-md-9">
+				<div class="bread-buy">
+					<ul>
+						<li>
+							<a href="#">
+								Главная 
+								<span>
+									»
+								</span> 
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								Корзина покупок
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- <div class="cart-info">
+					<table class="tableheader">
+						<thead>
+							<tr>
+								<td class="image">
+									Фото
+								</td>
+								<td class="name">
+									Наименование товара
+								</td>
+								<td class="quantity">
+									<span>
+										Кол-во	
+									</span>
+								</td>
+								<td>
+									
+								</td>
+								<td class="price">
+									Цена
+								</td>
+							</tr>
+						</thead>
+					</table> -->
+					<table class="tableheader">
+						<tbody>
+							<tr>
+								<td class="image">
+									<a href="#">
+										<img src="img/lupa-korzina.jpg" alt="">
+									</a>
+								</td>
+								<td class="name">
+									<a href="#">
+										Винтажная Увеличительная Лупа «Арлекино» в Золочёном окладе Англия
+									</a>
+								</td>
+								<td class="price">
+									4 500 руб.
+								</td>
+								<td style="vertical-align: middle !important;">
+								  	<a href="#"><img src="img/remove.png" alt="Удалить" title="Удалить"></a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+					<table class="tablefooter">
+						<thead>
+						  <tr>
+							<td style="padding-left: 5px;"><b>Итого:</b></td>
+							<td style="width: 104px; text-align: center;">4 500 руб.</td>
+						  </tr>
+						</thead>
+					  </table>
+					  <form action="#" class="basket">
+							<div class="basket__input">
+								<label for="">
+									Имя
+									<span>
+										*
+									</span>
+								</label>
+								<input type="text" name="name" placeholder="Введите имя">
+							</div>
+							<div class="basket__input">
+								<label for="">
+									Телефон
+									<span>
+										*
+									</span>
+								</label>
+								<input type="phone" name="tel" placeholder="Введите телефон">
+							</div>
+							<div class="basket__input">
+								<label for="">
+									Email
+									<span>
+										*
+									</span>
+								</label>
+								<input type="email" name="email" placeholder="Введите почту">
+							</div>
+							<div class="basket__input">
+								<label for="">
+									Комментарии
+								</label>
+								<textarea name="comment" cols="20" rows="5" placeholder="Комментарий"></textarea>
+							</div>
+							<button type="submit" class="basket__btn">
+								Отправить
+							</button>
+						</form>
+				</div>								
+			</div>
+		</div>
+	</div>
+</section>
+<!-- footer -->
+<footer class="footer" id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<p>
+					© «Антиквар», 2014. <br>се права защищены
+				</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<div id="modal-1" class="modal-1" style="display: none;">
+	<h3>
+		Написать нам
+	</h3>
+	<form action="#">
+		<label>Ваше имя:</label>
+		<input type="text" name="name">
+		<label>Ваш E-Mail:</label>
+		<input type="email" name="email">
+		<label>Ваш вопрос:</label>
+		<textarea name="question" rows="10">
+			
+		</textarea>
+		<button type="submit">
+			Отправить
+		</button>
+	</form>
+</div>
+
+
+	<script src="js/jquery-3.5.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.elevatezoom.js"></script>
+	<script src=js/jquery.fancybox.min.js></script>
+	<script src="js/index.js" defer></script>
+</body>
+</html>

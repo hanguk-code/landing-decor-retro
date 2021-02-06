@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="format-detection" content="telephone=no">
+	<title>Страница товара</title>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="css/jquery.fancybox.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/swiper-bundle.min.css">
+	<link rel="stylesheet" href="css/main.css">
+	<link rel="stylesheet" href="css/media.css">
+</head>
+<body class="catalog-page">
+	<a href="#" title="Корзина">
+		<div class="mycart-container">
+			<div class="mycart"></div>
+			<div class="mycart-button">9 000  руб.(1)</div>
+		</div>
+	</a>
+<header class="header">
+	<div class="container">
+		<div class="row d-flex d-lg-none">
+			<div class="col-12 text-center">
+				<a href="#">
+					<img src="img/logo-mob.png" alt="Logo">
+				</a>
+			</div>
+			<div class="col-12 d-flex flex-column justify-content-center align-items-center">
+				<a href="tel:89067894567" class="header-phone">
+					<img src="img/phone-mob.png" alt="">
+					8 (906) 789 45 67
+				</a>
+				<a href="#" class="korzina">
+					<img src="img/korzina-mob.png" alt="">
+					Корзина (5)
+				</a>
+				<div id="search" class="search">
+					<input type="text" name="search" placeholder="Поиск" value="" />
+			        <a class="button-search">
+			        	<img src="img/lupa.png" alt="">
+			        </a>
+			  	</div>
+			</div>
+		</div>
+		<div class="row d-none d-lg-flex">
+			<div class="col-lg-3 d-flex align-items-center">
+				<a href="#">
+					<img src="img/logo.png" alt="" class="header-logo">
+				</a>
+			</div>
+			<div class="col-lg-6">
+				<a href="#" class="logo-main">
+					<img src="img/logo2.png" alt="">
+				</a>
+			</div>
+			<div class="col-lg-3 d-flex flex-column justify-content-center align-items-end p-0">
+				<a href="tel:89067894567" class="header-phone">
+					8 (906) <span>789 45 67</span>
+				</a>
+				<a href="#modal-1" class="btn-header">
+					Заказать звонок
+				</a>
+				<div id="search" class="search">
+					<input type="text" name="search" placeholder="Поиск" value="" />
+			        <a class="button-search">&nbsp;&nbsp;&nbsp;</a>
+			  	</div>
+			</div>
+		</div>
+	</div>
+</header>
+<!-- content -->
+<section class="content" id="content">
+	<div class="container">
+		<div class="img-vector">
+			<img src="img/vector-left.png" alt="">
+			<img src="img/vector-right.png" alt="">
+			<img src="img/vector-left-bot.png" alt="">
+			<img src="img/vector-bot-right.png" alt="">
+		</div>
+		<div class="row d-flex d-lg-none">
+			<div class="col-12">
+				<div class="menu-mobile">
+					<div class="menu-mobile__top">
+						<p>
+							Меню
+						</p>
+						<a href="#" class="gamburger-link">
+							<img src="img/hamburgermenu.svg" alt="Gamb" class="gumb">
+							<img src="img/Exit.png" alt="Exit" class="exit">
+						</a>
+					</div>
+					<nav class="menu-collapse">
+						<ul class="menu">
+							<li>
+								<a href="#">
+									Главная
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Каталог
+								</a>
+							</li>
+							<li>
+								<a href="#" class="menu__dropdown">
+									Категории
+									<img src="img/minus.png" alt="">
+								</a>
+								<ul>
+									<li>
+										<a href="#" class="menu__dropdown">
+											Предметы интерьера
+											<img src="img/minus.png" alt="">
+										</a>
+										<ul>
+											<li>
+												<a href="#">
+													 Люстры
+												</a>
+											</li>
+											<li>
+												<a href="#">
+													светильники
+												</a>
+											</li>
+											<li>
+												<a href="#">
+													 лампы
+												</a>
+											</li>
+											<li>
+												<a href="#">
+													лампы
+												</a>
+											</li>
+											<li>
+												<a href="#">
+													торшеры
+												</a>
+											</li>
+										</ul>
+									</li>
+									<li>
+										<a href="#">
+											Кухонная  и домашняя утварь
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Фарфор, фаянс, керамика
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Стекло, хрусталь
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Радиотехника, приборы и часы
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Книги, плакаты, открытки
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Одежда, аксессуары
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Антикварная мебель
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Живопись и графика
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Люстры, светильники, зеркала
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Ювелирные изделия
+										</a>
+									</li>
+									<li>
+										<a href="#">
+											Разное
+										</a>
+									</li>
+								</ul>
+							</li>
+							<li>
+								<a href="#">
+									Новинки
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Архив
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Доставка
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									Контакты
+								</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		</div>		
+		<div class="row">
+			<div class="col-12 d-none d-lg-block">
+				<ul class="menu">
+					<li>
+						<a href="#">
+							Главная
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Каталог
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Новинки
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Архив
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Доставка
+						</a>
+					</li>
+					<li>
+						<a href="#">
+							Контакты
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col-12">
+				<div class="bread">
+					<ul>
+						<li>
+							<a href="#">
+								Главная
+							</a>
+						</li>                 
+						<li>
+							<a href="#">
+								Каталог
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								Фарфор
+							</a>
+						</li>
+						<li>
+							<a href="#">
+								Чайная пара РОЗЕНТАЛЬ ROSENTHAL
+							</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="product-select">
+					<div class="slider">
+						<div class="slider__zoom">
+								<img id="img_01" src="img/slider-main.jpg" data-zoom-image="img/slider-main.jpg"/>
+							
+						</div>
+						<div class="swiper-container gallery-thumbs">
+							<div class="swiper-wrapper" id="swiper-wrapper">
+								<a href="#" data-image="img/slider-main.jpg" data-zoom-image="img/slider-main.jpg" class="swiper-slide">
+								    <img id="img_01" src="img/slider-main.jpg" />
+								  </a>
+
+								  <a href="#" data-image="img/slider-1.jpg" data-zoom-image="img/slider-1.jpg" class="swiper-slide">
+								    <img id="img_01" src="img/slider-1.jpg" />
+								  </a>
+
+								  <a href="#" data-image="img/slider-2.jpg" data-zoom-image="img/slider-2.jpg" class="swiper-slide">
+								    <img id="img_01" src="img/slider-2.jpg" />
+								  </a>
+
+								  <a href="#" data-image="img/slider-3.jpg" data-zoom-image="img/slider-3.jpg" class="swiper-slide">
+								    <img id="img_01" src="img/slider-3.jpg" />
+								  </a>
+								  <a href="#" data-image="img/slider-4.jpg" data-zoom-image="img/slider-4.jpg" class="swiper-slide">
+								    <img id="img_01" src="img/slider-4.jpg" />
+								  </a>
+								  <a href="#" data-image="img/slider-5.jpg" data-zoom-image="img/slider-5.jpg" class="swiper-slide">
+								    <img id="img_01" src="img/slider-5.jpg" />
+								  </a>
+							</div>
+							
+							<!-- Add Arrows -->
+							<div class="swiper-button-next swiper-button-white"></div>
+							<div class="swiper-button-prev swiper-button-white"></div>
+						</div>
+					</div>
+					<div class="product-select__content">
+						<div class="article">
+							<p>
+								Артикул: 3992
+							</p>
+						</div>
+						<h2>
+							Большое Сервировочное Блюдо «Летняя Роскошь» Фарфор Rudolf Wachter Германия, 60-е годы ХХ века.
+						</h2>
+						<span class="product-select__price">
+							9 500 руб.
+						</span>
+						<a href="#" class="product-select__link">
+							Добавить в корзину
+						</a>
+						<table class="attribute">
+							<tbody>
+								<tr>
+									<td>Страна</td>
+									<td> Германия</td>
+								</tr>
+								<tr>
+									<td>Производитель</td>
+									<td>Rudolf Wachter</td>
+								</tr>
+								<tr>
+									<td>Материал</td>
+									<td>Фарфар</td>
+								</tr>
+								<tr>
+									<td>Диаметр</td>
+									<td>32 см.</td>
+								</tr>
+							</tbody>
+			          	</table>
+			          	<p>
+			          		Изысканное, Оригинальное, Сервировочное  Блюдо «Летняя Роскошь», Германия, мануфактура Rudolf Wachter, - клеймо соответствует периоду 60-х годов прошлого века. Чудесное, прекрасно оформленное, очень яркое и красивое блюдо с изображением летнего букета цветов, высококачественный немецкий фарфор, 100% ручная работа, великолепная деколь, позолота - натуральное 24 -х каратное золото, всё сделано в лучших традициях немецкой школы фарфора. Блюдо «Летняя Роскошь»  безусловно, смотрится очень эффектно и антуражно. А благодаря своей классической форме и комфортным размерам, не только весьма многофункционально и удобно в использовании, но и необыкновенно хорошо вписывается в любой интерьер, всегда привлекает взгляды окружающих. В результате витринного хранения состояние предмета идеально, без трещин и потертостей, дефектов и реставрации. Размеры: Диаметр тарелки - 32 см. Эта милая вещица, украсит Ваш стол, несомненно привлечет внимание гостей и станет прекрасным акцентом в праздничной или повседневной сервировке стола.
+			          	</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-12">
+				<div class="slider-inner">
+					<div class="slider-inner-swiper swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<a href="#">
+									<img src="img/catalog-1.png" alt=""  >
+								</a>
+								<a href="#">
+									Фарфоровая Сухарница - Корзинка для выпечки - Вазочка - Конфетница APPONYI GREEN, HEREND, Венгрия.
+								</a>
+							</div>
+							<div class="swiper-slide">
+								<a href="#">
+									<img src="img/catalog-2.png" alt="" >
+								</a>
+								<a href="#">
+									Фарфоровая Сухарница - Корзинка для выпечки - Вазочка - Конфетница APPONYI GREEN, HEREND, Венгрия.
+								</a>
+							</div>
+							<div class="swiper-slide">
+								<a href="#">
+									<img src="img/catalog-3.png" alt="" >
+								</a>
+								<a href="#">
+									Фарфоровая Сухарница - Корзинка для выпечки - Вазочка - Конфетница APPONYI GREEN, HEREND, Венгрия.
+								</a>
+							</div>
+							<div class="swiper-slide">
+								<a href="#">
+									<img src="img/catalog-4.png" alt=""  >
+								</a>
+								<a href="#">
+									Фарфоровая Сухарница - Корзинка для выпечки - Вазочка - Конфетница APPONYI GREEN, HEREND, Венгрия.
+								</a>
+							</div>
+							<div class="swiper-slide">
+								<a href="#">
+									<img src="img/catalog-5.png" alt="" >
+								</a>
+								<a href="#">
+									Фарфоровая Сухарница - Корзинка для выпечки - Вазочка - Конфетница APPONYI GREEN, HEREND, Венгрия.
+								</a>
+							</div>
+							<div class="swiper-slide">
+								<a href="#">
+									<img src="img/catalog-6.png" alt="" >
+								</a>
+								<a href="#">
+									Фарфоровая Сухарница - Корзинка для выпечки - Вазочка - Конфетница APPONYI GREEN, HEREND, Венгрия.
+								</a>
+							</div>
+							<div class="swiper-slide">
+								<a href="#">
+									<img src="img/catalog-1.png" alt="" >
+								</a>
+								<a href="#">
+									Фарфоровая Сухарница - Корзинка для выпечки - Вазочка - Конфетница APPONYI GREEN, HEREND, Венгрия.
+								</a>
+							</div>
+							<div class="swiper-slide">
+								<a href="#">
+									<img src="img/catalog-2.png" alt="" >
+								</a>
+								<a href="#">
+									Фарфоровая Сухарница - Корзинка для выпечки - Вазочка - Конфетница APPONYI GREEN, HEREND, Венгрия.
+								</a>
+							</div>
+						</div>
+						
+
+					</div>
+					 <!-- Add Arrows -->
+						    <div class="swiper-button-next"></div>
+						    <div class="swiper-button-prev"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- footer -->
+<footer class="footer" id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+				<p>
+					© «Антиквар», 2014. <br>Все права защищены
+				</p>
+			</div>
+		</div>
+	</div>
+</footer>
+
+<div id="modal-1" class="modal-1" style="display: none;">
+	<h3>
+		Написать нам
+	</h3>
+	<form action="#">
+		<label>Ваше имя:</label>
+		<input type="text" name="name">
+		<label>Ваш E-Mail:</label>
+		<input type="email" name="email">
+		<label>Ваш вопрос:</label>
+		<textarea name="question" rows="10">
+			
+		</textarea>
+		<button type="submit">
+			Отправить
+		</button>
+	</form>
+</div>
+
+
+	<script src="js/jquery-3.5.1.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/jquery.elevatezoom.js"></script>
+	<script src=js/jquery.fancybox.min.js></script>
+	<script src="js/swiper-bundle.min.js"></script>
+	<script src="js/index.js" defer></script>
+</body>
+</html>
