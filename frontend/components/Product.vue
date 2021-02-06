@@ -53,12 +53,12 @@
                     <div class="product-select">
                         <div class="slider">
                             <div class="slider__zoom">
-                                <img id="img_01" :src="'/image/'+product.image_url"/>
+                                <img id="img_01" :src="apiWebUrl + '/image'+product.image_url"/>
 
                             </div>
                             <div class="swiper-container gallery-thumbs">
                                 <img v-for="image, i in product.gallery" style="width: 98px; margin-left: 3px;"
-                                     :src="'/image/'+image.image_url" :alt="image.name">
+                                     :src="apiWebUrl + '/image'+image.image_url" :alt="image.name">
                             </div>
                         </div>
                         <div class="product-select__content">
