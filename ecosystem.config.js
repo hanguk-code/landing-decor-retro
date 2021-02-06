@@ -14,7 +14,7 @@ module.exports = {
         {
             name: 'laravel',
             host: process.env.CLIENT_URL,
-            script: 'php artisan serve',
+            script: 'php artisan serve --host=193.169.179.233 --port=8000',
             env: {
                 NODE_ENV: 'development'
             },

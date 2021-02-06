@@ -10,9 +10,9 @@ export default {
 
         //apiUrl: process.env.API_URL || process.env.APP_URL + '/api'
         // apiUrl: 'http://193.169.179.233/api',
-        apiUrl: 'http://127.0.0.1:8000/api',
+        apiUrl: 'http://193.169.179.233/api',
         // apiWebUrl: 'http://193.169.179.233/api',
-        apiWebUrl: 'http://127.0.0.1:8000',
+        apiWebUrl: 'http://193.169.179.233:8000',
 
         appName: process.env.APP_NAME || 'Декор Ретро',
         appLocale: process.env.APP_LOCALE || 'ru'
@@ -126,7 +126,7 @@ export default {
   */
     axios: {
         // baseURL: 'http://193.169.179.233/api', // process.env.API_URL,
-        baseURL: 'http://127.0.0.1:8000/api', // process.env.API_URL,
+        baseURL: 'http://193.169.179.233:8000/api', // process.env.API_URL,
         // baseURL: process.env.API_URL,
        // retry: { retries: 2 },
     },
