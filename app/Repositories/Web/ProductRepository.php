@@ -514,15 +514,21 @@ class ProductRepository
     {
         foreach ($product as $item) {
             $categoryId = $this->productToCategory->where(['product_id' => $item['product_id']])->first();
+            if(!$categoryId) {
+                continue;
+            }
             $category = $this->category->find($categoryId->category_id);
             $quCat = 'category_id=' . $categoryId->category_id;
             $urlAliasCat = $this->urlAlias->where('query', $quCat)->first();
 
             $qu = 'product_id=' . $item['product_id'];
             $urlAlias = $this->urlAlias->where('query', $qu)->first();
+            if(!$urlAlias) {
+                continue;
+            }
 
             if ($category && $category['parent_id']) {
-                $categoryChild = $this->category->find($category['parent_id']);
+//                $categoryChild = $this->category->find($category['parent_id']);
                 $quCatChild = 'category_id=' . $categoryId->category_id;
                 $urlAliasCatChild = $this->urlAlias->where('query', $quCatChild)->first();
                 $url = $urlAliasCatChild['keyword'] . '/' . $urlAliasCat['keyword'] . '/' . $urlAlias['keyword'];
