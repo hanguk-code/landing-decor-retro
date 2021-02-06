@@ -173,12 +173,16 @@ export default {
     methods: {
         async getCategories() {
             const request = await this.$axios.$get(`categories`)
-            this.categories = request.data
+            if (request) {
+                this.categories = request.data
+            }
         },
 
         async getNewProducts() {
             const request = await this.$axios.$get(`last/products`)
-            this.newProducts = request.data
+            if (request) {
+                this.newProducts = request.data
+            }
         },
 
         showChild(url) {
