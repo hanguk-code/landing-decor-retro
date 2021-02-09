@@ -55,11 +55,11 @@ class CategoryRepository
 
         foreach ($data as $item) {
             $dataItem[] = [
-                'id' => $item->category_id, 
-                'image' => $item->image, 
-                'name' => $item->description->name, 
-                //'status' => $item->status, 
-                'dates' => $item->dates, 
+                'id' => $item->category_id,
+                'image' => $item->image,
+                'name' => $item->description->name,
+                //'status' => $item->status,
+                'dates' => $item->dates,
             ];
         }
 
@@ -85,7 +85,7 @@ class CategoryRepository
                 'last_page'    => $data->lastPage(),
                 'total'    => $data->total(),
             ],
-            
+
             'columns'     => $columns,
             'statusClass' => $statusClass,
             'sortKey'     => $sortKey,
@@ -109,7 +109,7 @@ class CategoryRepository
         $category = $this->category->create($request['category'] + ['sort_order' => $sortOrder]);
 
         if( isset($request['photo']) ) {
-            $this->savePhoto($request['photo'], $category->id, $imageExist = null);   
+            $this->savePhoto($request['photo'], $category->id, $imageExist = null);
         }
     }
 
@@ -133,7 +133,7 @@ class CategoryRepository
 
         if( isset($request['photo']) ) {
             if($request['photo'] !== $request['category']['image_url']) {
-                $this->savePhoto($request['photo'], $categoryId, $imageExist = null); 
+                $this->savePhoto($request['photo'], $categoryId, $imageExist = null);
             }
         }
     }
@@ -150,7 +150,7 @@ class CategoryRepository
         //         unlink($imageToRemove);
         //     }
         // }
-        
+
         \File::makeDirectory(public_path('img/category/'.$id.'/photo/'), 0755, true, true);
         \Image::make($logoDataImage)->save(public_path('img/category/'.$id.'/photo/').$filename);
 
@@ -169,22 +169,24 @@ class CategoryRepository
 
     public function optionsData($request)
     {
-        $currentCatId = $request->input('id');
+//        $currentCatId = $request->input('id');
+//
+//        $category = $this->category->select('id', 'name as label', 'parent_id')->with('children')->where('status', 'active');
+//
+//        if(isset($currentCatId)) {
+//            $category = $category->where('id', '!=', $currentCatId);
+//        }
+//
+//        $category = $category->get();
+//        $category   = $category->push(['id' => 0, 'label' => 'Главная категория', 'parent_id' => null, 'children' => [], 'dates' => "<br><br>"]);
+//
+//        $data = [
+//            'categories' => $category,
+//        ];
 
-        $category = $this->category->select('id', 'name as label', 'parent_id')->with('children')->where('status', 'active');
-
-        if(isset($currentCatId)) {
-            $category = $category->where('id', '!=', $currentCatId);
-        }
-
-        $category = $category->get();
-        $category   = $category->push(['id' => 0, 'label' => 'Главная категория', 'parent_id' => null, 'children' => [], 'dates' => "<br><br>"]);
-
-        $data = [
-            'categories' => $category,
+        return [
+            $this->category->find($request->input('id'))->first(),
         ];
-
-        return $data;
     }
 
     public function deleteChecked($request)
