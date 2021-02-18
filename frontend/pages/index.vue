@@ -156,7 +156,6 @@ export default {
     async fetch() {
         await this.getCategories()
         await this.getNewProducts()
-        await this.zoom1()
     },
 
     methods: {
@@ -176,16 +175,6 @@ export default {
             if (request) {
                 this.newProducts = request.data
             }
-        },
-
-        zoom1() {
-            $(".zoom_01").elevateZoom({
-                zoomWindowWidth: 300,
-                zoomWindowHeight: 300,
-                zoomWindowPosition: 1,
-                zoomWindowOffetx: -515,
-                lensSize: 500,
-            });
         },
     }
 }

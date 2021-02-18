@@ -23,15 +23,13 @@ $(function () {
         return false;
     });
 
-    // console.log('zoom_01', $(".zoom_01").length)
-    //
-    // $(".zoom_01").elevateZoom({
-    //     zoomWindowWidth: 300,
-    //     zoomWindowHeight: 300,
-    //     zoomWindowPosition: 1,
-    //     zoomWindowOffetx: -515,
-    //     lensSize: 500,
-    // });
+    $(".zoom_01").elevateZoom({
+        zoomWindowWidth: 300,
+        zoomWindowHeight: 300,
+        zoomWindowPosition: 1,
+        zoomWindowOffetx: -515,
+        lensSize: 500,
+    });
 
     // $(".polzunok-5").slider({
     //     min: 1928,
