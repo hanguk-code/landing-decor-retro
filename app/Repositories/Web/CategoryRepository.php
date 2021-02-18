@@ -4,6 +4,7 @@ namespace App\Repositories\Web;
 
 use App\Models\Category\OcCategory;
 use App\Models\OcUrlAlias;
+use Illuminate\Support\Facades\Cache;
 
 class CategoryRepository
 {
@@ -25,46 +26,23 @@ class CategoryRepository
     }
 
     /**
-     * {@inheritDoc}
+     * getting all categories
+     * TODO: will need refactoring this function
+     * @param $request
+     * @return array
      */
-    public function all($request)
+    public function all($request): array
     {
         $recordsPerPage = 100;
-        $category = $this->category::where('status', 1)
-            ->where('parent_id', 0)
-            ->with('children')
-            ->orderBy('sort_order', 'asc')
-            ->paginate($recordsPerPage);
-        
-        $categoryData = [];
+        $category = Cache::rememberForever('top_categories', function () use ($recordsPerPage) {
+            return $this->category::where('status', 1)
+                ->where('parent_id', 0)
+                ->with('children')
+                ->orderBy('sort_order', 'asc')
+                ->paginate($recordsPerPage);
+        });
 
-        foreach ($category as $item) {
-            $categoryChild = [];
-            $qu = 'category_id='.$item['category_id'];
-            $urlAlias = $this->urlAlias->where('query', $qu)->first();
-            if($item['children']) {
-                foreach ($item['children'] as $itemChild) {
-                    $quChild = 'category_id='.$itemChild['category_id'];
-                    $urlAliasChild = $this->urlAlias->where('query', $quChild)->first();
-                    $categoryChild[] = [
-                        'id'        => $itemChild['category_id'],
-                        'name'      => $itemChild['description']['name'],
-                        'image_url' => $itemChild['image'],
-                        'url'       => '/'.$urlAlias['keyword'].'/'.$urlAliasChild['keyword']
-                    ];
-                }
-            }
-            
-            $categoryData[] = [
-                'id'        => $item['category_id'],
-                'name'      => $item['description']['name'],
-                'image_url' => $item['image'],
-                'url'       => '/'.$urlAlias['keyword'],
-                'children'  => $categoryChild
-            ];
-        }
-
-        $response = [
+        return [
             'pagination' => [
                 'total' => $category->total(),
                 'per_page' => $category->perPage(),
@@ -73,11 +51,68 @@ class CategoryRepository
                 'from' => $category->firstItem(),
                 'to' => $category->lastItem()
             ],
-            'data' => $categoryData
+            'data' => self::getCategories($category)
         ];
-        
+    }
 
-        return $response;
+    /**
+     * getting all categories
+     * @param $topCategories
+     * @return array
+     */
+    protected function getCategories($topCategories): array
+    {
+
+        foreach ($topCategories as $category) {
+            $categoryChild = [];
+            $qu = 'category_id=' . $category['category_id'];
+            $urlAlias = $this->urlAlias->where('query', $qu)->first();
+            if ($category['children']) {
+                foreach ($category['children'] as $itemChild) {
+                    $nextChildren = [];
+                    $quChild = 'category_id=' . $itemChild['category_id'];
+                    $urlAliasChild = $this->urlAlias->where('query', $quChild)->first();
+
+                    $children = Cache::rememberForever('children' . $itemChild['category_id'], function () use ($itemChild) {
+                        return $this->category::where('status', 1)
+                            ->where('parent_id', $itemChild['category_id'])
+                            ->with('description')
+                            ->orderBy('sort_order', 'asc')
+                            ->get()
+                            ->toArray();
+                    });
+                    if (count($children) > 0) {
+                        foreach ($children as $child) {
+                            $urlAliasChild2 = $this->urlAlias->where('query', 'category_id=' . $child['category_id'])->first();
+                            $nextChildren[] = [
+                                'id' => $child['category_id'],
+                                'name' => $child['description']['name'],
+                                'image_url' => $child['image'],
+                                'url' => '/' . $urlAlias['keyword'] . '/' . $urlAliasChild['keyword'] . '/' . $urlAliasChild2['keyword']
+                            ];
+                        }
+                    }
+                    $categoryChild[] = [
+                        'id' => $itemChild['category_id'],
+                        'name' => $itemChild['description']['name'],
+                        'image_url' => $itemChild['image'],
+                        'url' => '/' . $urlAlias['keyword'] . '/' . $urlAliasChild['keyword'],
+                        'children' => $nextChildren ?? []
+                    ];
+
+                }
+            }
+
+            $categories[] = [
+                'id' => $category['category_id'],
+                'name' => $category['description']['name'],
+                'image_url' => $category['image'],
+                'url' => '/' . $urlAlias['keyword'],
+                'children' => $categoryChild
+            ];
+        }
+
+        return $categories ?? [];
     }
 
     /**
@@ -96,12 +131,12 @@ class CategoryRepository
 
         $category = $this->category->select('id', 'name as label', 'parent_id')->with('children')->where('status', 'active');
 
-        if(isset($currentCatId)) {
+        if (isset($currentCatId)) {
             $category = $category->where('id', '!=', $currentCatId);
         }
 
         $category = $category->get();
-        $category   = $category->push(['id' => 0, 'label' => 'Главная категория', 'parent_id' => null, 'children' => [], 'dates' => "<br><br>"]);
+        $category = $category->push(['id' => 0, 'label' => 'Главная категория', 'parent_id' => null, 'children' => [], 'dates' => "<br><br>"]);
 
         $data = [
             'categories' => $category,

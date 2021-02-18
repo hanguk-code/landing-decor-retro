@@ -40,6 +40,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $category = $this->categoryRepository->all($request);
+
         return new JResource($category);
     }
 
@@ -52,6 +53,7 @@ class CategoryController extends Controller
     public function show($categoryId)
     {
         $category = $this->categoryRepository->find($categoryId);
+
         return new JResource($category);
     }
 

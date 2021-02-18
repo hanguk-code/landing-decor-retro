@@ -40,21 +40,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 col-md-3">
-                    <ul class="left-menu d-none d-lg-block">
-                        <li v-for="cat in categories">
-                            <n-link :to="cat.url" class="open-submenu menu__dropdown">
-                                {{ cat.name }}
-                                <img src="/img/minus.png" alt="">
-                            </n-link>
-                            <ul class="sub-menu" :style="showChild(cat.url)">
-                                <li v-for="catChild, indexChild in cat.children">
-                                    <n-link :to="catChild.url">
-                                        {{ catChild.name }}
-                                    </n-link>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <LeftMenu/>
                     <div class="left-news">
                         <h2>
                             Новинки
@@ -62,11 +48,13 @@
                         <div class="product" v-for="product in newProducts">
                             <div class="product__content">
                                 <i class="pos-3"></i>
-                                <img :src="apiWebUrl + '/image/' + product.image_url" alt=""
-                                     :data-image="apiWebUrl + '/image/' + product.image_url"
-                                     :data-zoom-image="apiWebUrl + '/image/' + product.image_url"
-                                     :alt="product.name"
-                                     class="zoom_01"
+                                <img
+                                    :src="apiWebUrl + '/image/' + product.image_url" alt=""
+                                    @error="imageUrlAlt"
+                                    :data-image="apiWebUrl + '/image/' + product.image_url"
+                                    :data-zoom-image="apiWebUrl + '/image/' + product.image_url"
+                                    :alt="product.name"
+                                    class="zoom_01"
                                 >
                             </div>
                             <div class="product__price">
@@ -122,9 +110,11 @@ import {mapGetters} from 'vuex'
 
 import MenuMobile from '~/components/Menu/MenuMobile'
 import Menu from '~/components/Menu/Menu'
+import LeftMenu from "~/components/Menu/LeftMenu";
 
 export default {
     components: {
+        LeftMenu,
         MenuMobile,
         Menu
     },
@@ -153,9 +143,6 @@ export default {
             categories: [],
             newProducts: [],
 
-            mainCat: 'farfor-fayans-keramika',
-            showChildren: 'display: block;',
-            appUrl: this.$config,
             loading: false,
             apiWebUrl: process.env.apiWebUrl
         };
@@ -165,8 +152,9 @@ export default {
             cartData: 'item/cartData'
         }),
     },
+
     async fetch() {
-        await this.getCategories()
+        await this.getCategories(),
         await this.getNewProducts()
     },
 
@@ -178,21 +166,15 @@ export default {
             }
         },
 
+        imageUrlAlt(event) {
+            event.target.src = this.apiWebUrl + "/image/no_image.jpg"
+        },
+
         async getNewProducts() {
             const request = await this.$axios.$get(`last/products`)
             if (request) {
                 this.newProducts = request.data
             }
-        },
-
-        showChild(url) {
-            let urlSplit = url.split('/')
-            if (urlSplit[1] === this.mainCat) {
-                return 'display: block;'
-            } else {
-                //return 'display: none;'
-            }
-
         },
     }
 }

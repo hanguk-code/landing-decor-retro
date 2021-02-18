@@ -45,18 +45,20 @@
                     </a>
                     <div class="search">
                         <el-select
+                            value
                             filterable
                             remote
                             reserve-keyword
                             placeholder="Поиск"
                             :remote-method="remoteMethod"
+                            no-data-text=""
                         >
                             <el-option
                                 v-for="product in searchProduct"
                                 :key="product.id"
                                 :label="product.name"
+                                :value="product.name"
                             >
-                                <!--                                :value="product"-->
                                 <n-link :to="product.url">
                                     <img :src="apiWebUrl + '/image/' + product.image_url" width="40px">
                                     <span v-html="product.name"></span>
@@ -76,14 +78,12 @@
 export default {
     data() {
         return {
-            queryProducts: '',
             searchProduct: [],
             apiWebUrl: process.env.apiWebUrl
         }
     },
 
     methods: {
-
         async remoteMethod(query) {
             const products = await this.$axios.$get('/search/products', {params: {search: query}})
             this.searchProduct = products.data

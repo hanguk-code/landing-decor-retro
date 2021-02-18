@@ -57,27 +57,27 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-12 col-md-12">
+                <div class="col-sm-4 col-md-3">
+                    <LeftMenu/>
+                </div>
+                <div class="col-sm-8 col-md-9">
                     <h2 class="catalog-title">
-                        Весь ассортимент товара
+                        Все товары магазина
                     </h2>
                     <div class="catalog">
-                        <div class="product" v-for="product, index in products">
-                            <!-- <div class="product__head">
-                              <img :src="product.image_url" :alt="product.name">
-                            </div> -->
+                        <div class="product" v-for="product in products">
                             <div class="product__content">
                                 <img :src="apiWebUrl+'/image/'+product.image_url" alt="" class="zoom_01"
                                      :data-image="apiWebUrl+'/image/'+product.image_url"
                                      :data-zoom-image="apiWebUrl+'/image/'+product.image_url">
                             </div>
                             <div class="product__price">
-              <span>
-                {{ product.price }}Р
-              </span>
+							<span>
+								{{ product.price }}Р
+							</span>
                                 <span>
-                Арт: {{ product.article }}
-              </span>
+								Арт: {{ product.article }}
+							</span>
                             </div>
                             <div class="product__link">
                                 <n-link :to="product.url" v-html="product.name">
@@ -100,11 +100,13 @@
 <script>
 import MenuMobile from './Menu/MenuMobile'
 import Menu from './Menu/Menu'
+import LeftMenu from './Menu/LeftMenu'
 
 export default {
     components: {
         MenuMobile,
-        Menu
+        Menu,
+        LeftMenu
     },
     data() {
         return {
@@ -130,20 +132,25 @@ export default {
 
     methods: {
         async getProducts() {
-            const {data} = await this.$axios.get(
-                `/new/products/all`, {params: this.query}
-            ).catch(() => {
-                //this.$nuxt.error({statusCode: 404, message: 'Oops! Something went wrong!'})
-            });
-            console.log(data.data.products)
-            if (this.products.length > 0) {
-                this.products = this.products.concat(data.data.products)
-            } else {
-                this.products = data.data.products
-            }
-
-            this.configPagination(data.data.pagination);
+            const request = await this.$axios.$get(`/products`)
+            this.products = request.data.products
+            this.configPagination(request.data.pagination);
         },
+        // async getProducts() {
+        //     const {data} = await this.$axios.get(
+        //         `/new/products/all`, {params: this.query}
+        //     ).catch(() => {
+        //         //this.$nuxt.error({statusCode: 404, message: 'Oops! Something went wrong!'})
+        //     });
+        //     console.log(data.data.products)
+        //     if (this.products.length > 0) {
+        //         this.products = this.products.concat(data.data.products)
+        //     } else {
+        //         this.products = data.data.products
+        //     }
+        //
+        //     this.configPagination(data.data.pagination);
+        // },
 
         visibilityChanged(e) {
             let vm = this

@@ -28,7 +28,6 @@
         </div>
 
         <div class="container">
-
             <div class="img-vector">
                 <img src="/img/vector-left.png" alt="">
                 <img src="/img/vector-right.png" alt="">
@@ -41,7 +40,7 @@
                 <div class="col-12">
                     <div class="bread">
                         <ul>
-                            <li v-for="b, i in breadcrumbs" v-if="breadcrumbs">
+                            <li v-for="b in breadcrumbs" v-if="breadcrumbs">
                                 <n-link :to="'/'+b.url">
                                     {{ b.name }}
                                 </n-link>
@@ -52,26 +51,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 col-md-3">
-                    <ul class="left-menu d-none d-lg-block">
-                        <li v-for="cat, index in categories">
-
-                            <a href="#" class="open-submenu menu__dropdown" v-if="cat.children">
-                                {{ cat.name }}
-                                <img src="/img/minus.png" alt="">
-                            </a>
-                            <n-link :to="cat.url" class="open-submenu menu__dropdown" v-else>
-                                {{ cat.name }}
-                            </n-link>
-                            <ul class="sub-menu" :style="showChild(cat.url,index)">
-                                <li v-for="catChild, indexChild in cat.children">
-                                    <n-link :to="catChild.url">
-                                        {{ catChild.name }}
-                                    </n-link>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-
+                    <LeftMenu/>
                 </div>
                 <div class="col-sm-8 col-md-9">
                     <form action="" class="range" v-if="products.length > 0">
@@ -188,11 +168,14 @@
                     </h2>
                     <div class="catalog">
 
-                        <div class="product" v-for="subCategory, index in subCategories">
+                        <div class="product" v-for="subCategory in subCategories">
                             <div class="product__content">
-                                <img :src="apiWebUrl+'/image/'+subCategory.image_url" alt="" class="zoom_01"
-                                     :data-image="apiWebUrl+'/image/'+subCategory.image_url"
-                                     :data-zoom-image="apiWebUrl+'/image/'+subCategory.image_url">
+                                <n-link :to="subCategory.url">
+                                    <img :src="apiWebUrl+'/image/'+subCategory.image_url" alt=""
+                                         @error="imageUrlAlt"
+                                         :data-image="apiWebUrl+'/image/'+subCategory.image_url"
+                                         :data-zoom-image="apiWebUrl+'/image/'+subCategory.image_url">
+                                </n-link>
                             </div>
                             <div class="product__link">
                                 <n-link :to="subCategory.url">
@@ -201,11 +184,15 @@
                             </div>
                         </div>
 
-                        <div class="product" v-for="product, index in products">
+                        <div class="product" v-for="product in products">
                             <div class="product__content">
-                                <img :src="apiWebUrl+'/image/'+product.image_url" alt="" class="zoom_01"
-                                     :data-image="apiWebUrl+'/image/'+product.image_url"
-                                     :data-zoom-image="apiWebUrl+'/image/'+product.image_url">
+                                <n-link :to="product.url">
+                                    <img :src="apiWebUrl+'/image/'+product.image_url" alt=""
+                                         @error="imageUrlAlt"
+                                         class="zoom_01"
+                                         :data-image="apiWebUrl+'/image/'+product.image_url"
+                                         :data-zoom-image="apiWebUrl+'/image/'+product.image_url">
+                                </n-link>
                             </div>
                             <div class="product__price">
 							<span>
@@ -222,9 +209,7 @@
                             </div>
                         </div>
 
-                        <div
-                            v-observe-visibility="currentPage !== lastPage ? visibilityChanged : false"
-                        ></div>
+                        <div v-observe-visibility="currentPage !== lastPage ? visibilityChanged : false"></div>
 
                     </div>
                 </div>
@@ -238,11 +223,13 @@ import {mapGetters} from 'vuex'
 
 import MenuMobile from './Menu/MenuMobile'
 import Menu from './Menu/Menu'
+import LeftMenu from './Menu/LeftMenu'
 
 export default {
     components: {
         MenuMobile,
-        Menu
+        Menu,
+        LeftMenu,
     },
     props: ['categories', 'subCategories', 'products', 'category', 'breadcrumbs', 'currentPage', 'lastPage'],
 
@@ -269,15 +256,34 @@ export default {
         let splitUrl = this.$route.params.pathMatch.split('/')
 
         if (splitUrl[0]) {
-            console.log(splitUrl[0])
+            // console.log(splitUrl[0])
             this.mainCat = splitUrl[0]
         } else {
-            console.log(splitUrl[1])
+            // console.log(splitUrl[1])
             this.mainCat = splitUrl[1]
         }
 
     },
+
+    mounted() {
+        this.zoom1()
+    },
+
     methods: {
+        imageUrlAlt(event) {
+            event.target.src = this.apiWebUrl + "/image/no_image.jpg"
+        },
+
+        zoom1() {
+            $(".zoom_01").elevateZoom({
+                zoomWindowWidth: 300,
+                zoomWindowHeight: 300,
+                zoomWindowPosition: 1,
+                zoomWindowOffetx: -515,
+                lensSize: 500,
+            });
+        },
+
         clearQuery() {
             this.query = {
                 price_min: '',
@@ -287,20 +293,11 @@ export default {
             $emit('queryProducts', this.query)
         },
 
-        showChild(url) {
-            let urlSplit = url.split('/')
-            if (urlSplit[1] === this.mainCat) {
-                return 'display: block;'
-            } else {
-                //return 'display: none;'
-            }
-
-        },
-
         visibilityChanged(currentPage) {
             this.currentPage = currentPage + 1
             let nextPage = currentPage + 1
             this.$emit('visibilityChanged', nextPage)
+            this.zoom1()
         }
     }
 }

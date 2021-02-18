@@ -35,115 +35,13 @@
                 <img src="/img/vector-left-bot.png" alt="">
                 <img src="/img/vector-bot-right.png" alt="">
             </div>
-            <div class="row d-flex d-lg-none">
-                <div class="col-12">
-                    <div class="menu-mobile">
-                        <div class="menu-mobile__top">
-                            <p>
-                                Меню
-                            </p>
-                            <a href="#" class="gamburger-link">
-                                <img src="/img/hamburgermenu.svg" alt="Gamb" class="gumb">
-                                <img src="/img/Exit.png" alt="Exit" class="exit">
-                            </a>
-                        </div>
-                        <nav class="menu-collapse">
-                            <ul class="menu">
-                                <li>
-                                    <n-link :to="{name: 'index'}">
-                                        Главная
-                                    </n-link>
-                                </li>
-                                <li>
-                                    <n-link to="/catalog">
-                                        Каталог
-                                    </n-link>
-                                </li>
-                                <li>
-                                    <a href="#" class="menu__dropdown">
-                                        Категории
-                                        <img src="/img/minus.png" alt="">
-                                    </a>
-                                    <ul>
-                                        <li v-for="cat, index in categories">
-                                            <n-link :to="cat.url" class="menu__dropdown">
-                                                {{ cat.name }}
-                                                <img src="/img/minus.png" alt="">
-                                            </n-link>
-                                            <ul>
-                                                <li v-for="catChild, indexChild in cat.children">
-                                                    <n-link :to="catChild.url">
-                                                        {{ catChild.name }}
-                                                    </n-link>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li>
-                                    <n-link to="/products/new">
-                                        Новинки
-                                    </n-link>
-                                </li>
-                                <li>
-                                    <n-link to="/archive">
-                                        Архив
-                                    </n-link>
-                                </li>
-                                <li>
-                                    <n-link to="/delivery">
-                                        Доставка
-                                    </n-link>
-                                </li>
-                                <li>
-                                    <n-link to="/contacts">
-                                        Контакты
-                                    </n-link>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
+            <MenuMobile/>
             <div class="row d-none d-lg-flex">
-                <div class="col-12">
-                    <ul class="menu">
-                        <li>
-                            <n-link :to="{name: 'index'}">
-                                Главная
-                            </n-link>
-                        </li>
-                        <li>
-                            <n-link to="/catalog">
-                                Каталог
-                            </n-link>
-                        </li>
-                        <li>
-                            <n-link to="/products/new">
-                                Новинки
-                            </n-link>
-                        </li>
-                        <li>
-                            <n-link to="/archive">
-                                Архив
-                            </n-link>
-                        </li>
-                        <li>
-                            <n-link to="/delivery">
-                                Доставка
-                            </n-link>
-                        </li>
-                        <li>
-                            <n-link to="/contacts">
-                                Контакты
-                            </n-link>
-                        </li>
-                    </ul>
-                </div>
+                <Menu/>
                 <div class="col-12">
                     <div class="bread">
                         <ul>
-                            <li v-for="b, i in breadcrumbs" v-if="breadcrumbs">
+                            <li v-for="b in breadcrumbs" v-if="breadcrumbs">
                                 <n-link :to="b.url">
                                     {{ b.name }}
                                 </n-link>
@@ -163,7 +61,7 @@
                                 <div class="range__title">
                                     Материал:
                                 </div>
-                                <select name="" id="">
+                                <select name="material">
                                     <option value="">Выбрать</option>
                                     <option value="">Майолика</option>
                                     <option value="">Металл / Эмаль</option>
@@ -178,7 +76,7 @@
                                 <div class="range__title">
                                     Страна:
                                 </div>
-                                <select name="" id="">
+                                <select name="country">
                                     <option value="">Выбрать</option>
                                     <option value="">Англия</option>
                                     <option value="">Бельгия</option>
@@ -202,7 +100,7 @@
                                 <div class="range__title">
                                     Изготовитель:
                                 </div>
-                                <select name="" id="">
+                                <select name="producer">
                                     <option value="">Выбрать</option>
                                     <option value="">Майолика</option>
                                     <option value="">Металл / Эмаль</option>
@@ -268,7 +166,7 @@
                     </h2>
                     <div class="catalog">
 
-                        <div class="product" v-for="subCategory, index in subCategories">
+                        <div class="product" v-for="subCategory in subCategories">
                             <!-- <div class="product__head">
                                 <img :src="subCategory.image_url" :alt="subCategory.name">
                             </div> -->
@@ -284,7 +182,7 @@
                             </div>
                         </div>
 
-                        <div class="product" v-for="product, index in products">
+                        <div class="product" v-for="product in products">
                             <!-- <div class="product__head">
                                 <img :src="product.image_url" :alt="product.name">
                             </div> -->
@@ -322,7 +220,14 @@
 <script>
 import {mapGetters} from 'vuex'
 
+import MenuMobile from './Menu/MenuMobile'
+import Menu from './Menu/Menu'
+
 export default {
+    components: {
+        MenuMobile,
+        Menu
+    },
 
     computed: {
         ...mapGetters({
@@ -341,7 +246,6 @@ export default {
                 price_min: '',
                 price_max: '',
             },
-            showChildren: 'display: block;'
 
         };
     },

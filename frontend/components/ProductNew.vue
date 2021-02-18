@@ -24,7 +24,6 @@
         </div>
 
         <div class="container">
-
             <div class="img-vector">
                 <img src="/img/vector-left.png" alt="">
                 <img src="/img/vector-right.png" alt="">
@@ -42,7 +41,6 @@
                                     Главная
                                 </n-link>
                             </li>
-
                             <li>
                                 <n-link to="/products/new">
                                     Новинки товара
@@ -54,21 +52,7 @@
             </div>
             <div class="row">
                 <div class="col-sm-4 col-md-3">
-                    <ul class="left-menu d-none d-lg-block">
-                        <li v-for="cat in categories">
-                            <n-link :to="cat.url" class="open-submenu menu__dropdown">
-                                {{ cat.name }}
-                                <img src="/img/minus.png" alt="">
-                            </n-link>
-                            <ul class="sub-menu" :style="showChild(cat.url)">
-                                <li v-for="catChild, indexChild in cat.children">
-                                    <n-link :to="catChild.url">
-                                        {{ catChild.name }}
-                                    </n-link>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
+                    <LeftMenu/>
                 </div>
                 <div class="col-sm-8 col-md-9">
                     <h2 class="catalog-title">
@@ -77,11 +61,14 @@
                     <div class="catalog">
                         <div class="product" v-for="product in products">
                             <div class="product__content">
-                                <i class="pos-3"></i>
-                                <img :src="apiWebUrl + '/image/'+product.image_url" alt=""
-                                     :data-image="apiWebUrl + '/image/'+product.image_url"
-                                     :data-zoom-image="apiWebUrl + '/image/'+product.image_url"
-                                     class="zoom_01"/>
+                                <n-link :to="product.url">
+                                    <i class="pos-3"></i>
+                                    <img :src="apiWebUrl + '/image/'+product.image_url" alt=""
+                                         @error="imageUrlAlt"
+                                         :data-image="apiWebUrl + '/image/'+product.image_url"
+                                         :data-zoom-image="apiWebUrl + '/image/'+product.image_url"
+                                         class="zoom_01"/>
+                                </n-link>
                             </div>
                             <div class="product__price">
                                 <span>{{ product.price }}</span>
@@ -94,8 +81,7 @@
                             </div>
                         </div>
 
-                        <!--                        <div-->
-                        <!--                            v-observe-visibility="pagination.currentPage !== pagination.lastPage ? visibilityChanged : false"></div>-->
+<!--                        <div v-observe-visibility="currentPage !== lastPage ? visibilityChanged : false"></div>-->
                     </div>
 
                 </div>
@@ -106,14 +92,13 @@
 
 <script>
 import {mapGetters} from 'vuex'
-
-import MenuMobile from './Menu/MenuMobile'
-import Menu from './Menu/Menu'
+// import $ from 'jquery'
 
 export default {
     components: {
         MenuMobile,
-        Menu
+        Menu,
+        LeftMenu
     },
     data() {
         return {
@@ -122,7 +107,9 @@ export default {
             apiWebUrl: process.env.apiWebUrl,
 
             query: {
-                page: 1
+                page: 1,
+                price_min: '',
+                price_max: '',
             },
 
             pagination: {
@@ -140,11 +127,22 @@ export default {
         }),
     },
     async fetch() {
-        await this.getCategories()
+        // await this.getCategories()
         await this.getProducts()
+        await this.zoom1()
+    },
+
+    mounted() {
+        this.getCategories()
+        // this.getProducts()
+        // this.zoom1()
     },
 
     methods: {
+        imageUrlAlt(event) {
+            event.target.src = this.apiWebUrl + "/image/no_image.jpg"
+        },
+
         async getCategories() {
             const request = await this.$axios.$get(`categories`)
             this.categories = request.data
@@ -153,38 +151,50 @@ export default {
         async getProducts() {
             const request = await this.$axios.$get(`new/products`)
             this.products = request.data.products
-            this.configPagination(request.data.pagination);
+            // this.configPagination(request.data.pagination)
         },
 
-        showChild(url) {
-            let urlSplit = url.split('/')
-            if (urlSplit[1] === this.mainCat) {
-                return 'display: block;'
-            } else {
-                //return 'display: none;'
-            }
-
+        zoom1() {
+            $(".zoom_01").elevateZoom({
+                zoomWindowWidth: 300,
+                zoomWindowHeight: 300,
+                zoomWindowPosition: 1,
+                zoomWindowOffetx: -515,
+                lensSize: 500,
+            });
         },
 
+        // queryProducts(e) {
+        //     this.query.page = 1
+        //     this.query.price_min = e.price_min
+        //     this.query.price_max = e.price_max
+        //
+        //     this.getProducts()
+        // },
+        //
         // visibilityChanged(e) {
         //     let vm = this
         //     vm.query.page = vm.query.page + 1
         //     if (vm.pagination.currentPage < vm.pagination.lastPage) {
         //         setTimeout(function () {
-        //             vm.getProducts()
+        //             vm.checkType()
         //         }, 50);
         //     }
         // },
-
-        configPagination(data) {
-            this.pagination.lastPage = data.last_page;
-            this.pagination.currentPage = data.current_page;
-            this.pagination.total = data.total;
-            this.pagination.from = data.from;
-            this.pagination.to = data.to;
-        },
+        //
+        // configPagination(data) {
+        //     this.pagination.lastPage = data.last_page;
+        //     this.pagination.currentPage = data.current_page;
+        //     this.pagination.total = data.total;
+        //     this.pagination.from = data.from;
+        //     this.pagination.to = data.to;
+        // },
     }
 }
+import MenuMobile from './Menu/MenuMobile'
+import Menu from './Menu/Menu'
+
+import LeftMenu from "./Menu/LeftMenu";
 </script>
 
 <style scoped>

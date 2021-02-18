@@ -15,10 +15,10 @@
             };
         },
         async fetch() {
-          
+
         },
         methods: {
-          
+
         }
 
     }

@@ -53,44 +53,62 @@ class ProductRepository
      */
     public function all($request)
     {
+        $limit = $request->input('limit') ?? 15;
+        $products = $this->product
+            ->with('description')
+//            ->where('upc', 'new')
+            ->where('status', 'active')
+            ->orderBy('sort_order', 'asc')
+            ->paginate($limit);
 
+        return [
+            'products' => self::parseProducts($products),
+            'pagination' => [
+                'total' => $products->total(),
+                'per_page' => $products->perPage(),
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'from' => $products->firstItem(),
+                'to' => $products->lastItem(),
+            ],
+        ];
     }
 
     public function newLimit($request)
     {
         $limit = $request->input('limit') ?? 3;
-        $product = $this->product
+        $products = $this->product
             ->with('description')
-//            ->where('upc', 'new')
-//            ->where('status', 'active')
+            ->where('upc', 'new')
+            ->where('status', 'active')
             ->orderBy('product_id', 'desc')
             ->limit($limit)
             ->get();
 
-        return self::parseProducts($product);
+        return self::parseProducts($products);
     }
 
     public function newAll($request)
     {
         $length = 12;
         $page = $request->input('page') ?? 3;
-        $product = $this->product
+        $products = $this->product
             ->with('description')
-            ->inRandomOrder()
+//            ->inRandomOrder()
             ->where('upc', 'new')
             ->where('status', 'active')
             ->orderBy('sort_order', 'asc')
             ->paginate($length);
 
         return [
-            'products' => self::parseProducts($product),
+            'products' => self::parseProducts($products),
             'pagination' => [
-                'total' => $product->total(),
-                //per_page' => $productCat->perPage(),
-                'current_page' => $product->currentPage(),
-                'last_page' => $product->lastPage(),
-                'from' => $product->firstItem(),
-                'to' => $product->lastItem(),
+                'total' => $products->total(),
+                //per_page' => $products->perPage(),
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'from' => $products->firstItem(),
+                'to' => $products->lastItem(),
             ],
         ];
     }
@@ -300,6 +318,10 @@ class ProductRepository
             foreach ($productCat as $productItemCat) {
                 $quCatProd = 'product_id=' . $productItemCat['product_id'];
                 $urlAliasProd = $this->urlAlias->where('query', $quCatProd)->first();
+
+                if (!$urlAliasProd) {
+                    continue;
+                }
 
                 $totalUrl = '/' . $categoryUrl . '/' . $urlAliasProd['keyword'];
                 if ($category['parent_id'] > 0) {
@@ -514,7 +536,7 @@ class ProductRepository
     {
         foreach ($product as $item) {
             $categoryId = $this->productToCategory->where(['product_id' => $item['product_id']])->first();
-            if(!$categoryId) {
+            if (!$categoryId) {
                 continue;
             }
             $category = $this->category->find($categoryId->category_id);
@@ -523,7 +545,7 @@ class ProductRepository
 
             $qu = 'product_id=' . $item['product_id'];
             $urlAlias = $this->urlAlias->where('query', $qu)->first();
-            if(!$urlAlias) {
+            if (!$urlAlias) {
                 continue;
             }
 

@@ -8,7 +8,6 @@ $(function () {
         return false;
     });
 
-
     // Menu opener hamburger
     $('.gamburger-link').click(function () {
 
@@ -24,103 +23,103 @@ $(function () {
         return false;
     });
 
+    // console.log('zoom_01', $(".zoom_01").length)
+    //
+    // $(".zoom_01").elevateZoom({
+    //     zoomWindowWidth: 300,
+    //     zoomWindowHeight: 300,
+    //     zoomWindowPosition: 1,
+    //     zoomWindowOffetx: -515,
+    //     lensSize: 500,
+    // });
 
-    $(".zoom_01").elevateZoom({
-        zoomWindowWidth: 300,
-        zoomWindowHeight: 300,
-        zoomWindowPosition: 1,
-        zoomWindowOffetx: -515,
-        lensSize: 500,
-    });
-
-
-    $(".polzunok-5").slider({
-        min: 1928,
-        max: 1976,
-        values: [1928, 1976],
-        range: true,
-        animate: "fast",
-        slide: function (event, ui) {
-            $(".polzunok-input-5-left").val(ui.values[0] + " год.");
-            $(".polzunok-input-5-right").val(ui.values[1] + " год.");
-        }
-    });
-    $(".polzunok-input-5-left").val($(".polzunok-5").slider("values", 0) + " год.");
-    $(".polzunok-input-5-right").val($(".polzunok-5").slider("values", 1) + " год.");
-    $(document).focusout(function () {
-        var input_left = $(".polzunok-input-5-left").val().replace(/[^0-9]/g, ''),
-            opt_left = $(".polzunok-5").slider("option", "min"),
-            where_right = $(".polzunok-5").slider("values", 1),
-            input_right = $(".polzunok-input-5-right").val().replace(/[^0-9]/g, ''),
-            opt_right = $(".polzunok-5").slider("option", "max"),
-            where_left = $(".polzunok-5").slider("values", 0);
-        if (input_left > where_right) {
-            input_left = where_right;
-        }
-        if (input_left < opt_left) {
-            input_left = opt_left;
-        }
-        if (input_left == "") {
-            input_left = 0;
-        }
-        if (input_right < where_left) {
-            input_right = where_left;
-        }
-        if (input_right > opt_right) {
-            input_right = opt_right;
-        }
-        if (input_right == "") {
-            input_right = 0;
-        }
-        $(".polzunok-5").slider("values", [input_left, input_right]);
-        $(".polzunok-input-5-left").val($(".polzunok-5").slider("values", 0) + " год.");
-        $(".polzunok-input-5-right").val($(".polzunok-5").slider("values", 1) + " год.");
-
-    });
-
-    $(".polzunok-6").slider({
-        min: 3400,
-        max: 134980,
-        values: [3400, 134980],
-        range: true,
-        animate: "fast",
-        slide: function (event, ui) {
-            $(".polzunok-input-6-left").val(ui.values[0] + " ₽.");
-            $(".polzunok-input-6-right").val(ui.values[1] + " ₽.");
-        }
-    });
-    $(".polzunok-input-6-left").val($(".polzunok-6").slider("values", 0) + " ₽.");
-    $(".polzunok-input-6-right").val($(".polzunok-6").slider("values", 1) + " ₽.");
-    $(document).focusout(function () {
-        var input_left = $(".polzunok-input-6-left").val().replace(/[^0-9]/g, ''),
-            opt_left = $(".polzunok-6").slider("option", "min"),
-            where_right = $(".polzunok-6").slider("values", 1),
-            input_right = $(".polzunok-input-6-right").val().replace(/[^0-9]/g, ''),
-            opt_right = $(".polzunok-6").slider("option", "max"),
-            where_left = $(".polzunok-6").slider("values", 0);
-        if (input_left > where_right) {
-            input_left = where_right;
-        }
-        if (input_left < opt_left) {
-            input_left = opt_left;
-        }
-        if (input_left == "") {
-            input_left = 0;
-        }
-        if (input_right < where_left) {
-            input_right = where_left;
-        }
-        if (input_right > opt_right) {
-            input_right = opt_right;
-        }
-        if (input_right == "") {
-            input_right = 0;
-        }
-        $(".polzunok-6").slider("values", [input_left, input_right]);
-        $(".polzunok-input-6-left").val($(".polzunok-6").slider("values", 0) + " ₽.");
-        $(".polzunok-input-6-right").val($(".polzunok-6").slider("values", 1) + " ₽.");
-
-    });
+    // $(".polzunok-5").slider({
+    //     min: 1928,
+    //     max: 1976,
+    //     values: [1928, 1976],
+    //     range: true,
+    //     animate: "fast",
+    //     slide: function (event, ui) {
+    //         $(".polzunok-input-5-left").val(ui.values[0] + " год.");
+    //         $(".polzunok-input-5-right").val(ui.values[1] + " год.");
+    //     }
+    // });
+    // $(".polzunok-input-5-left").val($(".polzunok-5").slider("values", 0) + " год.");
+    // $(".polzunok-input-5-right").val($(".polzunok-5").slider("values", 1) + " год.");
+    // $(document).focusout(function () {
+    //     var input_left = $(".polzunok-input-5-left").val().replace(/[^0-9]/g, ''),
+    //         opt_left = $(".polzunok-5").slider("option", "min"),
+    //         where_right = $(".polzunok-5").slider("values", 1),
+    //         input_right = $(".polzunok-input-5-right").val().replace(/[^0-9]/g, ''),
+    //         opt_right = $(".polzunok-5").slider("option", "max"),
+    //         where_left = $(".polzunok-5").slider("values", 0);
+    //     if (input_left > where_right) {
+    //         input_left = where_right;
+    //     }
+    //     if (input_left < opt_left) {
+    //         input_left = opt_left;
+    //     }
+    //     if (input_left == "") {
+    //         input_left = 0;
+    //     }
+    //     if (input_right < where_left) {
+    //         input_right = where_left;
+    //     }
+    //     if (input_right > opt_right) {
+    //         input_right = opt_right;
+    //     }
+    //     if (input_right == "") {
+    //         input_right = 0;
+    //     }
+    //     $(".polzunok-5").slider("values", [input_left, input_right]);
+    //     $(".polzunok-input-5-left").val($(".polzunok-5").slider("values", 0) + " год.");
+    //     $(".polzunok-input-5-right").val($(".polzunok-5").slider("values", 1) + " год.");
+    //
+    // });
+    //
+    // $(".polzunok-6").slider({
+    //     min: 3400,
+    //     max: 134980,
+    //     values: [3400, 134980],
+    //     range: true,
+    //     animate: "fast",
+    //     slide: function (event, ui) {
+    //         $(".polzunok-input-6-left").val(ui.values[0] + " ₽.");
+    //         $(".polzunok-input-6-right").val(ui.values[1] + " ₽.");
+    //     }
+    // });
+    // $(".polzunok-input-6-left").val($(".polzunok-6").slider("values", 0) + " ₽.");
+    // $(".polzunok-input-6-right").val($(".polzunok-6").slider("values", 1) + " ₽.");
+    // $(document).focusout(function () {
+    //     var input_left = $(".polzunok-input-6-left").val().replace(/[^0-9]/g, ''),
+    //         opt_left = $(".polzunok-6").slider("option", "min"),
+    //         where_right = $(".polzunok-6").slider("values", 1),
+    //         input_right = $(".polzunok-input-6-right").val().replace(/[^0-9]/g, ''),
+    //         opt_right = $(".polzunok-6").slider("option", "max"),
+    //         where_left = $(".polzunok-6").slider("values", 0);
+    //     if (input_left > where_right) {
+    //         input_left = where_right;
+    //     }
+    //     if (input_left < opt_left) {
+    //         input_left = opt_left;
+    //     }
+    //     if (input_left == "") {
+    //         input_left = 0;
+    //     }
+    //     if (input_right < where_left) {
+    //         input_right = where_left;
+    //     }
+    //     if (input_right > opt_right) {
+    //         input_right = opt_right;
+    //     }
+    //     if (input_right == "") {
+    //         input_right = 0;
+    //     }
+    //     $(".polzunok-6").slider("values", [input_left, input_right]);
+    //     $(".polzunok-input-6-left").val($(".polzunok-6").slider("values", 0) + " ₽.");
+    //     $(".polzunok-input-6-right").val($(".polzunok-6").slider("values", 1) + " ₽.");
+    //
+    // });
 
 
     $("#img_01").elevateZoom({
