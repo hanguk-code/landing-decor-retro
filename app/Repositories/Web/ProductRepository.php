@@ -90,13 +90,36 @@ class ProductRepository
 
     public function newAll($request)
     {
-        $length = 12;
-        $page = $request->input('page') ?? 3;
+        $length = $request->input('page') ?? 12;
         $products = $this->product
             ->with('description')
 //            ->inRandomOrder()
             ->where('upc', 'new')
             ->where('status', 'active')
+            ->orderBy('sort_order', 'asc')
+            ->paginate($length);
+
+        return [
+            'products' => self::parseProducts($products),
+            'pagination' => [
+                'total' => $products->total(),
+                //per_page' => $products->perPage(),
+                'current_page' => $products->currentPage(),
+                'last_page' => $products->lastPage(),
+                'from' => $products->firstItem(),
+                'to' => $products->lastItem(),
+            ],
+        ];
+    }
+
+
+    public function archiveAll($request)
+    {
+        $length = $request->input('page') ?? 12;
+        $products = $this->product
+            ->with('description')
+            ->where('quantity', '<', 0)
+//            ->where('status', 'active')
             ->orderBy('sort_order', 'asc')
             ->paginate($length);
 

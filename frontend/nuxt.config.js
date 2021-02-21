@@ -1,4 +1,3 @@
-
 export default {
   mode: 'universal',
   target: 'server',
@@ -6,18 +5,11 @@ export default {
 
     env: {
         appUrl: process.env.APP_URL,
-        // appUrl: 'http://decor-retro.local',
-
-        //apiUrl: process.env.API_URL || process.env.APP_URL + '/api'
-        // apiUrl: 'http://193.169.179.233/api',
-        apiUrl: 'http://193.169.179.233/api',
-        // apiWebUrl: 'http://193.169.179.233/api',
-        apiWebUrl: 'http://193.169.179.233:8000',
-
+        apiUrl: process.env.API_URL,
+        apiWebUrl: process.env.API_WEB_URL,
         appName: process.env.APP_NAME || 'Декор Ретро',
         appLocale: process.env.APP_LOCALE || 'ru'
     },
-
     server: {
         port: 3000, // default: 3000
         host: '0.0.0.0', // default: localhost
@@ -103,7 +95,7 @@ export default {
       //'~plugins/nuxt-client-init', // Comment this for SSR
       //{ src: '~plugins/vue-star-rating', ssr: false },
       //{ src: '~plugins/vue-image-crop-upload', ssr: false },
-      { src: '~plugins/persistedstate.js' } //vuex save after page reload in ssr mode
+      { src: '~plugins/persistedstate.js' }, //vuex save after page reload in ssr mode
   ],
   components: true,
   /*
@@ -125,10 +117,9 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
     axios: {
-        // baseURL: 'http://193.169.179.233/api', // process.env.API_URL,
-        baseURL: 'http://193.169.179.233:8000/api', // process.env.API_URL,
-        // baseURL: process.env.API_URL,
-       // retry: { retries: 2 },
+        baseURL: process.env.API_URL,
+        // baseURL: 'http://192.168.0.107:8000/api',
+        // retry: { retries: 2 },
     },
   /*
   ** Build configuration

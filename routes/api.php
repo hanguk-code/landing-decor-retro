@@ -50,6 +50,7 @@ Route::apiResource('categories','Web\CategoryController');
 Route::apiResource('products', 'Web\ProductController');
 Route::get('new/products', 'Web\ProductController@newAll');
 Route::get('last/products', 'Web\ProductController@newLimit');
+Route::get('archive', 'Web\ProductController@archiveAll');
 
 //Check type for multi-nested-slug page
 Route::get('type/{url}', 'Web\ProductController@type')->where('url', '(.*)');

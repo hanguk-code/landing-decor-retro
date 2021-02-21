@@ -53,12 +53,27 @@
                     <div class="product-select">
                         <div class="slider">
                             <div class="slider__zoom">
-                                <img id="img_01" :src="apiWebUrl + '/image/'+product.image_url"/>
-
+                                <img :src="apiWebUrl + '/image/'+product.image_url"
+                                     class="zoom_02"/>
                             </div>
-                            <div class="swiper-container gallery-thumbs">
-                                <img v-for="image, i in product.gallery" style="width: 98px; margin-left: 3px;"
-                                     :src="apiWebUrl + '/image/'+image.image_url" :alt="image.name">
+                            <div id="gallery_01" class="swiper-container gallery-thumbs">
+                                <div class="swiper-wrapper">
+                                    <div class="swiper-slide" v-for="image in product.gallery">
+                                        <a
+                                            href="#"
+                                            class="elevatezoom-gallery"
+                                            data-update=""
+                                            :data-image="apiWebUrl + '/image/'+image.image_url"
+                                            :data-zoom-image="apiWebUrl + '/image/'+image.image_url">
+                                            <img
+                                                style="width: 98px; margin-left: 3px;"
+                                                :src="apiWebUrl + '/image/'+image.image_url"
+                                                :alt="image.name"
+                                            />
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="swiper-button-next"></div>
                             </div>
                         </div>
                         <div class="product-select__content">
@@ -67,9 +82,7 @@
                                     Артикул: {{ product.article }}
                                 </p>
                             </div>
-                            <h2 v-html="product.name">
-
-                            </h2>
+                            <h2 v-html="product.name"></h2>
                             <span class="product-select__price">
 							{{ product.price }} руб.
 						</span>
@@ -78,13 +91,13 @@
                             </a>
                             <table class="attribute">
                                 <tbody>
-                                <tr v-for="attribute, i in product.attributes">
+                                <tr v-for="attribute in product.attributes">
                                     <td>{{ attribute.name }}</td>
                                     <td>{{ attribute.description }}</td>
                                 </tr>
                                 </tbody>
                             </table>
-                            <div v-html="product.description" style="color: #000000;">
+                            <div v-html="product.description">
                             </div>
                         </div>
                     </div>
@@ -118,10 +131,37 @@ export default {
         }),
     },
     mounted() {
-        // console.log('wefwef')
-        // console.log(this.cartData)
+        this.swiper()
     },
     methods: {
+        swiper() {
+            $(".zoom_02").elevateZoom({
+                zoomWindowWidth: 300,
+                zoomWindowHeight: 300,
+                zoomWindowPosition: 1,
+                zoomWindowOffetx: 15,
+                gallery: 'gallery_01',
+                cursor: 'pointer',
+            })
+                .bind("click", function (e) {
+                    var ez = $('.zoom_02').data('elevateZoom');
+                    $.fancybox(ez.getGalleryList());
+                    return false;
+                });
+
+            return new Swiper('.swiper-container', {
+                slidesPerView: 4,
+                spaceBetween: 5,
+                loop: true,
+                freeMode: true,
+                watchSlidesVisibility: true,
+                watchSlidesProgress: true,
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                },
+            });
+        },
+
         addToCart() {
             this.$store.dispatch('item/saveCartItem', {
                 cartData: this.product

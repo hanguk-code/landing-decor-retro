@@ -3,7 +3,8 @@
         <li v-for="cat in categories">
             <n-link :to="cat.url" class="open-submenu menu__dropdown">
                 {{ cat.name }}
-                <img src="/img/minus.png" alt="">
+                <img src="/img/plus.png" alt="" v-if="!showChild(cat.url)">
+                <img src="/img/minus.png" alt="" v-if="showChild(cat.url)">
             </n-link>
             <ul class="sub-menu" v-if="showChild(cat.url)">
                 <li v-for="catChild in cat.children">
@@ -50,7 +51,7 @@ export default {
 
         showChild(url) {
             let urlSplit = url.split('/')
-            return this.queryUrl.includes('/' + urlSplit[1])
+            return this.queryUrl.includes('/' + urlSplit[1]) || (this.queryUrl === '/' && urlSplit[1] === 'farfor-fayans-keramika')
         },
 
         showChild2(url) {

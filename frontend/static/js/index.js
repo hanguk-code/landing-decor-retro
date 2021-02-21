@@ -31,6 +31,20 @@ $(function () {
         lensSize: 500,
     });
 
+    $(".zoom_02").elevateZoom({
+        zoomWindowWidth: 300,
+        zoomWindowHeight: 300,
+        zoomWindowPosition: 1,
+        zoomWindowOffetx: 15,
+        gallery: 'gallery_01',
+        cursor: 'pointer',
+    })
+        .bind("click", function (e) {
+        var ez = $('.zoom_02').data('elevateZoom');
+        $.fancybox(ez.getGalleryList());
+        return false;
+    });
+
     // $(".polzunok-5").slider({
     //     min: 1928,
     //     max: 1976,
@@ -118,85 +132,74 @@ $(function () {
     //     $(".polzunok-input-6-right").val($(".polzunok-6").slider("values", 1) + " ₽.");
     //
     // });
-
-
-    $("#img_01").elevateZoom({
-        gallery: 'swiper-wrapper',
-        cursor: 'pointer',
-        galleryActiveClass: 'active',
-        imageCrossfade: true,
-        loadingIcon: 'http://www.elevateweb.co.uk/spinner.gif'
-    });
-
-
 });
 
+// var galleryThumbs = new Swiper('.gallery-thumbs', {
+//     spaceBetween: 5,
+//     slidesPerView: 4,
+//     loop: true,
+//     freeMode: true,
+//     watchSlidesVisibility: true,
+//     watchSlidesProgress: true,
+//     navigation: {
+//         nextEl: '.swiper-button-next',
+//         prevEl: '.swiper-button-prev',
+//     },
+//     breakpoints: {
+//         0: {
+//             slidesPerView: 2,
+//             spaceBetween: 20,
+//         },
+//         576: {
+//             slidesPerView: 4,
+//             spaceBetween: 20,
+//         },
+//         768: {
+//             slidesPerView: 3,
+//             spaceBetween: 10,
+//         },
+//         992: {
+//             slidesPerView: 4,
+//         },
+//     }
+// });
+//
+// var galleryTop = new Swiper('.gallery-top', {
+//     spaceBetween: 10,
+//
+//     thumbs: {
+//         swiper: galleryThumbs
+//     }
+// });
 
-var galleryThumbs = new Swiper('.gallery-thumbs', {
-    spaceBetween: 5,
-    slidesPerView: 4,
-    loop: true,
-    freeMode: true,
-    watchSlidesVisibility: true,
-    watchSlidesProgress: true,
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-        0: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-        },
-        576: {
-            slidesPerView: 4,
-            spaceBetween: 20,
-        },
-        768: {
-            slidesPerView: 3,
-            spaceBetween: 10,
-        },
-        992: {
-            slidesPerView: 4,
-        },
-    }
-});
-var galleryTop = new Swiper('.gallery-top', {
-    spaceBetween: 10,
-
-    thumbs: {
-        swiper: galleryThumbs
-    }
-});
-
-var swiper = new Swiper('.slider-inner-swiper', {
-    slidesPerView: 4,
-    spaceBetween: 30,
-    slidesPerGroup: 1,
-    autoplay: {
-        delay: 2500,
-        disableOnInteraction: false,
-    },
-    loop: true,
-    loopFillGroupWithBlank: true,
-    navigation: {
-        nextEl: '.swiper-button-next',
-        prevEl: '.swiper-button-prev',
-    },
-    breakpoints: {
-        0: {
-            slidesPerView: 1,
-        },
-        576: {
-            slidesPerView: 2,
-            spaceBetween: 20,
-        },
-        768: {
-            slidesPerView: 3,
-            spaceBetween: 40,
-        },
-        992: {
-            slidesPerView: 4,
-        },
-    }
-});
+// var swiper = new Swiper('.slider-inner-swiper', {
+//     slidesPerView: 4,
+//     spaceBetween: 30,
+//     slidesPerGroup: 1,
+//     autoplay: {
+//         delay: 2500,
+//         disableOnInteraction: false,
+//     },
+//     loop: true,
+//     loopFillGroupWithBlank: true,
+//     navigation: {
+//         nextEl: '.swiper-button-next',
+//         prevEl: '.swiper-button-prev',
+//     },
+//     breakpoints: {
+//         0: {
+//             slidesPerView: 1,
+//         },
+//         576: {
+//             slidesPerView: 2,
+//             spaceBetween: 20,
+//         },
+//         768: {
+//             slidesPerView: 3,
+//             spaceBetween: 40,
+//         },
+//         992: {
+//             slidesPerView: 4,
+//         },
+//     }
+// });
