@@ -67,10 +67,12 @@
                     <div class="catalog">
                         <div class="product" v-for="product in products">
                             <div class="product__content">
-                                <i class="prod"></i>
-                                <img :src="apiWebUrl+'/image/'+product.image_url" alt="" class="zoom_01"
-                                     :data-image="apiWebUrl+'/image/'+product.image_url"
-                                     :data-zoom-image="apiWebUrl+'/image/'+product.image_url">
+                                <n-link :to="product.url">
+                                    <i class="prod"></i>
+                                    <img :src="apiWebUrl+'/image/'+product.image_url" alt="" class="zoom_03"
+                                         :data-image="apiWebUrl+'/image/'+product.image_url"
+                                         :data-zoom-image="apiWebUrl+'/image/'+product.image_url">
+                                </n-link>
                             </div>
                             <div class="product__price">
 							<span>
@@ -81,9 +83,7 @@
 							</span>
                             </div>
                             <div class="product__link">
-                                <n-link :to="product.url" v-html="product.name">
-
-                                </n-link>
+                                <n-link :to="product.url" v-html="product.name"></n-link>
                             </div>
                         </div>
 
@@ -129,6 +129,7 @@ export default {
     },
     async fetch() {
         await this.getProducts()
+        await this.zoom3()
     },
 
     methods: {
@@ -137,21 +138,17 @@ export default {
             this.products = request.data.products
             this.configPagination(request.data.pagination);
         },
-        // async getProducts() {
-        //     const {data} = await this.$axios.get(
-        //         `/new/products/all`, {params: this.query}
-        //     ).catch(() => {
-        //         //this.$nuxt.error({statusCode: 404, message: 'Oops! Something went wrong!'})
-        //     });
-        //     console.log(data.data.products)
-        //     if (this.products.length > 0) {
-        //         this.products = this.products.concat(data.data.products)
-        //     } else {
-        //         this.products = data.data.products
-        //     }
-        //
-        //     this.configPagination(data.data.pagination);
-        // },
+
+        zoom3() {
+            $('.zoomContainer').remove()
+            $(".zoom_03").elevateZoom({
+                zoomWindowWidth: 300,
+                zoomWindowHeight: 300,
+                zoomWindowPosition: 1,
+                zoomWindowOffetx: -515,
+                lensSize: 500,
+            });
+        },
 
         visibilityChanged(e) {
             let vm = this

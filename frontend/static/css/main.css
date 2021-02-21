@@ -348,7 +348,8 @@ i.prod {
 }
 
 .left-menu li {
-    padding: 4px 0 0 20px;
+    padding: 4px 5px 0 20px;
+    text-align: left;
 }
 
 .left-menu > li:not(:last-child):after {

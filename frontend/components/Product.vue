@@ -53,8 +53,8 @@
                     <div class="product-select">
                         <div class="slider">
                             <div class="slider__zoom">
-                                <img :src="apiWebUrl + '/image/'+product.image_url"
-                                     class="zoom_02"/>
+                                <img :src="apiWebUrl + '/image/' + product.image_url"
+                                     class="zoom_04"/>
                             </div>
                             <div id="gallery_01" class="swiper-container gallery-thumbs">
                                 <div class="swiper-wrapper">
@@ -135,25 +135,22 @@ export default {
     },
     methods: {
         swiper() {
-            $(".zoom_02").elevateZoom({
+            $('.zoomContainer').remove()
+            $(".zoom_04").elevateZoom({
                 zoomWindowWidth: 300,
                 zoomWindowHeight: 300,
                 zoomWindowPosition: 1,
                 zoomWindowOffetx: 15,
                 gallery: 'gallery_01',
                 cursor: 'pointer',
-            })
-                .bind("click", function (e) {
-                    var ez = $('.zoom_02').data('elevateZoom');
-                    $.fancybox(ez.getGalleryList());
-                    return false;
-                });
+            });
 
             return new Swiper('.swiper-container', {
                 slidesPerView: 4,
                 spaceBetween: 5,
                 loop: true,
                 freeMode: true,
+                grabCursor: true,
                 watchSlidesVisibility: true,
                 watchSlidesProgress: true,
                 navigation: {

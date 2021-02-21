@@ -154,11 +154,12 @@ export default {
         },
 
         zoom1() {
+            $('.zoomContainer').remove()
             $(".zoom_01").elevateZoom({
                 zoomWindowWidth: 300,
                 zoomWindowHeight: 300,
-                zoomWindowPosition: 1,
-                zoomWindowOffetx: -515,
+                zoomWindowPosition: 11,
+                zoomWindowOffetx: -15,
                 lensSize: 500,
             });
         },

@@ -27,7 +27,7 @@ $(function () {
         zoomWindowWidth: 300,
         zoomWindowHeight: 300,
         zoomWindowPosition: 1,
-        zoomWindowOffetx: -515,
+        zoomWindowOffetx: 15,
         lensSize: 500,
     });
 

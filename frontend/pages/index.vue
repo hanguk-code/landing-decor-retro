@@ -166,6 +166,7 @@ export default {
             }
         },
 
+
         imageUrlAlt(event) {
             event.target.src = this.apiWebUrl + "/image/no_image.jpg"
         },
