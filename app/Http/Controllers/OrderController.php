@@ -18,13 +18,13 @@ class OrderController extends Controller
 {
 
     /**
-     * @var CategoryRepository
+     * @var OrderRepository
      */
     protected $orderRepository;
 
     /**
      * OrderController constructor.
-     * @param CategoryRepository $orderRepository
+     * @param OrderRepository $orderRepository
      */
     public function __construct(OrderRepository $orderRepository)
     {
@@ -42,4 +42,17 @@ class OrderController extends Controller
 
         return new JResource($order);
     }
+
+    public function optionsData(Request $request)
+    {
+        $data = $this->orderRepository->optionsData($request);
+
+        return new JResource($data);
+    }
+
+    public function show(int $categoryId)
+    {
+        return new JResource($this->orderRepository->find($categoryId));
+    }
+
 }

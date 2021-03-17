@@ -15,7 +15,7 @@ class CreateCategoryTable extends Migration
     {
         Schema::create('category', function (Blueprint $table) {
             $table->id();
-           
+
             $table->string('name');
             $table->string('slug');
              $table->unsignedInteger('parent_id')->nullable();
@@ -24,7 +24,7 @@ class CreateCategoryTable extends Migration
             $table->string('image_url');
             $table->integer('sort_order');
             $table->string('status');
-            
+
             $table->string('seo_title')->nullable();
             $table->text('seo_description')->nullable();
             $table->text('seo_keywords')->nullable();

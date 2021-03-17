@@ -38,7 +38,7 @@ Route::post('adm/products/delete/checked', 'ProductController@deleteChecked');
 Route::post('adm/products/c/copy', 'ProductController@copy');
 
  Route::apiResource('adm/orders', 'OrderController');
-// Route::get('orders/options/data', 'OrderController@optionsData');
+ Route::get('adm/orders/options/data', 'OrderController@optionsData');
 
 Route::apiResource('adm/media','MediaController');
 Route::post('adm/media/sort','MediaController@sort');

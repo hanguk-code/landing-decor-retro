@@ -89,7 +89,7 @@ h4 {
 a, a:hover, a:active {
     text-decoration: none;
     color: #fff;
-   
+
 }
 
 a, button, input {
@@ -513,7 +513,7 @@ button, button:hover, button:focus, button:active
 }
 
 .content-info h2 {
-    
+
 }
 
 .content-info p {
@@ -698,7 +698,7 @@ input[type='text'], input[type='phone'], input[type='password'], input[type='ema
     opacity: 1;
 }
 
-.slider .swiper-button-next:after, 
+.slider .swiper-button-next:after,
 .slider .swiper-button-next.swiper-button-white {
     background: url("../img/slide_additional_arrow.jpg") no-repeat scroll right top rgba(0, 0, 0, 0);
     font-size: 0;
@@ -706,7 +706,7 @@ input[type='text'], input[type='phone'], input[type='password'], input[type='ema
     background-size: 113%;
 }
 
-.slider .swiper-container-rtl .swiper-button-prev:after, 
+.slider .swiper-container-rtl .swiper-button-prev:after,
 .slider .swiper-button-prev.swiper-button-white {
     display: none;
 }
@@ -909,11 +909,15 @@ td, .attribute {
     background-color: #FCD0B0;
 }
 
+.tableheader tr {
+    border-bottom: 1px solid #994329;
+}
+
 .tableheader thead {
     margin-bottom: 15px;
 }
 
-.tableheader td, 
+.tableheader td,
 .tablefooter td {
     color: #994329;
     background: #FCD0B0;
@@ -925,7 +929,7 @@ td, .attribute {
 
 .tableheader td.image {
     width: 105px;
-}   
+}
 
 .tableheader td.name {
     width: 290px;
@@ -981,13 +985,13 @@ form.basket .basket__input label {
     font-family: Arial;
     width: 100px;
     text-align: right;
-} 
+}
 
 form.basket .basket__input label span {
     color: red
 }
 
-form.basket .basket__input input, 
+form.basket .basket__input input,
 form.basket .basket__input textarea {
     margin-left: 10px;
     margin-bottom: 15px;
@@ -1010,7 +1014,7 @@ form.basket .basket__btn {
     padding: 12px 9px 20px 0;
     margin: 35px 0 25px auto;
     background-color: transparent;
-    border: none 
+    border: none
 }
 
 /*range*/
@@ -1024,7 +1028,7 @@ form.range h3 {
     margin-top: 10px;
 }
 
-.range__select, 
+.range__select,
 .range__slider {
     display: flex;
     justify-content: space-between;
@@ -1054,7 +1058,7 @@ form.range h3 {
     font-family: Tahoma, sans-serif;
 }
 
-.range__top input, 
+.range__top input,
 .range__price input {
     width: 83px;
     text-align: center;
@@ -1067,7 +1071,7 @@ form.range h3 {
     padding: 2px 5px;
 }
 
-.range__top select, .range__top input, 
+.range__top select, .range__top input,
 .range__price select {
     background: #ffddc1;
     border: 1px solid #a03800;
@@ -1103,7 +1107,7 @@ form.range h3 {
     outline: none;
 }
 
-.polzunok-container-5, 
+.polzunok-container-5,
 .polzunok-container-6 {
     padding: 10px 3px;
     margin: 0;
@@ -1111,7 +1115,7 @@ form.range h3 {
     align-items: center;
 }
 
-.polzunok-container-5 p, 
+.polzunok-container-5 p,
 .polzunok-container-6 p {
     margin: 0 6px;
 }

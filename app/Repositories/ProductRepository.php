@@ -3,11 +3,14 @@
 namespace App\Repositories;
 
 use App\Models\Product\OcProduct;
+
 //use App\Models\Product\ProductAttribute;
 use App\Models\Category\OcCategory;
+
 //use App\Models\Reference\Tag;
 use App\Models\Attribute\OcAttribute;
 use App\Models\OcUrlAlias;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository
 {
@@ -20,28 +23,26 @@ class ProductRepository
 
     /**
      * ItemRepository constructor.
-     * @param OcProduct          $product
-     * @param ProductAttribute $productAttribute
-    * @param ProductGallery    $productGallery
-     * @param Category         $category
-     * @param Tag              $tag
-    * @param  Attribute        $attribute
+     * @param OcProduct $product
+     * @param OcCategory $category
+     * @param OcAttribute $attribute
+     * @param OcUrlAlias $urlAlias
      */
     public function __construct(
-        OcProduct          $product,
+        OcProduct $product,
         //ProductAttribute $productAttribute,
-        OcCategory         $category,
+        OcCategory $category,
         //Tag              $tag,
-        OcAttribute        $attribute,
-        OcUrlAlias         $urlAlias
+        OcAttribute $attribute,
+        OcUrlAlias $urlAlias
     )
     {
-        $this->product          = $product;
+        $this->product = $product;
         //$this->productAttribute = $productAttribute;
-        $this->category         = $category;
-        //$this->tag              = $tag;
-        $this->attribute        = $attribute;
-        $this->urlAlias         = $urlAlias;
+        $this->category = $category;
+//        $this->tag = $tag;
+        $this->attribute = $attribute;
+        $this->urlAlias = $urlAlias;
     }
 
     /**
@@ -49,24 +50,24 @@ class ProductRepository
      */
     public function all($request)
     {
-        if ( $request->input('client') ) {
+        if ($request->input('client')) {
             return $this->product->all();
         }
 
-        $columns = ['product_id', 'name', 'image_url', 'status', 'date_modified'];
+        $columns = ['product_id', 'name', 'image', 'status', 'date_modified'];
 
-        $length      = $request->input('length');
-        $column      = $request->input('column'); //Index
-        $dir         = $request->input('dir');
+        $length = $request->input('length');
+        $column = $request->input('column'); //Index
+        $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
         $query = $this->product->with('description')->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
-            $query->where(function($query) use ($searchValue) {
-                $query->where('product_id',         'like', '%' . $searchValue . '%')
+            $query->where(function ($query) use ($searchValue) {
+                $query->where('product_id', 'like', '%' . $searchValue . '%')
                     //->orWhere('name',       'like', '%' . $searchValue . '%')
-                    ->orWhere('status',     'like', '%' . $searchValue . '%')
+                    ->orWhere('status', 'like', '%' . $searchValue . '%')
                     ->orWhere('date_added', 'like', '%' . $searchValue . '%')
                     ->orWhere('date_modified', 'like', '%' . $searchValue . '%');
             });
@@ -78,41 +79,41 @@ class ProductRepository
 
         foreach ($data as $item) {
             $dataItem[] = [
-                'id' => $item->product_id, 
-                'image' => $item->image, 
-                'name' => $item->description->name, 
-                //'status' => $item->status, 
-                'dates' => $item->dates, 
+                'id' => $item->product_id,
+                'image' => $item->image,
+                'name' => $item->description->name,
+                //'status' => $item->status,
+                'dates' => $item->dates,
             ];
         }
 
-        $columns = array (
-            array('width' => '33%', 'label' => 'Id',     'name' => 'id'),
-            array('width' => '33%','label' => 'Фото', 'name' => 'image_url', 'type' => 'image'),
-            array('width' => '33%', 'label' => 'Наименование',   'name' => 'name'),
-               //array('width' => '33%', 'label' => 'Статус',   'name' => 'status'),
-            array('width' => '33%', 'label' => 'Даты',  'name' => 'dates')
+        $columns = array(
+            array('width' => '33%', 'label' => 'Id', 'name' => 'id'),
+            array('width' => '33%', 'label' => 'Фото', 'name' => 'image', 'type' => 'image'),
+            array('width' => '33%', 'label' => 'Наименование', 'name' => 'name'),
+            //array('width' => '33%', 'label' => 'Статус',   'name' => 'status'),
+            array('width' => '33%', 'label' => 'Даты', 'name' => 'dates')
         );
 
-        $statusClass = array (
-            array('status' => '0',   'badge' => 'kt-badge--danger'),
+        $statusClass = array(
+            array('status' => '0', 'badge' => 'kt-badge--danger'),
             array('status' => '1', 'badge' => 'kt-badge--success')
         );
 
         $sortKey = 'id';
 
-         return [
+        return [
             'data' => [
                 'data' => $dataItem,
                 'current_page' => $data->currentPage(),
-                'last_page'    => $data->lastPage(),
-                'total'    => $data->total(),
+                'last_page' => $data->lastPage(),
+                'total' => $data->total(),
             ],
-            
-            'columns'     => $columns,
+
+            'columns' => $columns,
             'statusClass' => $statusClass,
-            'sortKey'     => $sortKey,
-            'draw'        => $request->input('draw')
+            'sortKey' => $sortKey,
+            'draw' => $request->input('draw')
         ];
     }
 
@@ -123,37 +124,37 @@ class ProductRepository
     {
         $sorted = $this->product->orderBy('sort_order', 'DESC')->first();
 
-        if( isset($sorted->id) ) {
+        if (isset($sorted->id)) {
             $sortOrder = $sorted->sort_order + 1;
         } else {
             $sortOrder = 1;
         }
 
         $product = $this->product->create($request['product'] + ['sort_order' => $sortOrder]);
-        if(isset($request['product']['categories'])) {
+        if (isset($request['product']['categories'])) {
             $product->categories()->sync($request['product']['categories']);
         }
 
-        if( isset($request['photo']) ) {
-            $this->savePhoto($request['photo'], $product->id, $imageExist = null);   
+        if (isset($request['photo'])) {
+            $this->savePhoto($request['photo'], $product->id, $imageExist = null);
         }
 
-        if($request['product']['attributes']) {
+        if ($request['product']['attributes']) {
 
             foreach ($request['product']['attributes'] as $attrName) {
                 $attr = $this->attribute->where('name', $attrName['name'])->first();
-                if( !isset($attr->id) ) {
-                  $this->attribute->create(['name' => $attrName['name']]);
+                if (!isset($attr->id)) {
+                    $this->attribute->create(['name' => $attrName['name']]);
                 }
             }
 
             $product->attributes()->createMany($request['product']['attributes']);
         }
 
-        if($request['product']['tags']) {
+        if ($request['product']['tags']) {
             $tag = [];
             foreach ($request['product']['tags'] as $tagName) {
-                if(is_int($tagName)) {
+                if (is_int($tagName)) {
                     $tag[] = $tagName;
                 } else {
                     $t = $this->tag->create(['name' => $tagName]);
@@ -171,9 +172,11 @@ class ProductRepository
      */
     public function find(int $productId)
     {
-        $product = $this->product->with(['categories:id,name', 'tags:id,name', 'attributes'])->findOrFail($productId);
-
-        return $product;
+//        return $this->product->with(['categories:id,name', 'tags:id,name', 'attributes'])->findOrFail($productId);
+        return $this->product
+            ->with(['categories:product_id,category_id,main_category', 'description', 'attributes', 'gallery'])
+            ->leftJoin('oc_url_alias', 'query', DB::raw('\'product_id=' . $productId . '\''))
+            ->findOrFail($productId);
     }
 
 
@@ -184,48 +187,48 @@ class ProductRepository
     {
         $this->product->find($productId)->update($request['product']);
 
-        if(isset($request['product']['categories'])) {
+        if (isset($request['product']['categories'])) {
             $this->product->find($productId)->categories()->sync($request['product']['categories']);
         }
-        
-        
-        if( isset($request['photo']) ) {
-            if( $request['photo'] !== $request['product']['image_url'] ) {
-                $this->savePhoto($request['photo'], $productId, $imageExist = null);   
+
+
+        if (isset($request['photo'])) {
+            if ($request['photo'] !== $request['product']['image']) {
+                $this->savePhoto($request['photo'], $productId, $imageExist = null);
             }
         }
 
         $attr = $request['product']['attributes'];
-        if($attr) {
+        if ($attr) {
             foreach ($attr as $item) {
 
                 $a = $this->attribute->where('name', $item['name'])->first();
-                if( !isset($a->id) ) {
-                  $this->attribute->create(['name' => $item['name']]);
+                if (!isset($a->id)) {
+                    $this->attribute->create(['name' => $item['name']]);
                 }
 
-                if(isset($item['id'])) {
+                if (isset($item['id'])) {
                     $this->productAttribute->find($item['id'])->update($item);
                 } else {
                     $this->product->find($productId)->attributes()->create($item);
                 }
             }
-            
+
         }
 
-        if($request['product']['tags']) {
+        if ($request['product']['tags']) {
             $tag = [];
             foreach ($request['product']['tags'] as $tagName) {
-                if(is_int($tagName)) {
+                if (is_int($tagName)) {
                     $tag[] = $tagName;
                 } else {
                     $t = $this->tag->create(['name' => $tagName]);
                     $tag[] = $t->id;
                 }
             }
-           $this->product->find($productId)->tags()->sync($tag);
+            $this->product->find($productId)->tags()->sync($tag);
         } else {
-           $this->product->find($productId)->tags()->sync([]);
+            $this->product->find($productId)->tags()->sync([]);
         }
     }
 
@@ -244,38 +247,75 @@ class ProductRepository
         $productAttribute->delete();
     }
 
-    public function savePhoto($logoDataImage, $id, $imageExist) {
-        $filename = time().'.' . explode('/', explode(':', substr($logoDataImage, 0, strpos($logoDataImage, ';')))[1])[1];
+    public function savePhoto($logoDataImage, $id, $imageExist)
+    {
+        $filename = time() . '.' . explode('/', explode(':', substr($logoDataImage, 0, strpos($logoDataImage, ';')))[1])[1];
         $path = 'img/product/' . $id . '/photo/';
 
-        \File::makeDirectory(public_path('img/product/'.$id.'/photo/'), 0755, true, true);
-        \Image::make($logoDataImage)->save(public_path('img/product/'.$id.'/photo/').$filename);
+        \File::makeDirectory(public_path('img/product/' . $id . '/photo/'), 0755, true, true);
+        \Image::make($logoDataImage)->save(public_path('img/product/' . $id . '/photo/') . $filename);
 
-        $photo = config('app.url') . '/' . $path.$filename;
-        $this->product::find($id)->update(['image_url' => $photo]);
+        $photo = config('app.url') . '/' . $path . $filename;
+        $this->product::find($id)->update(['image' => $photo]);
     }
 
 
     public function optionsData()
     {
-        $tag        = $this->tag->select('id', 'name')->get();
-        $attribute  = $this->attribute->select('id', 'name')->get();
-        $category   = $this->category->select('id', 'name as label', 'parent_id')->where('parent_id', NULL)->with('children')->where('status', 'active')->get();
+//        $tag = $this->tag->select('id', 'name')->get();
 
-        $data = [
-            'tags'       => $tag,
+        $attributes = $this->attribute->select('attribute_id', 'attribute_id as label')
+            ->with('description')
+            ->get();
+
+        if (!empty($attributes)) {
+            foreach ($attributes as $key => $item) {
+                $attribute[] = [
+                    'id' => $item->attribute_id,
+                    'label' => $item->description->name,
+                    'language_id' => $item->description->language_id,
+                ];
+            }
+        }
+
+        $categories = $this->category->select('category_id', 'parent_id', 'category_id as label')
+            ->with('description')
+            ->with('children')
+            ->where('status', true)
+            ->where('parent_id', 0)
+            ->get();
+
+        foreach ($categories as $category) {
+            if (!empty($category->children)) {
+                foreach ($category->children as $child) {
+                    $children[] = [
+                        'id' => $child->category_id,
+                        'label' => $child->description->name,
+                    ];
+                }
+            }
+
+            $treeSelect[] = [
+                'id' => $category->category_id,
+                'label' => $category->description->name,
+                'children' => $children ?? []
+            ];
+
+            unset($children);
+        }
+
+        return [
+//            'tags' => $tag,
             'attributes' => $attribute,
-            'categories' => $category
+            'categories' => $treeSelect ?? []
         ];
-
-        return $data;
     }
 
     public function deleteChecked($request)
     {
         $checkedItems = $request->get('checkedItems');
 
-        foreach ($checkedItems as $item){
+        foreach ($checkedItems as $item) {
             $product = $this->product->find($item);
             $product->delete();
 
@@ -292,7 +332,7 @@ class ProductRepository
 
         $sorted = $this->product->orderBy('sort_order', 'DESC')->first();
 
-        if( isset($sorted->id) ) {
+        if (isset($sorted->id)) {
             $sortOrder = $sorted->sort_order + 1;
         } else {
             $sortOrder = 1;
@@ -300,12 +340,12 @@ class ProductRepository
 
         $product = $this->product->create([
             'sort_order' => $sortOrder,
-            'name' => $productCopy->name.'-копия',
-            'slug' => $productCopy->slug.'-kopiya',
+            'name' => $productCopy->name . '-копия',
+            'slug' => $productCopy->slug . '-kopiya',
             'article' => $productCopy->article,
             'category_id' => $productCopy->category_id,
             'url' => $productCopy->url,
-            'image_url' => $productCopy->image_url,
+            'image' => $productCopy->image,
             'description' => $productCopy->description,
             'price' => $productCopy->price,
             'html_h1' => $productCopy->html_h1,
@@ -315,11 +355,11 @@ class ProductRepository
             'sticker' => $productCopy->sticker,
             'sticker_position' => $productCopy->sticker_position,
             'sort_order' => $productCopy->sort_order,
-            'is_booked' => $productCopy->is_booked, 
+            'is_booked' => $productCopy->is_booked,
             'status' => $productCopy->status
         ]);
 
-        if(isset($productCopy->categories)) {
+        if (isset($productCopy->categories)) {
             $category = [];
             foreach ($productCopy->categories as $item) {
                 $category[] = $item['pivot']['category_id'];
@@ -328,7 +368,7 @@ class ProductRepository
         }
 
 
-        if($productCopy->attributes) {
+        if ($productCopy->attributes) {
             foreach ($productCopy->attributes as $item) {
                 $product->attributes()->create([
                     'product_id' => $item['product_id'],
@@ -337,21 +377,21 @@ class ProductRepository
                     'sort_order' => $item['sort_order'],
                 ]);
             }
-            
+
         }
 
-        if($productCopy->gallery) {
+        if ($productCopy->gallery) {
             foreach ($productCopy->gallery as $item) {
                 $product->gallery()->create([
                     'product_id' => $item['product_id'],
                     'name' => $item['name'],
-                    'image_url' => $item['image_url'],
+                    'image' => $item['image'],
                     'sort_order' => $item['sort_order'],
                 ]);
             }
         }
 
-        if($productCopy->tags) {
+        if ($productCopy->tags) {
             $tag = [];
             foreach ($productCopy['tags'] as $item) {
                 $tag[] = $item['pivot']['tag_id'];

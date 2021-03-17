@@ -45,7 +45,7 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function store(Request $request)
@@ -60,25 +60,24 @@ class CategoryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $categoryId
+     * @param int $categoryId
      * @return \Illuminate\Http\Resources\Json\JsonResource
      */
-    public function show($categoryId)
+    public function show(int $categoryId)
     {
-        $category = $this->categoryRepository->find($categoryId);
-        return new JResource($category);
+        return new JResource($this->categoryRepository->find($categoryId));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $categoryId
+     * @param \Illuminate\Http\Request $request
+     * @param int $categoryId
      * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function update(Request $request, $categoryId)
     {
-        $this->categoryRepository->update( $request->all(), $categoryId);
+        $this->categoryRepository->update($request->all(), $categoryId);
 
         return (new JResource(['status' => 'success', 'id' => request()->route('category')]));
     }
@@ -86,7 +85,7 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $categoryId
+     * @param int $categoryId
      * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function destroy($categoryId)

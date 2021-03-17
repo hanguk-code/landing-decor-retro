@@ -2,10 +2,13 @@
 
 namespace App\Models\Product;
 
+use App\Models\OcUrlAlias;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\User\User;
 use App\Models\Category\OcCategory;
+use Illuminate\Support\Facades\DB;
+
 //use App\Models\Attribute\OcAttribute;
 //use App\Models\Reference\Tag;
 
@@ -15,14 +18,14 @@ class OcProduct extends Model
     protected $primaryKey = 'product_id';
 
     protected $dateFormat = 'Y-m-d H:i:s';
-    
+
     /**
      * The name of the "created at" column.
      *
      * @var string
      */
     const CREATED_AT = 'date_added';
-    
+
     /**
      * The name of the "updated at" column.
      *
@@ -62,12 +65,12 @@ class OcProduct extends Model
     // protected $casts = [
     //     "is_booked" => "boolean",
     // ];
-    
+
     protected $appends = ['dates'];
 
     public function getDatesAttribute()
     {
-        return 'Р: '.$this->date_modified."<br>".'С: '.$this->date_added;
+        return 'Р: ' . $this->date_modified . "<br>" . 'С: ' . $this->date_added;
     }
 
     public function gallery()

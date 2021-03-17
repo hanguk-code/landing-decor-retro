@@ -29,7 +29,7 @@ class CreateProductTable extends Migration
             $table->string('seo_title')->nullable();
             $table->text('seo_description')->nullable();
             $table->text('seo_keywords')->nullable();
-            
+
             $table->string('sticker')->nullable();
             $table->string('sticker_position')->nullable();
 

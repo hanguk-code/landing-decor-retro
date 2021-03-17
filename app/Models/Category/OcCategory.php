@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class OcCategory extends Model
 {
-    
+
     public $table = 'oc_category';
 
     protected $primaryKey = 'category_id';
@@ -18,7 +18,7 @@ class OcCategory extends Model
      * @var string
      */
     const CREATED_AT = 'date_added';
-    
+
     /**
      * The name of the "updated at" column.
      *

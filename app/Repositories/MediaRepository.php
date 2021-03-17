@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Product\OcProductImage;
 use App\Models\Product\ProductGallery;
 
 use Illuminate\Support\Facades\Storage;
@@ -16,16 +17,16 @@ class MediaRepository
 
     /**
      * MediaRepository constructor.
-     * @param ProductGallery $productGallery
+     * @param OcProductImage $productGallery
      */
     public function __construct(
-        ProductGallery $productGallery
+        OcProductImage $productGallery
     )
     {
         $this->productGallery = $productGallery;
     }
 
-    
+
     public function all($request)
     {
         $itemType = $request->input('item_type');
@@ -37,14 +38,13 @@ class MediaRepository
 
         $id = null;
         $pID = $request['item_id'];
-        
 
         if (!is_null($id)) {
             $response = $model::findOrFail($id);
         } else {
             $files = $model::where($itemColumn, $pID)
             ->orderBy('sort_order', 'asc')->paginate(6); //->paginate($recordsPerPage);
-            
+
             $response = [
                 'pagination' => [
                     'total' => $files->total(),
@@ -61,7 +61,7 @@ class MediaRepository
         return $response;
     }
 
-    
+
     public function create($request)
     {
         $itemType = $request['media_data']['item_type'];
@@ -83,7 +83,7 @@ class MediaRepository
          $model->create($input);
     }
 
-    
+
     public function destroy(int $id, $request)
     {
         $itemType = $request->input('item_type');
@@ -93,7 +93,7 @@ class MediaRepository
         }
     }
 
-    
+
     public function sort($request)
     {
         $itemType = $request->input('item_type');
@@ -104,7 +104,7 @@ class MediaRepository
             if($itemType == 'product') {
                 $productMedia = $this->productGallery->find($pos['id']);
             }
-            
+
             $productMedia->sort_order = $i;
             $productMedia->save();
 

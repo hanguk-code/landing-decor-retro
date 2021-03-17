@@ -21,4 +21,5 @@ class Order extends Model
         'email',
         'comment',
     ];
+
 }

@@ -19,13 +19,13 @@ class OrderController extends Controller
 {
 
     /**
-     * @var CategoryRepository
+     * @var OrderRepository
      */
     protected $orderRepository;
 
     /**
      * OrderController constructor.
-     * @param CategoryRepository $orderRepository
+     * @param OrderRepository $orderRepository
      */
     public function __construct(OrderRepository $orderRepository)
     {
@@ -35,6 +35,7 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Resources\Json\JsonResource
      */
     public function order(Request $request)

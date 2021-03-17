@@ -63,18 +63,25 @@ ul, li {
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Arial';
     line-height: 1.1em;
-    color: #081d42;
     margin: 0;
 }
 
 h1 {
-    font-size: 72px;
+    color: #4C2011;
+    font-family: Georgia;
+    font-size: 30px;
+    font-style: italic;
+    font-weight: normal;
+    margin: 0 0 8px;
+    padding: 0;
 }
 
 h2 {
-    font-family: 'Trebuchet MS';
-    color: #ecd7ba;
-    font-size: 22px;
+    color:  #4C2011;
+    font-size: 16px;
+    margin-top: 0px;
+    margin-bottom: 15px;
+    line-height: 1em;
 }
 
 h3 {
@@ -606,6 +613,7 @@ i.prod {
     position: fixed;
     top: 285px;
     right: 35px;
+    z-index: 999;
 }
 
 .mycart {
@@ -966,6 +974,10 @@ td, .attribute {
     background-color: #FCD0B0;
 }
 
+.tableheader tr {
+    border-bottom: 1px solid #994329;
+}
+
 .tableheader thead {
     margin-bottom: 15px;
 }
@@ -1308,4 +1320,20 @@ form.range h3 {
 .img-right {
     float: right;
     margin: 5px;
+}
+
+.button_contact_submit {
+    background: url('/img/button_buy.png') repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border: medium none;
+    color: #7A0F0D;
+    cursor: pointer;
+    font-family: georgia, serif;
+    font-size: 18px;
+    font-weight: bold;
+    height: 57px;
+    line-height: 34px;
+    padding: 0 0 7px;
+    text-shadow: 1px 1px 1px #ffc082;
+    width: 161px;
+    float: right;
 }

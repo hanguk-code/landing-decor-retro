@@ -19,13 +19,21 @@ class OrderRepository
 
     public function order($request)
     {
+
+        $productId = [];
+
+        foreach ($request['cartData'] as $item) {
+            $productId[] = $item['id'];
+        }
+
         $this->order->create([
-            'product_id' => $request['cartData']['id'],
+            'product_id' => serialize($productId),
             'name' => $request['userForm']['name'],
             'phone' => $request['userForm']['phone'],
             'email' => $request['userForm']['email'],
             'comment' => $request['userForm']['comment'],
         ]);
+
     }
 
 }

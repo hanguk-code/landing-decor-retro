@@ -1,39 +1,8 @@
 <template>
     <section class="content" id="content">
-
-        <n-link :to="{ name: 'checkout-cart' }" title="Корзина" v-if="cartData">
-            <div class="mycart-container">
-                <div class="mycart"></div>
-                <div class="mycart-button"> {{ cartData.price }} руб.(1)</div>
-            </div>
-        </n-link>
-
-        <div id="modal-1" class="modal-1" style="display: none;">
-            <h3>
-                Написать нам
-            </h3>
-            <form action="#">
-                <label>Ваше имя:</label>
-                <input type="text" name="name">
-                <label>Ваш E-Mail:</label>
-                <input type="email" name="email">
-                <label>Ваш вопрос:</label>
-                <textarea name="question" rows="10">
-
-		</textarea>
-                <button type="submit">
-                    Отправить
-                </button>
-            </form>
-        </div>
-
+        <Basket/>
         <div class="container" v-if="!$fetchState.pending">
-            <div class="img-vector">
-                <img src="/img/vector-left.png" alt="">
-                <img src="/img/vector-right.png" alt="">
-                <img src="/img/vector-left-bot.png" alt="">
-                <img src="/img/vector-bot-right.png" alt="">
-            </div>
+            <Vector/>
             <MenuMobile/>
             <div class="row d-none d-lg-flex">
                 <Menu/>
@@ -91,8 +60,10 @@
                             Как жаль, что современный мир с его прогрессами, социальными нормами и темпами жизни
                             заставляет нас забыть о самом главном – о нашей личности. Так сегодня женщина просто
                             вынуждена порой утрачивать свою природную женственность. Речь идет об одежде, которою мы
-                            обычно надеваем на работе и дома, и даже в гостях и на праздники. Брюки, джинсы, рубашки и
-                            футболки – это стало не только мужским, но и женским стандартом. А ведь существует одежда,
+                            обычно надеваем на работе и дома, и даже в гостях и на праздники. Брюки, джинсы, рубашки
+                            и
+                            футболки – это стало не только мужским, но и женским стандартом. А ведь существует
+                            одежда,
                             которая предназначена именно для прекрасного пола. Она подчеркивает
                         </p>
                         <a href="#">
@@ -106,17 +77,19 @@
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
-
 import MenuMobile from '~/components/Menu/MenuMobile'
 import Menu from '~/components/Menu/Menu'
 import LeftMenu from "~/components/Menu/LeftMenu";
+import Vector from "~/components/Partials/Vector";
+import Basket from "~/components/Partials/Basket";
 
 export default {
     components: {
         LeftMenu,
         MenuMobile,
-        Menu
+        Menu,
+        Vector,
+        Basket,
     },
     head: {
         bodyAttrs: {
@@ -124,18 +97,6 @@ export default {
         },
         title: 'Главная Декор Ретро',
         meta: [
-
-            // {
-            //     //hid: 'description',
-            //     name: 'description',
-            //     content: this.productData.product.seo.seo_description,
-            // },
-            // {
-            //     //hid: 'keywords',
-            //     name: 'keywords',
-            //     content: this.productData.product.seo.seo_keywords,
-            // },
-
         ],
     },
     data() {
@@ -143,14 +104,8 @@ export default {
             categories: [],
             newProducts: [],
 
-            loading: false,
             apiWebUrl: process.env.apiWebUrl
         };
-    },
-    computed: {
-        ...mapGetters({
-            cartData: 'item/cartData'
-        }),
     },
 
     async fetch() {

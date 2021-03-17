@@ -1,65 +1,70 @@
 <template>
-    <div v-if="!$fetchState.pending">
-        <template v-if="linkType === 'about'">
-            <About/>
-        </template>
-        <template v-if="linkType === 'products/all'">
-            <ProductAll/>
-        </template>
-        <template v-if="linkType === 'products/new'">
-            <ProductNew/>
-        </template>
-        <template v-if="linkType === 'archive'">
-            <Archive/>
-        </template>
-        <template v-if="linkType === 'delivery'">
-            <Delivery/>
-        </template>
-        <template v-if="linkType === 'contacts'">
-            <Contacts/>
-        </template>
-        <template v-if="type === 'category'">
-            <Category :categories="categories"
-                      :subCategories="subCategories"
-                      :products="products"
-                      :category="typeData"
-                      :breadcrumbs="breadcrumbs"
-                      :lastPage="pagination.lastPage"
-                      :currentPage="pagination.currentPage"
-                      @queryProducts="queryProducts($event)"
-                      @visibilityChanged="visibilityChanged($event)"
-            />
-        </template>
+    <section class="content" id="content">
+        <div class="container">
+            <Vector/>
+            <MenuMobile/>
+            <Basket/>
+            <Menu/>
+            <div v-if="!$fetchState.pending">
+                <template v-if="linkType === 'about'">
+                    <About/>
+                </template>
+                <template v-if="linkType === 'products/all'">
+                    <ProductAll/>
+                </template>
+                <template v-if="linkType === 'products/new'">
+                    <ProductNew/>
+                </template>
+                <template v-if="linkType === 'archive'">
+                    <Archive/>
+                </template>
+                <template v-if="linkType === 'delivery'">
+                    <Delivery/>
+                </template>
+                <template v-if="linkType === 'contacts'">
+                    <Contacts/>
+                </template>
+                <template v-if="type === 'category'">
+                    <Category :categories="categories"
+                              :subCategories="subCategories"
+                              :products="products"
+                              :category="typeData"
+                              :breadcrumbs="breadcrumbs"
+                              :lastPage="pagination.lastPage"
+                              :currentPage="pagination.currentPage"
+                              @queryProducts="queryProducts($event)"
+                              @visibilityChanged="visibilityChanged($event)"
+                    />
+                </template>
 
-        <template v-if="type === 'product'">
-            <Product :product="product"/>
-        </template>
-    </div>
+                <template v-if="type === 'product'">
+                    <Product :product="product"/>
+                </template>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script>
+import MenuMobile from "~/components/Menu/MenuMobile";
+import Menu from "~/components/Menu/Menu";
+import LeftMenu from "~/components/Menu/LeftMenu";
+import Vector from "~/components/Partials/Vector";
+import Basket from "~/components/Partials/Basket";
 
 export default {
+    components: {
+        MenuMobile,
+        Menu,
+        LeftMenu,
+        Vector,
+        Basket,
+    },
     head: {
         bodyAttrs: {
             class: 'catalog-page'
         },
-
-        //title: this.category.name,
-        meta: [
-
-            // {
-            //     //hid: 'description',
-            //     name: 'description',
-            //     content: this.productData.product.seo.seo_description,
-            // },
-            // {
-            //     //hid: 'keywords',
-            //     name: 'keywords',
-            //     content: this.productData.product.seo.seo_keywords,
-            // },
-
-        ],
+        meta: [],
     },
     data() {
         return {
@@ -86,8 +91,6 @@ export default {
             },
 
             linkType: '',
-
-            loading: false
         };
     },
     async fetch() {
@@ -114,7 +117,6 @@ export default {
                 //await this.getProduct()
             }
         }
-
     },
 
     methods: {

@@ -33,6 +33,7 @@ class CategoryRepository
      */
     public function all($request): array
     {
+
         $recordsPerPage = 100;
         $category = Cache::rememberForever('top_categories', function () use ($recordsPerPage) {
             return $this->category::where('status', 1)
