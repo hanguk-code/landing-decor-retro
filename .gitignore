@@ -17,3 +17,4 @@ npm-debug.log
 yarn-error.log
 /ecosystem.config.js
 /frontend/nuxt.config.js
+server.php
