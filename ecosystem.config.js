@@ -4,7 +4,7 @@ module.exports = {
             name: 'decor-ru',
             host: process.env.APP_URL,
             script: 'npm run start',
-            watch: false,
+            watch: true,
             env: {
                 NODE_ENV: 'development'
             },

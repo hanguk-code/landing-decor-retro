@@ -3,7 +3,6 @@
         <div class="container">
             <Vector/>
             <MenuMobile/>
-            <Basket/>
             <Menu/>
             <div v-if="!$fetchState.pending">
                 <template v-if="linkType === 'about'">
@@ -50,7 +49,6 @@ import MenuMobile from "~/components/Menu/MenuMobile";
 import Menu from "~/components/Menu/Menu";
 import LeftMenu from "~/components/Menu/LeftMenu";
 import Vector from "~/components/Partials/Vector";
-import Basket from "~/components/Partials/Basket";
 
 export default {
     components: {
@@ -58,7 +56,6 @@ export default {
         Menu,
         LeftMenu,
         Vector,
-        Basket,
     },
     head: {
         bodyAttrs: {

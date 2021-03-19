@@ -1,14 +1,15 @@
 <template>
-    <n-link :to="{ name: 'checkout-cart' }" title="Корзина" v-if="totalPrice">
-        <div class="mycart-container">
-            <div class="mycart"></div>
-            <div class="mycart-button"> {{ totalPrice }} руб.({{ basket.length }})</div>
+    <n-link :to="{ name: 'checkout-cart' }" title="Корзина" class="basket-header">
+        <div class="basket-header-icon"></div>
+        <div class="basket-header-bar">
+            Корзина ({{ basket.length }})
         </div>
     </n-link>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+
 export default {
     computed: {
         ...mapGetters({
@@ -16,6 +17,9 @@ export default {
             basket: 'item/basket',
             totalPrice: 'item/totalPrice'
         }),
+    },
+    mounted() {
+        this.basket = JSON.parse(window.localStorage.getItem('basket'))
     }
 }
 

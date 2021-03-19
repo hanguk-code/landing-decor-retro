@@ -13,12 +13,14 @@
                     </n-link>
                 </div>
                 <div class="col-12 d-flex flex-column justify-content-center align-items-center">
-                    <a href="tel:89067894567" class="header-phone">
-                        8 (906) <span>789 45 67</span>
-                    </a>
-                    <a href="#modal-1" class="btn-header">
-                        Заказать звонок
-                    </a>
+                    <div class="header-phone">
+                        +7(985)<span>272-77-80</span>
+                        <br>
+                        +7(966) 381-59-39
+                    </div>
+
+                    <Basket/>
+
                     <div id="search" class="search">
                         <input type="text" name="search" placeholder="Поиск" value=""/>
                         <a class="button-search">&nbsp;&nbsp;&nbsp;</a>
@@ -37,12 +39,14 @@
                     </n-link>
                 </div>
                 <div class="col-lg-3 d-flex flex-column justify-content-center align-items-end p-0">
-                    <a href="tel:89067894567" class="header-phone">
-                        8 (906) <span>789 45 67</span>
-                    </a>
-                    <a href="#modal-1" class="btn-header">
-                        Заказать звонок
-                    </a>
+                    <div class="header-phone">
+                        +7(985)<span>272-77-80</span>
+                        <br>
+                        +7(966) 381-59-39
+                    </div>
+
+                    <Basket/>
+
                     <div class="search">
                         <el-select
                             value
@@ -75,7 +79,12 @@
 </template>
 
 <script>
+import Basket from "~/components/Partials/Basket";
+
 export default {
+    components: {
+        Basket,
+    },
     data() {
         return {
             searchProduct: [],
@@ -94,4 +103,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

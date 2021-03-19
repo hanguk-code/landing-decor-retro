@@ -1,6 +1,5 @@
 <template>
     <section class="content" id="content">
-        <Basket/>
         <div class="container" v-if="!$fetchState.pending">
             <Vector/>
             <MenuMobile/>
@@ -81,7 +80,6 @@ import MenuMobile from '~/components/Menu/MenuMobile'
 import Menu from '~/components/Menu/Menu'
 import LeftMenu from "~/components/Menu/LeftMenu";
 import Vector from "~/components/Partials/Vector";
-import Basket from "~/components/Partials/Basket";
 
 export default {
     components: {
@@ -89,7 +87,6 @@ export default {
         MenuMobile,
         Menu,
         Vector,
-        Basket,
     },
     head: {
         bodyAttrs: {
