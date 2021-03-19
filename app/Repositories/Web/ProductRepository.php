@@ -76,7 +76,7 @@ class ProductRepository
 
     public function newLimit($request)
     {
-        $limit = $request->input('limit') ?? 3;
+        $limit = $request->input('limit') ?? 2;
         $products = $this->product
             ->with('description')
             ->where('upc', 'new')
