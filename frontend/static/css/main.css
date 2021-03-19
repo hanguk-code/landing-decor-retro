@@ -584,6 +584,12 @@ i.prod {
     font-style: normal;
 }
 
+.left-news h2 {
+    font-size: 22px;
+    color: #ecd7ba;
+    font-weight: bold;
+}
+
 .content-info p {
     font-size: 14px;
     color: #ecd7ba;

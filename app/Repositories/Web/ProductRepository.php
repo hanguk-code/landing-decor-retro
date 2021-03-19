@@ -79,8 +79,8 @@ class ProductRepository
         $limit = $request->input('limit') ?? 3;
         $products = $this->product
             ->with('description')
-            ->where('upc', 'new')
-            ->where('status', 'active')
+//            ->where('upc', 'new')
+//            ->where('status', 'active')
             ->orderBy('product_id', 'asc')
             ->limit($limit)
             ->get();

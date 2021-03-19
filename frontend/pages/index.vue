@@ -10,9 +10,7 @@
                 <div class="col-sm-4 col-md-3">
                     <LeftMenu/>
                     <div class="left-news">
-                        <h2>
-                            Новинки
-                        </h2>
+                        <h2>Новинки</h2>
                         <div class="product" v-for="product in newProducts">
                             <n-link :to="product.url">
                                 <div class="product__content">
