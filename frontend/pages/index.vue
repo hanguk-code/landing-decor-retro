@@ -12,7 +12,7 @@
                     <div class="left-news">
                         <h2>Новинки</h2>
                         <div class="product" v-for="product in newProducts">
-                            <n-link :to="product.url">
+                            <n-link :to="product.url" v-show="showImage">
                                 <div class="product__content">
                                     <i class="pos-3"></i>
                                     <img
@@ -147,6 +147,7 @@ export default {
         return {
             categories: [],
             newProducts: [],
+            showImage: true,
 
             apiWebUrl: process.env.apiWebUrl
         };
@@ -167,6 +168,7 @@ export default {
 
 
         imageUrlAlt(event) {
+            this.showImage = false
             event.target.src = this.apiWebUrl + "/image/no_image.jpg"
         },
 

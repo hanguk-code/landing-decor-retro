@@ -58,7 +58,7 @@ class ProductRepository
             ->with('description')
 //            ->where('upc', 'new')
             ->where('status', 'active')
-            ->orderBy('sort_order', 'asc')
+            ->orderBy('sort_order', 'desc')
             ->paginate($limit);
 
         return [
@@ -76,11 +76,11 @@ class ProductRepository
 
     public function newLimit($request)
     {
-        $limit = $request->input('limit') ?? 3;
+        $limit = $request->input('limit') ?? 6;
         $products = $this->product
             ->with('description')
-//            ->where('upc', 'new')
-//            ->where('status', 'active')
+            ->where('upc', 'new')
+            ->where('status', 'active')
             ->orderBy('product_id', 'asc')
             ->limit($limit)
             ->get();
