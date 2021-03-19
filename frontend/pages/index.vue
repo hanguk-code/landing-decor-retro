@@ -168,7 +168,7 @@ export default {
 
 
         imageUrlAlt(event) {
-            this.showImage = false
+            // this.showImage = false
             event.target.src = this.apiWebUrl + "/image/no_image.jpg"
         },
 
