@@ -81,7 +81,7 @@ class ProductRepository
             ->with('description')
             ->where('upc', 'new')
             ->where('status', 'active')
-            ->orderBy('product_id', 'desc')
+            ->orderBy('product_id', 'asc')
             ->limit($limit)
             ->get();
 

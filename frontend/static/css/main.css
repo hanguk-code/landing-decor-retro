@@ -574,14 +574,17 @@ i.prod {
 .content-info {
     margin-top: 35px;
     padding-bottom: 40px;
+    font-family: Arial, sans-serif;
 }
 
-.content-info h2 {
-
+.content-info h1, .content-info h2 {
+    color: #ecd7ba;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
 }
 
 .content-info p {
-    font-family: Arial;
     font-size: 14px;
     color: #ecd7ba;
     margin: 15px 0;
