@@ -3,15 +3,13 @@
         <div class="col-12">
             <div class="menu-mobile">
                 <div class="menu-mobile__top">
-                    <p>
-                        Меню
-                    </p>
-                    <a href="#" class="gamburger-link">
+                    <p>Меню</p>
+                    <a href="#" class="gamburger-link" v-on:click="show = !show">
                         <img src="/img/hamburgermenu.svg" alt="Gamb" class="gumb">
                         <img src="/img/Exit.png" alt="Exit" class="exit">
                     </a>
                 </div>
-                <nav class="menu-collapse">
+                <nav class="menu-collapse" v-show="show">
                     <ul class="menu">
                         <li>
                             <n-link :to="{name: 'index'}">
@@ -65,7 +63,9 @@ export default {
         LeftMenu,
     },
     data() {
-        return {};
+        return {
+            show: false,
+        };
     },
 }
 </script>

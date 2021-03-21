@@ -9,19 +9,18 @@ $(function () {
     });
 
     // Menu opener hamburger
-    $('.gamburger-link').click(function () {
-
-        if ($('.menu-collapse').is(":hidden")) {
-            $(".menu-collapse").show("slow");
-            $('.gumb').addClass('d-none');
-            $('.exit').addClass('d-block');
-        } else {
-            $(".menu-collapse").hide("slow");
-            $('.exit').removeClass('d-block');
-            $('.gumb').removeClass('d-none');
-        }
-        return false;
-    });
+    // $('.container').on('click', '.gamburger-link', function (event) {
+    //     event.preventDefault()
+    //     if ($('.menu-collapse').is(":hidden")) {
+    //         $(".menu-collapse").show("slow");
+    //         $('.gumb').addClass('d-none');
+    //         $('.exit').addClass('d-block');
+    //     } else {
+    //         $(".menu-collapse").hide("slow");
+    //         $('.exit').removeClass('d-block');
+    //         $('.gumb').removeClass('d-none');
+    //     }
+    // });
 
     $(".zoom_01").elevateZoom({
         zoomWindowWidth: 300,
