@@ -79,6 +79,7 @@ export default {
             product: {},
 
             // categories: [],
+            subCategories: [],
             products: [],
             breadcrumbs: [],
             type: '',

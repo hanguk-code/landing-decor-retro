@@ -338,6 +338,10 @@
 }
 
 @media (max-width: 768px) {
+    .row {
+        display: block;
+    }
+    
     .catalog__card {
         width: 48%;
     }
@@ -397,6 +401,10 @@
 }
 
 @media (max-width: 576px) {
+    .row {
+        display: block;
+    }
+
     .catalog-page .left-menu {
         margin: 0;
     }
