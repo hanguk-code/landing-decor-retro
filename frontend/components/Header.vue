@@ -95,6 +95,10 @@ export default {
         }
     },
 
+    mounted() {
+        console.log('isMobile', this.isMobile)
+    },
+
     methods: {
         async remoteMethod(query) {
             const products = await this.$axios.$get('/search/products', {params: {search: query}})
