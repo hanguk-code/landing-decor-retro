@@ -137,7 +137,6 @@ export default {
             });
             this.type = data.data.type
             this.product = data.data.product
-            console.log(this.product)
             if (data.data.type === 'category') {
                 this.typeData = data.data.category
                 this.subCategories = data.data.sub_categories

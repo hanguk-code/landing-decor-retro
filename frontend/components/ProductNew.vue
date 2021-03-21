@@ -95,7 +95,6 @@ export default {
         visibilityChanged(e) {
             let vm = this
             if (vm.query.page !== 1 && vm.pagination.currentPage < vm.pagination.lastPage) {
-                console.log(4)
                 vm.getProducts()
             }
             vm.query.page = vm.query.page + 1
