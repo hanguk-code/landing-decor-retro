@@ -135,10 +135,10 @@
                     <div class="product" v-for="subCategory in subCategories">
                         <div class="product__content">
                             <n-link :to="subCategory.url">
-                                <img :src="apiWebUrl+'/image/'+subCategory.image_url" alt=""
+                                <img :src="apiWebUrl+'/image/'+subCategory.image_url"
                                      @error="imageUrlAlt"
-                                     :data-image="apiWebUrl+'/image/'+subCategory.image_url"
-                                     :data-zoom-image="apiWebUrl+'/image/'+subCategory.image_url">
+                                     alt=""
+                                >
                             </n-link>
                         </div>
                         <div class="product__link">
@@ -184,8 +184,6 @@
 </template>
 
 <script>
-import {isMobileOnly} from 'mobile-device-detect';
-
 export default {
     components: {},
     props: ['categories', 'subCategories', 'products', 'category', 'breadcrumbs', 'currentPage', 'lastPage'],
@@ -193,7 +191,7 @@ export default {
     data() {
         return {
             apiWebUrl: process.env.apiWebUrl,
-            isMobile: isMobileOnly,
+            isMobile: this.$parent.isMobile,
             query: {
                 price_min: '',
                 price_max: '',
@@ -223,13 +221,16 @@ export default {
         },
 
         zoom1() {
-            $(".zoom_01").elevateZoom({
-                zoomWindowWidth: 300,
-                zoomWindowHeight: 300,
-                zoomWindowPosition: 1,
-                zoomWindowOffetx: -515,
-                lensSize: 500,
-            });
+            if (!this.isMobile) {
+                $('.zoomContainer').remove()
+                $(".zoom_01").elevateZoom({
+                    zoomWindowWidth: 300,
+                    zoomWindowHeight: 300,
+                    zoomWindowPosition: 1,
+                    zoomWindowOffetx: -515,
+                    lensSize: 500,
+                });
+            }
         },
 
         clearQuery() {

@@ -70,11 +70,14 @@
 </template>
 
 <script>
+import {isMobileOnly} from 'mobile-device-detect';
+
 export default {
     components: {},
     data() {
         return {
             apiWebUrl: process.env.apiWebUrl,
+            isMobile: isMobileOnly,
         }
     },
     props: ['product'],
@@ -84,15 +87,17 @@ export default {
     },
     methods: {
         swiper() {
-            $('.zoomContainer').remove()
-            $(".zoom_04").elevateZoom({
-                zoomWindowWidth: 300,
-                zoomWindowHeight: 300,
-                zoomWindowPosition: 1,
-                zoomWindowOffetx: 15,
-                gallery: 'gallery_01',
-                cursor: 'pointer',
-            });
+            if (!this.isMobile) {
+                $('.zoomContainer').remove()
+                $(".zoom_04").elevateZoom({
+                    zoomWindowWidth: 300,
+                    zoomWindowHeight: 300,
+                    zoomWindowPosition: 1,
+                    zoomWindowOffetx: 15,
+                    gallery: 'gallery_01',
+                    cursor: 'pointer',
+                });
+            }
 
             return new Swiper('.swiper-container', {
                 slidesPerView: 4,

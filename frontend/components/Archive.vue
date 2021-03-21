@@ -32,9 +32,7 @@
                         </div>
                     </div>
 
-                    <div
-                        v-observe-visibility="pagination.currentPage !== pagination.lastPage ? visibilityChanged : false"
-                    ></div>
+                    <div v-observe-visibility="visibilityChanged"></div>
                 </div>
             </div>
         </div>
@@ -51,6 +49,7 @@ export default {
     data() {
         return {
             apiWebUrl: process.env.apiWebUrl,
+            isMobile: this.$parent.isMobile,
             breadcrumbs: [{
                 url: '/archive',
                 title: 'Архив'
@@ -78,29 +77,30 @@ export default {
     methods: {
         async getProducts() {
             const request = await this.$axios.$get(`/archive`)
-            this.products = request.data.products
-            this.configPagination(request.data.pagination);
+            this.products = this.products.concat(request.data.products)
+            await this.zoom3()
+            this.configPagination(request.data.pagination)
         },
 
         zoom3() {
-            $('.zoomContainer').remove()
-            $(".zoom_03").elevateZoom({
-                zoomWindowWidth: 300,
-                zoomWindowHeight: 300,
-                zoomWindowPosition: 1,
-                zoomWindowOffetx: -515,
-                lensSize: 500,
-            });
+            if (!this.isMobile) {
+                $('.zoomContainer').remove()
+                $(".zoom_03").elevateZoom({
+                    zoomWindowWidth: 300,
+                    zoomWindowHeight: 300,
+                    zoomWindowPosition: 1,
+                    zoomWindowOffetx: -515,
+                    lensSize: 500,
+                });
+            }
         },
 
         visibilityChanged(e) {
             let vm = this
-            vm.query.page = vm.query.page + 1
-            if (vm.pagination.currentPage < vm.pagination.lastPage) {
-                setTimeout(function () {
-                    vm.getProducts()
-                }, 50);
+            if (vm.query.page !== 1 && vm.pagination.currentPage < vm.pagination.lastPage) {
+                vm.getProducts()
             }
+            vm.query.page = vm.query.page + 1
         },
 
         configPagination(data) {

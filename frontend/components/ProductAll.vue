@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import {isMobileOnly} from 'mobile-device-detect';
 import Breadcrumbs from "~/components/Layouts/Breadcrumbs";
 
 export default {
@@ -51,7 +52,7 @@ export default {
     data() {
         return {
             apiWebUrl: process.env.apiWebUrl,
-            isMobile: this.$parent.isMobile,
+            isMobile: isMobileOnly,
             breadcrumbs: [{
                 url: '/products/new',
                 title: 'Все товары магазина'
