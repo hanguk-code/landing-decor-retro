@@ -1,7 +1,7 @@
 <template>
     <header class="header">
         <div class="container">
-            <div class="row d-flex" v-if="isMobile">
+            <div class="row d-flex" v-show="isMobile">
                 <div class="col-5 d-flex align-items-center">
                     <n-link :to="{name: 'index'}">
                         <img src="/img/logo.png" alt="" class="header-logo">
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="row d-lg-flex" v-if="!isMobile">
+            <div class="row d-lg-flex" v-show="!isMobile">
                 <div class="col-lg-3 d-flex align-items-center">
                     <n-link :to="{name: 'index'}">
                         <img src="/img/logo.png" alt="" class="header-logo">
