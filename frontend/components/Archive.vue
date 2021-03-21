@@ -1,31 +1,13 @@
 <template>
     <div>
-        <div class="row d-none d-lg-flex">
-            <div class="col-12">
-                <div class="bread">
-                    <ul>
-                        <li>
-                            <n-link to="/">
-                                Главная
-                            </n-link>
-                        </li>
-
-                        <li>
-                            <n-link to="/products/all">
-                                Весь ассортимент товара
-                            </n-link>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <Breadcrumbs :breadcrumbs="breadcrumbs"/>
         <div class="row">
             <div class="col-sm-4 col-md-3">
                 <LeftMenu/>
             </div>
             <div class="col-sm-8 col-md-9">
                 <h2 class="catalog-title">
-                    Архив
+                    {{ breadcrumbs.slice(-1)[0].title }}
                 </h2>
                 <div class="catalog">
                     <div class="product" v-for="product in products">
@@ -54,18 +36,25 @@
                         v-observe-visibility="pagination.currentPage !== pagination.lastPage ? visibilityChanged : false"
                     ></div>
                 </div>
-
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import Breadcrumbs from "~/components/Layouts/Breadcrumbs";
+
 export default {
-    components: {},
+    components: {
+        Breadcrumbs
+    },
     data() {
         return {
             apiWebUrl: process.env.apiWebUrl,
+            breadcrumbs: [{
+                url: '/archive',
+                title: 'Архив'
+            }],
             products: [],
 
             query: {

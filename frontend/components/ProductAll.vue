@@ -1,57 +1,39 @@
 <template>
     <div>
-        <div class="row d-none d-lg-flex">
-            <div class="col-12">
-                <div class="bread">
-                    <ul>
-                        <li>
-                            <n-link to="/">
-                                Главная
-                            </n-link>
-                        </li>
-
-                        <li>
-                            <n-link to="/products/all">
-                                Весь ассортимент товара
-                            </n-link>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <Breadcrumbs :breadcrumbs="breadcrumbs"/>
         <div class="row">
             <div class="col-sm-4 col-md-3">
                 <LeftMenu/>
             </div>
             <div class="col-sm-8 col-md-9">
                 <h2 class="catalog-title">
-                    Все товары магазина
+                    {{ breadcrumbs.slice(-1)[0].title }}
                 </h2>
                 <div class="catalog">
                     <div class="product" v-for="product in products">
                         <div class="product__content">
-                            <img :src="apiWebUrl+'/image/'+product.image_url" alt="" class="zoom_01"
-                                 :data-image="apiWebUrl+'/image/'+product.image_url"
-                                 :data-zoom-image="apiWebUrl+'/image/'+product.image_url">
+                            <n-link :to="product.url">
+                                <img :src="apiWebUrl+'/image/'+product.image_url"
+                                     :data-image="apiWebUrl+'/image/'+product.image_url"
+                                     :data-zoom-image="apiWebUrl+'/image/'+product.image_url"
+                                     @error="imageUrlAlt"
+                                     class="zoom_01"
+                                     alt=""
+                                >
+                            </n-link>
                         </div>
                         <div class="product__price">
-							<span>
-								{{ product.price }}Р
-							</span>
-                            <span>
-								Арт: {{ product.article }}
-							</span>
+                            <span>{{ product.price }}</span>
+                            <span>Арт: {{ product.article }}</span>
                         </div>
                         <div class="product__link">
-                            <n-link :to="product.url" v-html="product.name">
-
+                            <n-link :to="product.url">
+                                {{ product.name }}
                             </n-link>
                         </div>
                     </div>
 
-                    <div
-                        v-observe-visibility="pagination.currentPage !== pagination.lastPage ? visibilityChanged : false"
-                    ></div>
+                    <div v-observe-visibility="visibilityChanged"></div>
                 </div>
 
             </div>
@@ -60,15 +42,24 @@
 </template>
 
 <script>
+import Breadcrumbs from "~/components/Layouts/Breadcrumbs";
+
 export default {
-    components: {},
+    components: {
+        Breadcrumbs
+    },
     data() {
         return {
             apiWebUrl: process.env.apiWebUrl,
+            isMobile: this.$parent.isMobile,
+            breadcrumbs: [{
+                url: '/products/new',
+                title: 'Все товары магазина'
+            }],
             products: [],
 
             query: {
-                page: 1
+                page: 1,
             },
 
             pagination: {
@@ -80,40 +71,31 @@ export default {
             },
         };
     },
+
     async fetch() {
         await this.getProducts()
+        await this.zoom1()
     },
 
     methods: {
-        async getProducts() {
-            const request = await this.$axios.$get(`/products`)
-            this.products = request.data.products
-            this.configPagination(request.data.pagination);
+        imageUrlAlt(event) {
+            event.target.src = this.apiWebUrl + "/image/no_image.jpg"
         },
-        // async getProducts() {
-        //     const {data} = await this.$axios.get(
-        //         `/new/products/all`, {params: this.query}
-        //     ).catch(() => {
-        //         //this.$nuxt.error({statusCode: 404, message: 'Oops! Something went wrong!'})
-        //     });
-        //     console.log(data.data.products)
-        //     if (this.products.length > 0) {
-        //         this.products = this.products.concat(data.data.products)
-        //     } else {
-        //         this.products = data.data.products
-        //     }
-        //
-        //     this.configPagination(data.data.pagination);
-        // },
+
+        async getProducts() {
+            const request = await this.$axios.$get(`/products`, {params: this.query})
+            this.products = this.products.concat(request.data.products)
+            await this.zoom1()
+            this.configPagination(request.data.pagination)
+        },
 
         visibilityChanged(e) {
             let vm = this
-            vm.query.page = vm.query.page + 1
-            if (vm.pagination.currentPage < vm.pagination.lastPage) {
-                setTimeout(function () {
-                    vm.getProducts()
-                }, 50);
+            if (vm.query.page !== 1 && vm.pagination.currentPage < vm.pagination.lastPage) {
+                console.log(4)
+                vm.getProducts()
             }
+            vm.query.page = vm.query.page + 1
         },
 
         configPagination(data) {
@@ -122,6 +104,19 @@ export default {
             this.pagination.total = data.total;
             this.pagination.from = data.from;
             this.pagination.to = data.to;
+        },
+
+        zoom1() {
+            if (!this.isMobile) {
+                $('.zoomContainer').remove()
+                $(".zoom_01").elevateZoom({
+                    zoomWindowWidth: 300,
+                    zoomWindowHeight: 300,
+                    zoomWindowPosition: 1,
+                    zoomWindowOffetx: -515,
+                    lensSize: 500,
+                });
+            }
         },
     }
 }

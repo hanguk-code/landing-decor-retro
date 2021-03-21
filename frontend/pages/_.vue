@@ -3,7 +3,9 @@
         <div class="container">
             <Vector/>
             <MenuMobile/>
-            <Menu/>
+            <div class="row d-none d-lg-flex" v-if="!isMobile">
+                <Menu/>
+            </div>
             <div v-if="!$fetchState.pending">
                 <template v-if="linkType === 'about'">
                     <About/>
@@ -24,15 +26,16 @@
                     <Contacts/>
                 </template>
                 <template v-if="type === 'category'">
-                    <Category :categories="categories"
-                              :subCategories="subCategories"
-                              :products="products"
-                              :category="typeData"
-                              :breadcrumbs="breadcrumbs"
-                              :lastPage="pagination.lastPage"
-                              :currentPage="pagination.currentPage"
-                              @queryProducts="queryProducts($event)"
-                              @visibilityChanged="visibilityChanged($event)"
+                    <Category
+                        :categories="categories"
+                        :subCategories="subCategories"
+                        :products="products"
+                        :category="typeData"
+                        :breadcrumbs="breadcrumbs"
+                        :lastPage="pagination.lastPage"
+                        :currentPage="pagination.currentPage"
+                        @queryProducts="queryProducts($event)"
+                        @visibilityChanged="visibilityChanged($event)"
                     />
                 </template>
 
@@ -45,10 +48,12 @@
 </template>
 
 <script>
+import {isMobileOnly} from 'mobile-device-detect';
 import MenuMobile from "~/components/Menu/MenuMobile";
 import Menu from "~/components/Menu/Menu";
 import LeftMenu from "~/components/Menu/LeftMenu";
 import Vector from "~/components/Partials/Vector";
+import {mapGetters} from "vuex";
 
 export default {
     components: {
@@ -63,11 +68,17 @@ export default {
         },
         meta: [],
     },
+    computed: {
+        ...mapGetters({
+            categories: 'item/categories',
+        }),
+    },
     data() {
         return {
+            isMobile: isMobileOnly,
             product: {},
 
-            categories: [],
+            // categories: [],
             products: [],
             breadcrumbs: [],
             type: '',
@@ -108,7 +119,7 @@ export default {
         } else {
             await this.checkType()
             if (this.type === 'category') {
-                await this.getCategories()
+                // await this.getCategories()
             }
             if (this.type === 'product') {
                 //await this.getProduct()

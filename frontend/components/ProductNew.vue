@@ -1,41 +1,26 @@
 <template>
     <div>
-        <div class="row d-none d-lg-flex">
-            <div class="col-12">
-                <div class="bread">
-                    <ul>
-                        <li>
-                            <n-link to="/">
-                                Главная
-                            </n-link>
-                        </li>
-                        <li>
-                            <n-link to="/products/new">
-                                Новинки товара
-                            </n-link>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+        <Breadcrumbs :breadcrumbs="breadcrumbs"/>
         <div class="row">
             <div class="col-sm-4 col-md-3">
                 <LeftMenu/>
             </div>
             <div class="col-sm-8 col-md-9">
                 <h2 class="catalog-title">
-                    Новинки товара
+                    {{ breadcrumbs.slice(-1)[0].title }}
                 </h2>
                 <div class="catalog">
                     <div class="product" v-for="product in products">
                         <div class="product__content">
                             <n-link :to="product.url">
                                 <i class="pos-3"></i>
-                                <img :src="apiWebUrl + '/image/'+product.image_url" alt=""
-                                     @error="imageUrlAlt"
+                                <img :src="apiWebUrl + '/image/'+product.image_url"
                                      :data-image="apiWebUrl + '/image/'+product.image_url"
                                      :data-zoom-image="apiWebUrl + '/image/'+product.image_url"
-                                     class="zoom_01"/>
+                                     @error="imageUrlAlt"
+                                     class="zoom_01"
+                                     alt=""
+                                >
                             </n-link>
                         </div>
                         <div class="product__price">
@@ -43,13 +28,13 @@
                             <span>Арт: {{ product.article }}</span>
                         </div>
                         <div class="product__link">
-                            <n-link :to="product.url" v-html="product.name">
+                            <n-link :to="product.url">
                                 {{ product.name }}
                             </n-link>
                         </div>
                     </div>
 
-                    <div v-observe-visibility="currentPage !== lastPage ? visibilityChanged : false"></div>
+                    <div v-observe-visibility="visibilityChanged"></div>
                 </div>
 
             </div>
@@ -58,13 +43,22 @@
 </template>
 
 <script>
+import Breadcrumbs from "~/components/Layouts/Breadcrumbs";
+
 export default {
-    components: {},
+    components: {
+        Breadcrumbs
+    },
     data() {
         return {
-            products: [],
-            categories: [],
             apiWebUrl: process.env.apiWebUrl,
+            isMobile: this.$parent.isMobile,
+
+            breadcrumbs: [{
+                url: '/products/new',
+                title: 'Новинки товара'
+            }],
+            products: [],
 
             query: {
                 page: 1,
@@ -82,15 +76,8 @@ export default {
         };
     },
     async fetch() {
-        // await this.getCategories()
         await this.getProducts()
         await this.zoom1()
-    },
-
-    mounted() {
-        this.getCategories()
-        // this.getProducts()
-        // this.zoom1()
     },
 
     methods: {
@@ -98,53 +85,42 @@ export default {
             event.target.src = this.apiWebUrl + "/image/no_image.jpg"
         },
 
-        async getCategories() {
-            const request = await this.$axios.$get(`categories`)
-            this.categories = request.data
+        async getProducts() {
+            const request = await this.$axios.$get(`new/products`, {params: this.query})
+            this.products = this.products.concat(request.data.products)
+            await this.zoom1()
+            this.configPagination(request.data.pagination)
         },
 
-        async getProducts() {
-            const request = await this.$axios.$get(`new/products`)
-            this.products = request.data.products
-            // this.configPagination(request.data.pagination)
+        visibilityChanged(e) {
+            let vm = this
+            if (vm.query.page !== 1 && vm.pagination.currentPage < vm.pagination.lastPage) {
+                console.log(4)
+                vm.getProducts()
+            }
+            vm.query.page = vm.query.page + 1
+        },
+
+        configPagination(data) {
+            this.pagination.lastPage = data.last_page;
+            this.pagination.currentPage = data.current_page;
+            this.pagination.total = data.total;
+            this.pagination.from = data.from;
+            this.pagination.to = data.to;
         },
 
         zoom1() {
-            $('.zoomContainer').remove()
-            $(".zoom_01").elevateZoom({
-                zoomWindowWidth: 300,
-                zoomWindowHeight: 300,
-                zoomWindowPosition: 11,
-                zoomWindowOffetx: -15,
-                lensSize: 500,
-            });
+            if (!this.isMobile) {
+                $('.zoomContainer').remove()
+                $(".zoom_01").elevateZoom({
+                    zoomWindowWidth: 300,
+                    zoomWindowHeight: 300,
+                    zoomWindowPosition: 11,
+                    zoomWindowOffetx: -15,
+                    lensSize: 500,
+                });
+            }
         },
-
-        // queryProducts(e) {
-        //     this.query.page = 1
-        //     this.query.price_min = e.price_min
-        //     this.query.price_max = e.price_max
-        //
-        //     this.getProducts()
-        // },
-        //
-        // visibilityChanged(e) {
-        //     let vm = this
-        //     vm.query.page = vm.query.page + 1
-        //     if (vm.pagination.currentPage < vm.pagination.lastPage) {
-        //         setTimeout(function () {
-        //             vm.checkType()
-        //         }, 50);
-        //     }
-        // },
-        //
-        // configPagination(data) {
-        //     this.pagination.lastPage = data.last_page;
-        //     this.pagination.currentPage = data.current_page;
-        //     this.pagination.total = data.total;
-        //     this.pagination.from = data.from;
-        //     this.pagination.to = data.to;
-        // },
     }
 }
 </script>

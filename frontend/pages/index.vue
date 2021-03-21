@@ -3,7 +3,7 @@
         <div class="container" v-if="!$fetchState.pending">
             <Vector/>
             <MenuMobile/>
-            <div class="row d-none d-lg-flex">
+            <div class="row d-none d-lg-flex" v-if="!isMobile">
                 <Menu/>
             </div>
             <div class="row">
@@ -93,29 +93,34 @@
                             и
                             прочувствовать дух тех времён.
                         </p>
-                        <p>
-                            Старинные предметы интерьера могут с лёгкость создать особый стиль и шик Вашего дома,
-                            который
-                            сможет заворожить любого гостя. Запоминающимся и дорогим подарком всегда может послужить
-                            антиквариат.
-                        </p>
-                        <p>
-                            Старинные аксессуары могут с лёгкостью создать в человеке образ из прошлого, ведь мелочи
-                            задают
-                            тон. Раздел вещей из СССР позволит каждому человеку окунуться в, казалось бы, столь родное,
-                            но
-                            уже в столько далёкое время – время СССР, которое имеет свою особую атмосферу.
-                        </p>
-                        <p>
-                            Винтажные и антикварные вещи подчёркивают утончённость вкуса. Ведь познать красоту и
-                            ценность
-                            вещей может далеко не каждый человек.
-                        </p>
-                        <p>
-                            Интернет-магазин «Декор-Ретро» поразит каждого человека обилием красивых старинных вещей -
-                            вещей
-                            с историей.
-                        </p>
+                        <a class="readmore-link" href="#" v-if="!readMoreActivated" @click="activateReadMore">Читать далее</a>
+                        <span v-if="readMoreActivated">
+                            <p>
+                                Старинные предметы интерьера могут с лёгкость создать особый стиль и шик Вашего дома,
+                                который
+                                сможет заворожить любого гостя. Запоминающимся и дорогим подарком всегда может послужить
+                                антиквариат.
+                            </p>
+                            <p>
+                                Старинные аксессуары могут с лёгкостью создать в человеке образ из прошлого, ведь мелочи
+                                задают
+                                тон. Раздел вещей из СССР позволит каждому человеку окунуться в, казалось бы, столь
+                                родное,
+                                но
+                                уже в столько далёкое время – время СССР, которое имеет свою особую атмосферу.
+                            </p>
+                            <p>
+                                Винтажные и антикварные вещи подчёркивают утончённость вкуса. Ведь познать красоту и
+                                ценность
+                                вещей может далеко не каждый человек.
+                            </p>
+                            <p>
+                                Интернет-магазин «Декор-Ретро» поразит каждого человека обилием красивых старинных вещей
+                                -
+                                вещей
+                                с историей.
+                            </p>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -124,10 +129,12 @@
 </template>
 
 <script>
+import {isMobileOnly} from 'mobile-device-detect';
 import MenuMobile from '~/components/Menu/MenuMobile'
 import Menu from '~/components/Menu/Menu'
 import LeftMenu from "~/components/Menu/LeftMenu";
 import Vector from "~/components/Partials/Vector";
+import {mapGetters} from "vuex";
 
 export default {
     components: {
@@ -143,29 +150,40 @@ export default {
         title: 'Главная Декор Ретро',
         meta: [],
     },
+    computed: {
+        ...mapGetters({
+            categories: 'item/categories',
+        }),
+    },
     data() {
         return {
-            categories: [],
+            isMobile: isMobileOnly,
+            // categories: this.$root.categories,
             newProducts: [],
             showImage: true,
+            readMoreActivated: false,
 
             apiWebUrl: process.env.apiWebUrl
         };
     },
 
     async fetch() {
-        await this.getCategories()
+        // await this.getCategories()
         await this.getNewProducts()
     },
 
     methods: {
-        async getCategories() {
-            const request = await this.$axios.$get(`categories`)
-            if (request) {
-                this.categories = request.data
-            }
-        },
+        // async getCategories() {
+        //     const request = await this.$axios.$get(`categories`)
+        //     if (request) {
+        //         this.categories = request.data
+        //     }
+        // },
 
+        activateReadMore(event) {
+            event.preventDefault()
+            this.readMoreActivated = true
+        },
 
         imageUrlAlt(event) {
             // this.showImage = false

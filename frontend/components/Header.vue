@@ -1,7 +1,7 @@
 <template>
     <header class="header">
         <div class="container">
-            <div class="row d-flex d-lg-none">
+            <div class="row d-flex" v-if="isMobile">
                 <div class="col-5 d-flex align-items-center">
                     <n-link :to="{name: 'index'}">
                         <img src="/img/logo.png" alt="" class="header-logo">
@@ -27,7 +27,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row d-none d-lg-flex">
+
+            <div class="row d-lg-flex" v-if="!isMobile">
                 <div class="col-lg-3 d-flex align-items-center">
                     <n-link :to="{name: 'index'}">
                         <img src="/img/logo.png" alt="" class="header-logo">
@@ -79,6 +80,7 @@
 </template>
 
 <script>
+import {isMobileOnly} from 'mobile-device-detect';
 import Basket from "~/components/Partials/Basket";
 
 export default {
@@ -87,6 +89,7 @@ export default {
     },
     data() {
         return {
+            isMobile: isMobileOnly,
             searchProduct: [],
             apiWebUrl: process.env.apiWebUrl
         }

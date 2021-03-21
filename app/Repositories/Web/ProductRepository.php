@@ -56,9 +56,8 @@ class ProductRepository
         $limit = $request->input('limit') ?? 15;
         $products = $this->product
             ->with('description')
-//            ->where('upc', 'new')
             ->where('status', 'active')
-            ->orderBy('sort_order', 'desc')
+//            ->orderBy('sort_order', 'desc')
             ->paginate($limit);
 
         return [
@@ -76,7 +75,7 @@ class ProductRepository
 
     public function newLimit($request)
     {
-        $limit = $request->input('limit') ?? 2;
+        $limit = $request->input('limit') ?? 3;
         $products = $this->product
             ->with('description')
             ->where('upc', 'new')
@@ -90,13 +89,13 @@ class ProductRepository
 
     public function newAll($request)
     {
-        $length = $request->input('page') ?? 12;
+        $length = $request->input('limit') ?? 15;
         $products = $this->product
             ->with('description')
 //            ->inRandomOrder()
             ->where('upc', 'new')
             ->where('status', 'active')
-            ->orderBy('sort_order', 'asc')
+//            ->orderBy('sort_order', 'asc')
             ->paginate($length);
 
         return [

@@ -63,57 +63,57 @@ class CategoryRepository
      */
     protected function getCategories($topCategories): array
     {
+        return Cache::rememberForever('getCategories_' . $topCategories, function () use ($topCategories) {
+            foreach ($topCategories as $category) {
+                $categoryChild = [];
+                $qu = 'category_id=' . $category['category_id'];
+                $urlAlias = $this->urlAlias->where('query', $qu)->first();
+                if ($category['children']) {
+                    foreach ($category['children'] as $itemChild) {
+                        $nextChildren = [];
+                        $quChild = 'category_id=' . $itemChild['category_id'];
+                        $urlAliasChild = $this->urlAlias->where('query', $quChild)->first();
 
-        foreach ($topCategories as $category) {
-            $categoryChild = [];
-            $qu = 'category_id=' . $category['category_id'];
-            $urlAlias = $this->urlAlias->where('query', $qu)->first();
-            if ($category['children']) {
-                foreach ($category['children'] as $itemChild) {
-                    $nextChildren = [];
-                    $quChild = 'category_id=' . $itemChild['category_id'];
-                    $urlAliasChild = $this->urlAlias->where('query', $quChild)->first();
-
-                    $children = Cache::rememberForever('children' . $itemChild['category_id'], function () use ($itemChild) {
-                        return $this->category::where('status', 1)
-                            ->where('parent_id', $itemChild['category_id'])
-                            ->with('description')
-                            ->orderBy('sort_order', 'asc')
-                            ->get()
-                            ->toArray();
-                    });
-                    if (count($children) > 0) {
-                        foreach ($children as $child) {
-                            $urlAliasChild2 = $this->urlAlias->where('query', 'category_id=' . $child['category_id'])->first();
-                            $nextChildren[] = [
-                                'id' => $child['category_id'],
-                                'name' => $child['description']['name'],
-                                'image_url' => $child['image'],
-                                'url' => '/' . $urlAlias['keyword'] . '/' . $urlAliasChild['keyword'] . '/' . $urlAliasChild2['keyword']
-                            ];
+                        $children = Cache::rememberForever('children' . $itemChild['category_id'], function () use ($itemChild) {
+                            return $this->category::where('status', 1)
+                                ->where('parent_id', $itemChild['category_id'])
+                                ->with('description')
+                                ->orderBy('sort_order', 'asc')
+                                ->get()
+                                ->toArray();
+                        });
+                        if (count($children) > 0) {
+                            foreach ($children as $child) {
+                                $urlAliasChild2 = $this->urlAlias->where('query', 'category_id=' . $child['category_id'])->first();
+                                $nextChildren[] = [
+                                    'id' => $child['category_id'],
+                                    'name' => $child['description']['name'],
+                                    'image_url' => $child['image'],
+                                    'url' => '/' . $urlAlias['keyword'] . '/' . $urlAliasChild['keyword'] . '/' . $urlAliasChild2['keyword']
+                                ];
+                            }
                         }
+                        $categoryChild[] = [
+                            'id' => $itemChild['category_id'],
+                            'name' => $itemChild['description']['name'],
+                            'image_url' => $itemChild['image'],
+                            'url' => '/' . $urlAlias['keyword'] . '/' . $urlAliasChild['keyword'],
+                            'children' => $nextChildren ?? []
+                        ];
+
                     }
-                    $categoryChild[] = [
-                        'id' => $itemChild['category_id'],
-                        'name' => $itemChild['description']['name'],
-                        'image_url' => $itemChild['image'],
-                        'url' => '/' . $urlAlias['keyword'] . '/' . $urlAliasChild['keyword'],
-                        'children' => $nextChildren ?? []
-                    ];
-
                 }
+
+                $categories[] = [
+                    'id' => $category['category_id'],
+                    'name' => $category['description']['name'],
+                    'image_url' => $category['image'],
+                    'url' => '/' . $urlAlias['keyword'],
+                    'children' => $categoryChild
+                ];
             }
-
-            $categories[] = [
-                'id' => $category['category_id'],
-                'name' => $category['description']['name'],
-                'image_url' => $category['image'],
-                'url' => '/' . $urlAlias['keyword'],
-                'children' => $categoryChild
-            ];
-        }
-
-        return $categories ?? [];
+            return $categories ?? [];
+        });
     }
 
     /**

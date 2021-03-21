@@ -21,6 +21,7 @@
     "flag-icon-css": "^3.5.0",
     "jquery": "^3.5.1",
     "js-cookie": "^2.2.1",
+    "mobile-device-detect": "^0.4.3",
     "normalize-styl": "^4.1.1",
     "nuxt": "^2.13.0",
     "nuxt-i18n": "^6.12.2",

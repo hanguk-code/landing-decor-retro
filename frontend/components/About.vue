@@ -1,26 +1,13 @@
 <template>
-    <div>
-        <div class="row d-none d-lg-flex">
-            <div class="col-12">
-                <div class="bread">
-                    <ul>
-                        <li>
-                            <n-link to="/">Главная</n-link>
-                        </li>
-                        <li>
-                            <n-link to="/products/new">О нас</n-link>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+    <div class="row">
+        <Breadcrumbs :breadcrumbs="breadcrumbs"/>
         <div class="row">
             <div class="col-sm-4 col-md-3">
                 <LeftMenu/>
             </div>
             <div class="col-sm-8 col-md-9">
                 <h2 class="catalog-title">
-                    О нас
+                    {{ breadcrumbs.slice(-1)[0].title }}
                 </h2>
                 <div class="content-news">
                     <a data-fancybox="gallery"
@@ -116,11 +103,19 @@
 </template>
 
 <script>
+import Breadcrumbs from "~/components/Layouts/Breadcrumbs";
+
 export default {
-    components: {},
+    components: {
+        Breadcrumbs
+    },
     data() {
         return {
             apiWebUrl: process.env.apiWebUrl,
+            breadcrumbs: [{
+                url: '/products/new',
+                title: 'О нас'
+            }],
         };
     },
     methods: {}

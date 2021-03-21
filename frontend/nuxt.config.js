@@ -84,7 +84,7 @@ export default {
     ],
     router: {
         //trailingSlash: true,
-        middleware: ['check-auth']
+        // middleware: ['check-auth']
     },
     /*
     ** Plugins to load before mounting the App

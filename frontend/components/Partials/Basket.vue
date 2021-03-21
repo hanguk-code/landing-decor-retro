@@ -11,6 +11,13 @@
 import {mapGetters} from 'vuex'
 
 export default {
+    // data() {
+    //     return {
+    //         basket: [],
+    //         cartData: '',
+    //         totalPrice: '',
+    //     }
+    // },
     computed: {
         ...mapGetters({
             cartData: 'item/cartData',
@@ -19,7 +26,11 @@ export default {
         }),
     },
     mounted() {
-        this.basket = JSON.parse(window.localStorage.getItem('basket'))
+        // if(window.localStorage.getItem('basket')){
+        //     this.basket = JSON.parse(window.localStorage.getItem('basket'))
+        //     this.cartData = JSON.parse(window.localStorage.getItem('cartData'))
+        //     this.totalPrice = JSON.parse(window.localStorage.getItem('totalPrice'))
+        // }
     }
 }
 
