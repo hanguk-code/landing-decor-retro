@@ -12,14 +12,6 @@ export const getters = {
     basket: state => state.basket,
     totalPrice: state => state.totalPrice,
     categories: state => state.categories,
-
-    // this.basket = JSON.parse(window.localStorage.getItem('basket'))
-    // this.cartData = JSON.parse(window.localStorage.getItem('cartData'))
-    // this.totalPrice = JSON.parse(window.localStorage.getItem('totalPrice'))
-
-    // basket: state => JSON.parse(window.localStorage.getItem('basket')),
-    // totalPrice: state => JSON.parse(window.localStorage.getItem('totalPrice')),
-    // cartData: state => JSON.parse(window.localStorage.getItem('cartData')),
 }
 
 // mutations
@@ -38,6 +30,14 @@ export const mutations = {
     SET_CATEGORIES(state, categories) {
         state.categories = categories
     },
+    RESTORE_BASKET(state, basket, cartData, totalPrice) {
+        state.basket = basket
+        state.cartData = cartData
+        state.totalPrice = totalPrice
+    },
+    REMOVE_FROM_BASKET(state, id) {
+        // state.basket
+    },
 }
 
 // actions
@@ -47,5 +47,11 @@ export const actions = {
     },
     saveCategories({commit, dispatch}, {categories}) {
         commit('SET_CATEGORIES', categories)
+    },
+    restoreBasket({commit, dispatch}, {basket, cartData, totalPrice}) {
+        commit('RESTORE_BASKET', basket, cartData, totalPrice)
+    },
+    removeFromBasket({commit, dispatch}, {id}) {
+        commit('REMOVE_FROM_BASKET', id)
     },
 }

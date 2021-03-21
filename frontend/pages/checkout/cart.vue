@@ -42,7 +42,7 @@
                                 {{ item.price }} руб.
                             </td>
                             <td style="vertical-align: middle !important;">
-                                <a href="#" @click="removeFromCart"><img src="/img/remove.png" alt="Удалить"
+                                <a href="#" @click="removeFromCart(item.id)"><img src="/img/remove.png" alt="Удалить"
                                                                          title="Удалить"></a>
                             </td>
                         </tr>
@@ -118,23 +118,11 @@ export default {
         title: 'Главная Декор Ретро',
         meta: [
 
-            // {
-            //     //hid: 'description',
-            //     name: 'description',
-            //     content: this.productData.product.seo.seo_description,
-            // },
-            // {
-            //     //hid: 'keywords',
-            //     name: 'keywords',
-            //     content: this.productData.product.seo.seo_keywords,
-            // },
-
         ],
     },
     data() {
         return {
             categories: [],
-
             userForm: {},
         };
     },
@@ -146,20 +134,9 @@ export default {
         }),
     },
     async fetch() {
-        await this.getCategories()
-        //await this.getNewProducts()
     },
 
     methods: {
-        async getCategories() {
-            const {data} = await this.$axios.get(
-                `/categories`
-            ).catch(() => {
-                //this.$nuxt.error({statusCode: 404, message: 'Oops! Something went wrong!'})
-            });
-            this.categories = data.data
-        },
-
         order() {
             this.loading = true;
 
@@ -188,9 +165,9 @@ export default {
                 });
         },
 
-        removeFromCart() {
-            this.$store.dispatch('item/saveCartItem', {
-                cartData: null
+        removeFromCart(id) {
+            this.$store.dispatch('item/removeFromBasket', {
+                cartData: id
             })
         }
     }
