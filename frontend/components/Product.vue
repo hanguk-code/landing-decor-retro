@@ -16,8 +16,7 @@
                 <div class="product-select">
                     <div class="slider">
                         <div class="slider__zoom">
-                            <img :src="apiWebUrl + '/image/' + product.image_url"
-                                 class="zoom_04"/>
+                            <img :src="apiWebUrl + '/image/' + product.image_url" class="zoom_04"/>
                         </div>
                         <div id="gallery_01" class="swiper-container gallery-thumbs">
                             <div class="swiper-wrapper">
@@ -65,31 +64,31 @@
                 </div>
             </div>
 
-<!--            <div class="col-12">-->
-<!--                <div class="slider-related">-->
-<!--                    <div id="gallery_02" class="swiper-container gallery-thumbs">-->
-<!--                        <div class="swiper-wrapper">-->
-<!--                            <div class="swiper-slide" v-for="item in relatedProducts">-->
-<!--                                <n-link :to="item.url">-->
-<!--                                    <div class="tovar-inner">-->
-<!--                                        <img-->
-<!--                                            :src="apiWebUrl + '/image/'+item.image_url"-->
-<!--                                            :title="item.name"-->
-<!--                                            :alt="item.name"-->
-<!--                                            @error="imageUrlAlt"-->
-<!--                                            class="zoom_01"-->
-<!--                                            width="200"-->
-<!--                                        >-->
-<!--                                    </div>-->
-<!--                                    <div v-html="item.name"></div>-->
-<!--                                </n-link>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="swiper-button-prev"></div>-->
-<!--                        <div class="swiper-button-next"></div>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div class="col-12">-->
+            <!--                <div class="slider-related">-->
+            <!--                    <div id="gallery_02" class="swiper-container gallery-thumbs">-->
+            <!--                        <div class="swiper-wrapper">-->
+            <!--                            <div class="swiper-slide" v-for="item in relatedProducts">-->
+            <!--                                <n-link :to="item.url">-->
+            <!--                                    <div class="tovar-inner">-->
+            <!--                                        <img-->
+            <!--                                            :src="apiWebUrl + '/image/'+item.image_url"-->
+            <!--                                            :title="item.name"-->
+            <!--                                            :alt="item.name"-->
+            <!--                                            @error="imageUrlAlt"-->
+            <!--                                            class="zoom_01"-->
+            <!--                                            width="200"-->
+            <!--                                        >-->
+            <!--                                    </div>-->
+            <!--                                    <div v-html="item.name"></div>-->
+            <!--                                </n-link>-->
+            <!--                            </div>-->
+            <!--                        </div>-->
+            <!--                        <div class="swiper-button-prev"></div>-->
+            <!--                        <div class="swiper-button-next"></div>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
         </div>
     </div>
 </template>
@@ -132,7 +131,6 @@ export default {
                     zoomWindowHeight: 300,
                     zoomWindowPosition: 1,
                     zoomWindowOffetx: 15,
-                    gallery: 'gallery_02',
                     cursor: 'pointer',
                 });
             }
@@ -154,17 +152,28 @@ export default {
 
 
         swiper() {
-            // if (!this.isMobile) {
-                $('.zoomContainer').remove()
+            $('.zoomContainer').remove()
+            if (!this.isMobile) {
                 $(".zoom_04").elevateZoom({
                     zoomWindowWidth: 300,
                     zoomWindowHeight: 300,
                     zoomWindowPosition: 1,
                     zoomWindowOffetx: 15,
+                    lensSize: 500,
                     gallery: 'gallery_01',
                     cursor: 'pointer',
                 });
-            // }
+            } else {
+                $(".zoom_04").elevateZoom({
+                    // zoomType: "lens",
+                    zoomWindowWidth: 0,
+                    zoomWindowHeight: 0,
+                    zoomWindowPosition: 1,
+                    zoomWindowOffetx: 15,
+                    gallery: 'gallery_01',
+                    cursor: 'pointer',
+                });
+            }
 
             return new Swiper('.swiper-container', {
                 slidesPerView: 4,
@@ -176,6 +185,7 @@ export default {
                 watchSlidesVisibility: true,
                 watchSlidesProgress: true,
                 navigation: {
+                    prevEl: '.swiper-button-prev',
                     nextEl: '.swiper-button-next',
                 },
             });
