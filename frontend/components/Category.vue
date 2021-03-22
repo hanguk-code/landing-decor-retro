@@ -229,6 +229,7 @@ export default {
                     zoomWindowPosition: 1,
                     zoomWindowOffetx: -515,
                     lensSize: 500,
+                    cursor: 'pointer',
                 });
             }
         },

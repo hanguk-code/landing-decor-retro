@@ -60,11 +60,36 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div v-html="product.description">
-                        </div>
+                        <div v-html="product.description"></div>
                     </div>
                 </div>
             </div>
+
+<!--            <div class="col-12">-->
+<!--                <div class="slider-related">-->
+<!--                    <div id="gallery_02" class="swiper-container gallery-thumbs">-->
+<!--                        <div class="swiper-wrapper">-->
+<!--                            <div class="swiper-slide" v-for="item in relatedProducts">-->
+<!--                                <n-link :to="item.url">-->
+<!--                                    <div class="tovar-inner">-->
+<!--                                        <img-->
+<!--                                            :src="apiWebUrl + '/image/'+item.image_url"-->
+<!--                                            :title="item.name"-->
+<!--                                            :alt="item.name"-->
+<!--                                            @error="imageUrlAlt"-->
+<!--                                            class="zoom_01"-->
+<!--                                            width="200"-->
+<!--                                        >-->
+<!--                                    </div>-->
+<!--                                    <div v-html="item.name"></div>-->
+<!--                                </n-link>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="swiper-button-prev"></div>-->
+<!--                        <div class="swiper-button-next"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </template>
@@ -78,16 +103,58 @@ export default {
         return {
             apiWebUrl: process.env.apiWebUrl,
             isMobile: isMobileOnly,
+            relatedProducts: []
         }
     },
     props: ['product'],
 
     mounted() {
         this.swiper()
+        this.getRelatedProducts()
     },
+
     methods: {
-        swiper() {
+        imageUrlAlt(event) {
+            event.target.src = this.apiWebUrl + "/image/no_image.jpg"
+        },
+
+        async getRelatedProducts() {
+            const request = await this.$axios.$get(`/related/products`, {params: {product_id: this.product.id}})
+            this.relatedProducts = request.data
+            await this.swiper2()
+        },
+
+        swiper2() {
             if (!this.isMobile) {
+                $('.zoomContainer').remove()
+                $(".zoom_04").elevateZoom({
+                    zoomWindowWidth: 300,
+                    zoomWindowHeight: 300,
+                    zoomWindowPosition: 1,
+                    zoomWindowOffetx: 15,
+                    gallery: 'gallery_02',
+                    cursor: 'pointer',
+                });
+            }
+
+            return new Swiper('.swiper-container', {
+                slidesPerView: 4,
+                spaceBetween: 15,
+                loop: false,
+                freeMode: true,
+                grabCursor: true,
+                watchSlidesVisibility: true,
+                watchSlidesProgress: true,
+                navigation: {
+                    prevEl: '.swiper-button-prev',
+                    nextEl: '.swiper-button-next',
+                },
+            });
+        },
+
+
+        swiper() {
+            // if (!this.isMobile) {
                 $('.zoomContainer').remove()
                 $(".zoom_04").elevateZoom({
                     zoomWindowWidth: 300,
@@ -97,12 +164,12 @@ export default {
                     gallery: 'gallery_01',
                     cursor: 'pointer',
                 });
-            }
+            // }
 
             return new Swiper('.swiper-container', {
                 slidesPerView: 4,
                 spaceBetween: 5,
-                loop: true,
+                loop: false,
                 freeMode: true,
                 grabCursor: true,
                 watchSlidesVisibility: true,

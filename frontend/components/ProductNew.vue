@@ -117,6 +117,7 @@ export default {
                     zoomWindowPosition: 11,
                     zoomWindowOffetx: -15,
                     lensSize: 500,
+                    cursor: 'pointer',
                 });
             }
         },

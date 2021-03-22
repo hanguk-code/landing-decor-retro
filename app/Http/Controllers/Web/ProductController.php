@@ -51,6 +51,11 @@ class ProductController extends Controller
         $product = $this->productRepository->newAll($request);
         return new JResource($product);
     }
+    public function related(Request $request)
+    {
+        $product = $this->productRepository->related($request);
+        return new JResource($product);
+    }
 
     public function archiveAll(Request $request)
     {

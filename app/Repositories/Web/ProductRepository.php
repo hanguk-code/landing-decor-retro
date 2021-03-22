@@ -87,6 +87,21 @@ class ProductRepository
         return self::parseProducts($products);
     }
 
+    public function related($request)
+    {
+        $limit = $request->input('limit') ?? 10;
+        $product_id = $request->input('product_id') ?? 3;
+        $products = $this->product
+            ->with('description')
+            ->inRandomOrder()
+            ->where('status', 'active')
+//            ->orderBy('product_id', 'asc')
+            ->limit($limit)
+            ->get();
+
+        return self::parseProducts($products);
+    }
+
     public function newAll($request)
     {
         $length = $request->input('limit') ?? 15;
