@@ -29,13 +29,13 @@
                                         :data-image="apiWebUrl + '/image/'+image.image_url"
                                         :data-zoom-image="apiWebUrl + '/image/'+image.image_url">
                                         <img
-                                            style="width: 98px; margin-left: 3px;"
                                             :src="apiWebUrl + '/image/'+image.image_url"
                                             :alt="image.name"
                                         />
                                     </a>
                                 </div>
                             </div>
+                            <div class="swiper-button-prev"></div>
                             <div class="swiper-button-next"></div>
                         </div>
                     </div>
@@ -137,7 +137,7 @@ export default {
                 });
             }
 
-            return new Swiper('.swiper-container', {
+            new Swiper('.swiper-container', {
                 slidesPerView: 4,
                 spaceBetween: 15,
                 loop: false,
@@ -169,6 +169,7 @@ export default {
             return new Swiper('.swiper-container', {
                 slidesPerView: 4,
                 spaceBetween: 5,
+                zoom: true,
                 loop: false,
                 freeMode: true,
                 grabCursor: true,
