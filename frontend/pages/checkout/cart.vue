@@ -27,10 +27,10 @@
                     </div>
                     <table class="tableheader">
                         <tbody>
-                        <tr v-for="item in basket">
+                        <tr v-for="(item, index) in basket">
                             <td class="image">
                                 <a href="#">
-                                    <img :src="item.image" alt="">
+                                    <img :src="apiWebUrl + '/image/' + item.image_url" alt="" width="50">
                                 </a>
                             </td>
                             <td class="name">
@@ -38,24 +38,23 @@
                                     {{ item.name }}
                                 </n-link>
                             </td>
-                            <td class="price">
+                            <td class="price" width="150">
                                 {{ item.price }} руб.
                             </td>
-                            <td style="vertical-align: middle !important;">
-                                <a href="#" @click="removeFromCart(item.id)"><img src="/img/remove.png" alt="Удалить"
-                                                                         title="Удалить"></a>
+                            <td width="40">
+                                <a href="#" @click="removeFromCart(index)"><img src="/img/remove.png" alt="Удалить"
+                                                                                  title="Удалить"></a>
                             </td>
                         </tr>
                         </tbody>
-                    </table>
-                    <table class="tablefooter">
-                        <thead>
-                        <tr v-if="totalPrice">
-                            <td style="padding-left: 5px;"><b>Итого:</b></td>
-                            <td style="width: 104px; text-align: center;">{{ totalPrice }} руб.</td>
+                        <tfoot>
+                        <tr v-show="tPrice">
+                            <td class="text-right" colspan="2"><b>Итого:</b></td>
+                            <td  colspan="2">{{ tPrice }} руб.</td>
                         </tr>
-                        </thead>
+                        </tfoot>
                     </table>
+
                     <form role="form" @submit.prevent="order" class="basket">
                         <div class="basket__input">
                             <label>
@@ -116,14 +115,14 @@ export default {
             class: 'main-page'
         },
         title: 'Главная Декор Ретро',
-        meta: [
-
-        ],
+        meta: [],
     },
     data() {
         return {
+            apiWebUrl: process.env.apiWebUrl,
             categories: [],
             userForm: {},
+            tPrice: 0
         };
     },
     computed: {
@@ -133,7 +132,11 @@ export default {
             totalPrice: 'item/totalPrice'
         }),
     },
-    async fetch() {
+
+    mounted() {
+        if(window.localStorage.getItem('basket')) {
+            this.tPrice = parseFloat(window.localStorage.totalPrice)
+        }
     },
 
     methods: {
@@ -165,10 +168,21 @@ export default {
                 });
         },
 
-        removeFromCart(id) {
+        removeFromCart(index) {
+            if(index === this.basket.length){
+                this.$store.dispatch('item/saveCartItem', {
+                    cartData: null,
+                    basket: null,
+                    totalPrice: 0,
+                })
+                return true
+            }
             this.$store.dispatch('item/removeFromBasket', {
-                cartData: id
+                index: index
             })
+            if(window.localStorage.getItem('basket')) {
+                this.tPrice = parseFloat(window.localStorage.totalPrice)
+            }
         }
     }
 }

@@ -22,8 +22,7 @@ export default {
         if(window.localStorage.getItem('basket')){
             this.$store.dispatch('item/restoreBasket', {
                 basket: JSON.parse(window.localStorage.getItem('basket')),
-                cartData: JSON.parse(window.localStorage.getItem('cartData')),
-                totalPrice: JSON.parse(window.localStorage.getItem('totalPrice'))
+                totalPrice: parseFloat(window.localStorage.totalPrice)
             })
         }
     }
