@@ -89,14 +89,13 @@ class ProductRepository
 
     public function related($request)
     {
-        $limit = $request->input('limit') ?? 10;
-        $product_id = $request->input('product_id') ?? 3;
+        $product = $this->product->with('description')->where('product_id', $request->input('product_id'))->first();
         $products = $this->product
-            ->with('description')
-            ->inRandomOrder()
+            ->whereHas('description', function($query) use ($product){
+                return $query->where('tag', $product->description->tag);
+            })
             ->where('status', 'active')
 //            ->orderBy('product_id', 'asc')
-            ->limit($limit)
             ->get();
 
         return self::parseProducts($products);

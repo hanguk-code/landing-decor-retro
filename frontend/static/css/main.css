@@ -748,21 +748,21 @@ input[type='text'], input[type='phone'], input[type='password'], input[type='ema
 }
 
 .slider-related {
-    width: 98%;
-    padding: 0px 20px;
+    width: 100%;
+    height: 100%;
 }
-.slider-related .swiper-slide {
-    background-size: cover;
-    background-position: center;
-}
-.slider-related .gallery-thumbs {
-    height: 109px;
-    box-sizing: border-box;
-    padding: 12px 0 9px;
-    width: 93%;
-    margin: 0 auto 0 0;
-    overflow: visible;
-}
+/*.slider-related .swiper-slide {*/
+/*    background-size: cover;*/
+/*    background-position: center;*/
+/*}*/
+/*.slider-related .gallery-thumbs {*/
+/*    height: 109px;*/
+/*    box-sizing: border-box;*/
+/*    padding: 12px 0 9px;*/
+/*    width: 93%;*/
+/*    margin: 0 auto 0 0;*/
+/*    overflow: visible;*/
+/*}*/
 
 
 .zoomLens {

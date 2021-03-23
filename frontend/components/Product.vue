@@ -18,7 +18,7 @@
                         <div class="slider__zoom">
                             <img :src="apiWebUrl + '/image/' + product.image_url" class="zoom_04"/>
                         </div>
-                        <div id="gallery_01" class="swiper-container gallery-thumbs">
+                        <div id="gallery_01" class="swiper-container swiper1 gallery-thumbs">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide" v-for="image in product.gallery">
                                     <a
@@ -34,8 +34,8 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="swiper-button-prev"></div>
-                            <div class="swiper-button-next"></div>
+                            <div class="swiper-button-prev swiper-button-prev1"></div>
+                            <div class="swiper-button-next swiper-button-next1"></div>
                         </div>
                     </div>
                     <div class="product-select__content">
@@ -64,31 +64,28 @@
                 </div>
             </div>
 
-            <!--            <div class="col-12">-->
-            <!--                <div class="slider-related">-->
-            <!--                    <div id="gallery_02" class="swiper-container gallery-thumbs">-->
-            <!--                        <div class="swiper-wrapper">-->
-            <!--                            <div class="swiper-slide" v-for="item in relatedProducts">-->
-            <!--                                <n-link :to="item.url">-->
-            <!--                                    <div class="tovar-inner">-->
-            <!--                                        <img-->
-            <!--                                            :src="apiWebUrl + '/image/'+item.image_url"-->
-            <!--                                            :title="item.name"-->
-            <!--                                            :alt="item.name"-->
-            <!--                                            @error="imageUrlAlt"-->
-            <!--                                            class="zoom_01"-->
-            <!--                                            width="200"-->
-            <!--                                        >-->
-            <!--                                    </div>-->
-            <!--                                    <div v-html="item.name"></div>-->
-            <!--                                </n-link>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                        <div class="swiper-button-prev"></div>-->
-            <!--                        <div class="swiper-button-next"></div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
+<!--            <div class="col-12">-->
+<!--                <div class="slider slider-related">-->
+<!--                    <div class="swiper-container swiper2 gallery-thumbs">-->
+<!--                        <div class="swiper-wrapper">-->
+<!--                            <div class="swiper-slide" v-for="item in relatedProducts">-->
+<!--                                <n-link :to="item.url">-->
+<!--                                    <img-->
+<!--                                        :src="apiWebUrl + '/image/'+item.image_url"-->
+<!--                                        :title="item.name"-->
+<!--                                        :alt="item.name"-->
+<!--                                        @error="imageUrlAlt"-->
+<!--                                        class="zoom_01"-->
+<!--                                    >-->
+<!--                                    <span v-html="item.name"></span>-->
+<!--                                </n-link>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="swiper-button-prev swiper-button-prev2"></div>-->
+<!--                        <div class="swiper-button-next swiper-button-next2"></div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </div>
     </div>
 </template>
@@ -124,28 +121,29 @@ export default {
         },
 
         swiper2() {
-            if (!this.isMobile) {
-                $('.zoomContainer').remove()
-                $(".zoom_04").elevateZoom({
-                    zoomWindowWidth: 300,
-                    zoomWindowHeight: 300,
-                    zoomWindowPosition: 1,
-                    zoomWindowOffetx: 15,
-                    cursor: 'pointer',
-                });
-            }
+            // if (!this.isMobile) {
+            //     $('.zoomContainer').remove()
+            //     $(".zoom_01").elevateZoom({
+            //         zoomWindowWidth: 300,
+            //         zoomWindowHeight: 300,
+            //         zoomWindowPosition: 1,
+            //         zoomWindowOffetx: 15,
+            //         cursor: 'pointer',
+            //     });
+            // }
 
-            new Swiper('.swiper-container', {
+            return new Swiper('.swiper2', {
                 slidesPerView: 4,
-                spaceBetween: 15,
-                loop: false,
+                spaceBetween: 5,
+                zoom: true,
+                loop: true,
                 freeMode: true,
                 grabCursor: true,
                 watchSlidesVisibility: true,
                 watchSlidesProgress: true,
                 navigation: {
-                    prevEl: '.swiper-button-prev',
-                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev2',
+                    nextEl: '.swiper-button-next2',
                 },
             });
         },
@@ -175,7 +173,7 @@ export default {
                 });
             }
 
-            return new Swiper('.swiper-container', {
+            return new Swiper('.swiper1', {
                 slidesPerView: 4,
                 spaceBetween: 5,
                 zoom: true,
@@ -185,8 +183,8 @@ export default {
                 watchSlidesVisibility: true,
                 watchSlidesProgress: true,
                 navigation: {
-                    prevEl: '.swiper-button-prev',
-                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev1',
+                    nextEl: '.swiper-button-next1',
                 },
             });
         },
