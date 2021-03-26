@@ -124,7 +124,7 @@
     }
 
     .header-logo {
-        width: 80%;
+        display: none;
     }
 
     .logo-main {
@@ -134,24 +134,22 @@
     }
 
     .logo-main img {
-        width: 100%;
+        width: 290px;
     }
 
     .header .search input {
         background: #ECD7BA;
-        border: medium none;
         font-size: 16px;
         padding: 6px 0 6px 20px;
-        width: 100%;
+        width: 90%;
         position: relative;
         border-radius: 50px;
-        margin-left: 0;
         height: auto;
         border: 2px solid #460706;
     }
 
     .header-phone {
-        margin: 30px 0;
+        margin: 20px auto;
     }
 
     .header-phone img {
@@ -339,6 +337,12 @@
 }
 
 @media (max-width: 768px) {
+
+    .basket-header {
+        width: 50%;
+        margin: auto 25px;
+    }
+
     .row {
         display: block;
     }
@@ -400,6 +404,11 @@
 }
 
 @media (max-width: 576px) {
+    .basket-header {
+        width: 90%;
+        margin: auto;
+    }
+    
     .product-description {
         text-align: left;
     }
