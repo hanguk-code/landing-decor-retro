@@ -25,35 +25,50 @@
                             </li>
                         </ul>
                     </div>
-                    <table class="tableheader">
-                        <tbody>
-                        <tr v-for="(item, index) in basket">
-                            <td class="image">
-                                <a href="#">
-                                    <img :src="apiWebUrl + '/image/' + item.image_url" alt="" width="50">
-                                </a>
-                            </td>
-                            <td class="name">
-                                <n-link :to="item.url">
-                                    {{ item.name }}
-                                </n-link>
-                            </td>
-                            <td class="price" width="150">
-                                {{ item.price }} руб.
-                            </td>
-                            <td width="40">
-                                <a href="#" @click="removeFromCart(index)"><img src="/img/remove.png" alt="Удалить"
-                                                                                  title="Удалить"></a>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <tfoot>
-                        <tr v-show="tPrice">
-                            <td class="text-right" colspan="2"><b>Итого:</b></td>
-                            <td  colspan="2">{{ tPrice }} руб.</td>
-                        </tr>
-                        </tfoot>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="tableheader tableheader500 table table-bordered">
+                            <thead>
+                            <tr>
+                                <td class="text-center">Изображение</td>
+                                <td class="text-left">Название товара</td>
+                                <td class="text-left">Цена</td>
+                                <td style="width: 50px;"></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr v-for="(item, index) in basket">
+                                <td class="image">
+                                    <n-link :to="item.url">
+                                        <img :src="apiWebUrl + '/image/' + item.image_url" alt="" width="100">
+                                    </n-link>
+                                </td>
+                                <td class="name">
+                                    <n-link :to="item.url">
+                                        {{ item.name }}
+                                    </n-link>
+                                    <br><span>Артикул: {{ item.article }}</span>
+                                </td>
+                                <td class="price">
+                                    {{ item.price }} руб.
+                                </td>
+                                <td>
+                                    <a href="#" @click="removeFromCart(index)"><img src="/img/remove.png" alt="Удалить"
+                                                                                    title="Удалить"></a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div v-show="tPrice">
+                        <table class="tableheader table table-bordered">
+                            <tbody>
+                            <tr>
+                                <td class="text-right"><strong>Итого:</strong></td>
+                                <td class="text-right">{{ tPrice }} руб.</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <form role="form" @submit.prevent="order" class="basket">
                         <div class="basket__input">
@@ -134,7 +149,7 @@ export default {
     },
 
     mounted() {
-        if(window.localStorage.getItem('basket')) {
+        if (window.localStorage.getItem('basket')) {
             this.tPrice = parseFloat(window.localStorage.totalPrice)
         }
     },
@@ -169,7 +184,7 @@ export default {
         },
 
         removeFromCart(index) {
-            if(index === this.basket.length){
+            if (index === this.basket.length) {
                 this.$store.dispatch('item/saveCartItem', {
                     cartData: null,
                     basket: null,
@@ -180,7 +195,7 @@ export default {
             this.$store.dispatch('item/removeFromBasket', {
                 index: index
             })
-            if(window.localStorage.getItem('basket')) {
+            if (window.localStorage.getItem('basket')) {
                 this.tPrice = parseFloat(window.localStorage.totalPrice)
             }
         }

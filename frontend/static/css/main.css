@@ -751,6 +751,7 @@ input[type='text'], input[type='phone'], input[type='password'], input[type='ema
     width: 100%;
     height: 100%;
 }
+
 /*.slider-related .swiper-slide {*/
 /*    background-size: cover;*/
 /*    background-position: center;*/
@@ -1000,15 +1001,23 @@ td, .attribute {
     display: block;
 }
 
+.table-responsive {
+    min-height: .01%;
+    overflow-x: auto;
+}
+
 .tableheader {
     border: 1px solid #994329;
-    width: 100%;
     margin-bottom: 15px;
     background-color: #FCD0B0;
 }
 
-.tableheader tr {
-    border-bottom: 1px solid #994329;
+.tableheader500 {
+    min-width: 500px;
+}
+
+.tableheader td {
+    border: 1px solid #994329;
 }
 
 .tableheader thead {
@@ -1017,25 +1026,30 @@ td, .attribute {
 
 .tableheader td,
 .tablefooter td {
+    padding: 4px;
     color: #994329;
     background: #FCD0B0;
     font-size: 14px;
-    border: none;
     text-align: center;
     font-family: 'PT Sans', sans-serif;
 }
 
 .tableheader td.image {
-    width: 105px;
+    width: 100px;
 }
 
 .tableheader td.name {
-    width: 290px;
+    /*width: 290px;*/
+    text-align: left;
+    font-size: 12px;
 }
 
 .tableheader td.name a {
-    font-size: 11px;
     color: #994329;
+}
+
+.tableheader td.name a:hover, .tableheader td.name span {
+    color: #d5600a;
 }
 
 .tableheader td.quantity {
@@ -1056,7 +1070,7 @@ td, .attribute {
 }
 
 .tableheader td.price {
-
+    width: 100px;
 }
 
 .tablefooter {
@@ -1069,9 +1083,10 @@ form.basket {
     width: 100%;
     display: flex;
     flex-direction: column;
-    padding: 20px 40px;
-    margin-top: 25px;
-    margin-bottom: 30px;
+    padding: 10px;
+    margin-bottom: 25px;
+    color: #ffffff;
+    font-weight: bold;
 }
 
 form.basket .basket__input {

@@ -15,7 +15,7 @@
                     </div>
                     <div class="col-12 d-flex flex-column justify-content-center align-items-center">
                         <div class="header-phone">
-                            +7(985)<span>272-77-80</span>
+                            +7(985) <span>272-77-80</span>
                             <br>
                             +7(966) 381-59-39
                         </div>
