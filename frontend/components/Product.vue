@@ -59,7 +59,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <div v-html="product.description"></div>
+                        <div class="product-description" v-html="product.description"></div>
                     </div>
                 </div>
             </div>
