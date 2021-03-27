@@ -1,12 +1,29 @@
 $(function () {
 
-    $(".btn-header").fancybox({});
+    // $(".btn-header").fancybox({});
 
     $('.menu__dropdown').on('click', function () {
         $(this).next('ul').toggle(600);
         $(this).toggleClass('active')
         return false;
     });
+
+    $.fancybox.defaults.backFocus = false;
+
+    // $('[data-fancybox="gallery"]').fancybox({
+    //     buttons: [
+    //         "zoom",
+    //         //"share",
+    //         // "slideShow",
+    //         //"fullScreen",
+    //         //"download",
+    //         "thumbs",
+    //         "close"
+    //     ],
+    //     beforeClose: function (){
+    //         console.log(111)
+    //     }
+    // });
 
     // Menu opener hamburger
     // $('.container').on('click', '.gamburger-link', function (event) {
@@ -38,11 +55,11 @@ $(function () {
         gallery: 'gallery_01',
         cursor: 'pointer',
     })
-        .bind("click", function (e) {
-        var ez = $('.zoom_02').data('elevateZoom');
-        $.fancybox(ez.getGalleryList());
-        return false;
-    });
+    //     .bind("click", function (e) {
+    //     var ez = $('.zoom_02').data('elevateZoom');
+    //     $.fancybox(ez.getGalleryList());
+    //     return false;
+    // });
 
     // $(".polzunok-5").slider({
     //     min: 1928,

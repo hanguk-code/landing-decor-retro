@@ -404,11 +404,15 @@
 }
 
 @media (max-width: 576px) {
+    .zoomContainer {
+        display: none;
+    }
+
     .basket-header {
         width: 90%;
         margin: auto;
     }
-    
+
     .product-description {
         text-align: left;
     }
@@ -419,6 +423,7 @@
     .product-description div {
         font-size: 14px !important;
     }
+
     .product-description div {
         padding: 0 0 10px;
     }
