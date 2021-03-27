@@ -6,6 +6,11 @@
 }
 
 @media (max-width: 992px) {
+    .basket-header {
+        width: 50%;
+        margin: auto 25px;
+    }
+    
     .korzina {
         background-color: #FBC06E;
         border: 2px solid #460706;
