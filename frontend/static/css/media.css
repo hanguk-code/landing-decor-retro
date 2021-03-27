@@ -81,7 +81,7 @@
         width: 100%;
         position: relative;
         padding: 6px;
-        z-index: 999999;
+        z-index: 9999;
         align-items: center;
     }
 
