@@ -118,7 +118,28 @@ export default {
             }],
         };
     },
-    methods: {}
+    mounted() {
+        this.fancy()
+    },
+    methods: {
+        fancy(){
+            $('[data-fancybox="gallery"]').fancybox({
+                backFocus: false,
+                buttons: [
+                    "zoom",
+                    //"share",
+                    // "slideShow",
+                    //"fullScreen",
+                    //"download",
+                    // "thumbs",
+                    "close"
+                ],
+                beforeClose: function () {
+                    console.log(111)
+                }
+            });
+        }
+    }
 }
 </script>
 

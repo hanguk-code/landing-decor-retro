@@ -8,25 +8,6 @@ $(function () {
         return false;
     });
 
-    // $.fancybox.defaults.backFocus = false;
-    // $.fancybox.defaults.clickOutside = "close";
-
-    $('[data-fancybox="gallery"]').fancybox({
-        backFocus: false,
-        buttons: [
-            "zoom",
-            //"share",
-            // "slideShow",
-            //"fullScreen",
-            //"download",
-            // "thumbs",
-            "close"
-        ],
-        beforeClose: function () {
-            console.log(111)
-        }
-    });
-
     // Menu opener hamburger
     // $('.container').on('click', '.gamburger-link', function (event) {
     //     event.preventDefault()

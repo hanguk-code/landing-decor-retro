@@ -1,6 +1,6 @@
 <template>
-    <div class="row">
-        <div class="row d-lg-flex" v-show="isMobile">
+    <div>
+        <div class="row d-lg-flex">
             <div class="col-12">
                 <div class="bread">
                     <ul>

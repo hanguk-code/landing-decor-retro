@@ -216,6 +216,7 @@ button, button:hover, button:focus, button:active {
     border-radius: 9px;
     box-shadow: 0 0 42px 30px #B47E51 inset;
     background-size: contain;
+    padding-bottom: 50px;
 }
 
 .img-vector img {
@@ -615,6 +616,10 @@ i.prod {
     width: 100%;
     font-family: Arial;
     line-height: normal;
+}
+
+.footer-mobile {
+    display: none;
 }
 
 /*Корзина*/
