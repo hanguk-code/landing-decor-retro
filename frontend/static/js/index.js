@@ -2,11 +2,11 @@ $(function () {
 
     // $(".btn-header").fancybox({});
 
-    $('.menu__dropdown').on('click', function () {
-        $(this).next('ul').toggle(600);
-        $(this).toggleClass('active')
-        return false;
-    });
+    // $('.menu__dropdown').on('click', function () {
+    //     $(this).next('ul').toggle(600);
+    //     $(this).toggleClass('active')
+    //     return false;
+    // });
 
     // Menu opener hamburger
     // $('.container').on('click', '.gamburger-link', function (event) {
@@ -22,27 +22,22 @@ $(function () {
     //     }
     // });
 
-    $(".zoom_01").elevateZoom({
-        zoomWindowWidth: 300,
-        zoomWindowHeight: 300,
-        zoomWindowPosition: 1,
-        zoomWindowOffetx: 15,
-        lensSize: 500,
-    });
-
-    $(".zoom_02").elevateZoom({
-        zoomWindowWidth: 300,
-        zoomWindowHeight: 300,
-        zoomWindowPosition: 1,
-        zoomWindowOffetx: 15,
-        gallery: 'gallery_01',
-        cursor: 'pointer',
-    })
-    //     .bind("click", function (e) {
-    //     var ez = $('.zoom_02').data('elevateZoom');
-    //     $.fancybox(ez.getGalleryList());
-    //     return false;
+    // $(".zoom_01").elevateZoom({
+    //     zoomWindowWidth: 300,
+    //     zoomWindowHeight: 300,
+    //     zoomWindowPosition: 1,
+    //     zoomWindowOffetx: 15,
+    //     lensSize: 500,
     // });
+    //
+    // $(".zoom_02").elevateZoom({
+    //     zoomWindowWidth: 300,
+    //     zoomWindowHeight: 300,
+    //     zoomWindowPosition: 1,
+    //     zoomWindowOffetx: 15,
+    //     gallery: 'gallery_01',
+    //     cursor: 'pointer',
+    // })
 
     // $(".polzunok-5").slider({
     //     min: 1928,

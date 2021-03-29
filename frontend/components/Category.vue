@@ -18,120 +18,97 @@
                 <LeftMenu/>
             </div>
             <div class="col-sm-8 col-md-9">
-<!--                <form action="" class="range" v-if="products.length > 0">-->
-<!--                    <h3>-->
-<!--                        Выбор по параметрам-->
-<!--                    </h3>-->
-<!--                    <div class="range__select">-->
-<!--                        <div class="range__top">-->
-<!--                            <div class="range__title">-->
-<!--                                Материал:-->
-<!--                            </div>-->
-<!--                            <select name="" id="">-->
-<!--                                <option value="">Выбрать</option>-->
-<!--                                <option value="">Майолика</option>-->
-<!--                                <option value="">Металл / Эмаль</option>-->
-<!--                                <option value="">Фарвор</option>-->
-<!--                                <option value="">Фарфар</option>-->
-<!--                                <option value="">Фарфор</option>-->
-<!--                                <option value="">фарфор / металл</option>-->
-<!--                                <option value="">Фаянс</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                        <div class="range__top">-->
-<!--                            <div class="range__title">-->
-<!--                                Страна:-->
-<!--                            </div>-->
-<!--                            <select name="" id="">-->
-<!--                                <option value="">Выбрать</option>-->
-<!--                                <option value="">Англия</option>-->
-<!--                                <option value="">Бельгия</option>-->
-<!--                                <option value="">Венгрия</option>-->
-<!--                                <option value="">Германия</option>-->
-<!--                                <option value="">Голландия</option>-->
-<!--                                <option value="">Дания</option>-->
-<!--                                <option value="">Италия</option>-->
-<!--                                <option value="">Китай</option>-->
-<!--                                <option value="">Португалия</option>-->
-<!--                                <option value="">СССР</option>-->
-<!--                                <option value="">Франция</option>-->
-<!--                                <option value="">Чехословакия</option>-->
-<!--                                <option value="">Япония</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-
-<!--                    </div>-->
-<!--                    <div class="range__slider">-->
-<!--                        <div class="range__top">-->
-<!--                            <div class="range__title">-->
-<!--                                Изготовитель:-->
-<!--                            </div>-->
-<!--                            <select name="" id="">-->
-<!--                                <option value="">Выбрать</option>-->
-<!--                                <option value="">Майолика</option>-->
-<!--                                <option value="">Металл / Эмаль</option>-->
-<!--                                <option value="">Фарвор</option>-->
-<!--                                <option value="">Фарфар</option>-->
-<!--                                <option value="">Фарфор</option>-->
-<!--                                <option value="">фарфор / металл</option>-->
-<!--                                <option value="">Фаянс</option>-->
-<!--                            </select>-->
-<!--                        </div>-->
-<!--                        <div class="range__price d-none d-lg-flex">-->
-<!--                            <div class="polzunok-container-6">-->
-<!--                                <div class="range__title">-->
-<!--                                    Цена:-->
-<!--                                </div>-->
-<!--                                <p>-->
-<!--                                    от-->
-<!--                                </p>-->
-<!--                                <input type="text" v-model="query.price_min" class="polzunok-input-6-left"/>-->
-<!--                                <p>-->
-<!--                                    до-->
-<!--                                </p>-->
-<!--                                <input type="text" v-model="query.price_max" class="polzunok-input-6-right "/>-->
-
-<!--                            </div>-->
-<!--                            <div class="polzunok-6"></div>-->
-<!--                        </div>-->
-<!--                        <div class="range__top d-flex d-lg-none">-->
-<!--                            <div class="polzunok-container-6">-->
-<!--                                <div>-->
-<!--                                    <div class="range__title">-->
-<!--                                        Цена:-->
-<!--                                    </div>-->
-<!--                                    <div class="polzunok-6"></div>-->
-<!--                                </div>-->
-<!--                                <div class="d-flex justify-content-between align-items-center w-100">-->
-<!--                                    <p>-->
-<!--                                        от-->
-<!--                                    </p>-->
-<!--                                    <input type="text" v-model="query.price_min" class="polzunok-input-6-left"/>-->
-<!--                                    <p>-->
-<!--                                        до-->
-<!--                                    </p>-->
-<!--                                    <input type="text" v-model="query.price_max" class="polzunok-input-6-right "/>-->
-<!--                                </div>-->
-
-
-<!--                            </div>-->
-
-<!--                        </div>-->
-<!--                    </div>-->
-<!--                    <div class="range__btn">-->
-<!--                        <a href="#" @click="$emit('queryProducts', query)">-->
-<!--                            Отфильтровать-->
-<!--                        </a>-->
-<!--                        <a href="#" @click="clearQuery()">-->
-<!--                            Сбросить параметры-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </form>-->
                 <h2 class="catalog-title">
                     {{ category.name }}
                 </h2>
-                <div class="catalog">
 
+                <div class="range" v-if="subCategories.length < 1">
+                    <form action="">
+                        <h3 class="text-left">
+                            Выбор по параметрам
+                        </h3>
+                        <div class="range__select">
+
+                            <div class="range__top">
+                                <div class="range__title">
+                                    Страна:
+                                </div>
+                                <select @change="setCountry">
+                                    <option>Выбрать</option>
+                                    <option
+                                        v-for="item in countries"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <div class="range__top">
+                                <div class="range__title">
+                                    Материал:
+                                </div>
+                                <select @change="setMaterial">
+                                    <option value="">Выбрать</option>
+                                    <option
+                                        v-for="item in materials"
+                                        :key="item.value"
+                                        :label="item.label"
+                                        :value="item.value">
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!--                            <div class="range__top">-->
+                            <!--                                <div class="range__title">-->
+                            <!--                                    Изготовитель:-->
+                            <!--                                </div>-->
+                            <!--                                <select>-->
+                            <!--                                    <option value="">Выбрать</option>-->
+                            <!--                                    <option value="">Майолика</option>-->
+                            <!--                                    <option value="">Металл / Эмаль</option>-->
+                            <!--                                    <option value="">Фарвор</option>-->
+                            <!--                                    <option value="">Фарфар</option>-->
+                            <!--                                    <option value="">Фарфор</option>-->
+                            <!--                                    <option value="">фарфор / металл</option>-->
+                            <!--                                    <option value="">Фаянс</option>-->
+                            <!--                                </select>-->
+                            <!--                            </div>-->
+
+                            <div class="range-price">
+                                <div class="range__top">
+                                    <div class="range__title">
+                                        Цена:
+                                    </div>
+                                    <div class="text-center">
+                                        <b-form-slider ref="range"
+                                                       v-model="rangeValue"
+                                                       range
+                                                       :min="0"
+                                                       :max="1000"
+                                                       @slide-stop="slideStop"></b-form-slider>
+                                    </div>
+                                    <div class="text-center">
+                                        <span>от</span>
+                                        <input type="text" v-model="this.rangeValue[0]"/>
+                                        <span>до</span>
+                                        <input type="text" v-model="this.rangeValue[1]"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="range__btn">
+                            <a href="#" type="button" @click="setQuery">
+                                Применить
+                            </a>
+                            <a href="#" type="button" @click="clearQuery">
+                                Сбросить
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="catalog">
                     <div class="product" v-for="subCategory in subCategories">
                         <div class="product__content">
                             <n-link :to="subCategory.url">
@@ -184,20 +161,107 @@
 </template>
 
 <script>
+import 'bootstrap-slider/dist/css/bootstrap-slider.css'
+
 export default {
     components: {},
     props: ['categories', 'subCategories', 'products', 'category', 'breadcrumbs', 'currentPage', 'lastPage'],
 
     data() {
         return {
+            rangeValue: [0, 1000],
             apiWebUrl: process.env.apiWebUrl,
             isMobile: this.$parent.isMobile,
             query: {
                 price_min: '',
                 price_max: '',
+                country: '',
+                material: '',
             },
             mainCat: '',
-            showChildren: 'display: block;'
+            showChildren: 'display: block;',
+
+            materials: [
+                {
+                    value: 'Майолика',
+                    label: 'Майолика',
+                },
+                {
+                    value: 'Металл / Эмаль',
+                    label: 'Металл / Эмаль',
+                },
+                {
+                    value: 'Фарвор',
+                    label: 'Фарвор',
+                },
+                {
+                    value: 'фарфор / металл',
+                    label: 'фарфор / металл',
+                },
+                {
+                    value: 'Фаянс',
+                    label: 'Фаянс',
+                },
+                {
+                    value: 'Фарфар',
+                    label: 'Фарфар',
+                },
+            ],
+
+            countries: [
+                {
+                    value: 'Англия',
+                    label: 'Англия'
+                },
+                {
+                    value: 'Бельгия',
+                    label: 'Бельгия'
+                },
+                {
+                    value: 'Венгрия',
+                    label: 'Венгрия'
+                },
+                {
+                    value: 'Германия',
+                    label: 'Германия'
+                },
+                {
+                    value: 'Голландия',
+                    label: 'Голландия'
+                },
+                {
+                    value: 'Дания',
+                    label: 'Дания'
+                },
+                {
+                    value: 'Италия',
+                    label: 'Италия'
+                },
+                {
+                    value: 'Китай',
+                    label: 'Китай'
+                },
+                {
+                    value: 'Португалия',
+                    label: 'Португалия'
+                },
+                {
+                    value: 'СССР',
+                    label: 'СССР'
+                },
+                {
+                    value: 'Франция',
+                    label: 'Франция'
+                },
+                {
+                    value: 'Чехословакия',
+                    label: 'Чехословакия'
+                },
+                {
+                    value: 'Япония',
+                    label: 'Япония'
+                },
+            ],
         };
     },
 
@@ -234,13 +298,38 @@ export default {
             }
         },
 
-        clearQuery() {
+        slideStop() {
+            this.query = {
+                price_min: this.rangeValue[0],
+                price_max: this.rangeValue[1],
+            }
+        },
+
+        setQuery(event) {
+            event.preventDefault()
+            this.$emit('queryProducts', this.query)
+        },
+
+        clearQuery(event) {
+            event.preventDefault()
             this.query = {
                 price_min: '',
                 price_max: '',
+                country: '',
+                material: '',
             }
+            this.$emit('queryProducts', this.query)
+        },
 
-            $emit('queryProducts', this.query)
+        setCountry() {
+            this.query = {
+                country: '',
+            }
+        },
+        setMaterial() {
+            this.query = {
+                material: '',
+            }
         },
 
         visibilityChanged(currentPage) {

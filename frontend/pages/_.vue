@@ -140,6 +140,7 @@ export default {
             if (data.data.type === 'category') {
                 this.typeData = data.data.category
                 this.subCategories = data.data.sub_categories
+
                 if (this.products.length > 0) {
                     this.products = this.products.concat(data.data.products)
                 } else {
@@ -166,6 +167,7 @@ export default {
             this.query.price_min = e.price_min
             this.query.price_max = e.price_max
 
+            this.products = []
             this.checkType()
         },
 

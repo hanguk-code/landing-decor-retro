@@ -230,7 +230,6 @@ export default {
             this.query.page = 1
             this.query.price_min = e.price_min
             this.query.price_max = e.price_max
-
             this.getProducts()
         },
 

@@ -6,6 +6,10 @@
 }
 
 @media (max-width: 992px) {
+    .range-price .slider {
+        margin-bottom: 20px;
+    }
+
     .footer-mobile {
         display: flex;
     }
@@ -267,10 +271,6 @@
         padding: 0 5px;
     }
 
-    .range__btn {
-        margin-top: 15px;
-    }
-
     .catalog-title {
         font-family: georgia;
         font-size: 24px;
@@ -283,33 +283,13 @@
     }
 
     .range__select {
+        display: flex;
         flex-direction: column;
     }
 
     .range__top {
+        display: flex;
         width: 100%;
-    }
-
-    .range__title {
-        font-size: 16px;
-        color: #333;
-        font-family: 'Roboto', sans-serif;
-        font-weight: 700;
-        margin-bottom: 7px;
-        margin-top: 15px;
-        width: 100%;
-        max-width: 150px;
-    }
-
-    .range__top select, .range__top input {
-        background: #ECD7BA;
-        border: 2px solid #460706;
-        height: 35px;
-        border-radius: 50px;
-        padding: 0 5px;
-        text-align: center;
-        width: 100%;
-        max-width: none;
     }
 
     .polzunok-container-6 {
@@ -401,7 +381,7 @@
     }
 
     /*inner*/
-    .slider {
+    .product-select .slider {
         width: 100%;
     }
 
@@ -586,8 +566,4 @@
         margin: 0 0 15px;
     }
 
-    .range__btn a {
-        max-width: 120px;
-        font-size: 11px;
-    }
 }

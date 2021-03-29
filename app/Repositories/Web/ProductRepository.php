@@ -181,8 +181,7 @@ class ProductRepository
         $priceMin = $request->input('price_min');
         $priceMax = $request->input('price_max');
         $country = $request->input('country');
-        //$priceMin = $request->input('price_min');
-        //$priceMin = $request->input('price_min');
+        $material = $request->input('material');
 
         $urlExplode = explode('/', $url);
         $c = count($urlExplode);
@@ -322,22 +321,21 @@ class ProductRepository
             //->where('main_category', 1)
             //if(isset($pCat[0])) {
             $ppp = [];
-            $productCat = [];
             foreach ($pCat as $pItem) {
                 $ppp[] = $pItem['product_id'];
-                // $productQuery = $this->product->where('product_id', $pItem['product_id']);
-                // if($priceMin) {
-                //     $productQuery = $productQuery->where('price', '>=', $priceMin);
-                // }
-                // if($priceMax) {
-                //     $productQuery = $productQuery->where('price', '<=', $priceMax);
-                // }
+                 $productQuery = $this->product->where('product_id', $pItem['product_id']);
+                 if($priceMin) {
+                     $productQuery = $productQuery->where('price', '>=', $priceMin);
+                 }
+                 if($priceMax) {
+                     $productQuery = $productQuery->where('price', '<=', $priceMax);
+                 }
 
-                // $productQuery = $productQuery->first();
+                 $productQuery = $productQuery->first();
 
-                // if(isset($productQuery->product_id)) {
-                //     $productCat[] = $productQuery;
-                // }
+                 if(isset($productQuery->product_id)) {
+                     $productCat[] = $productQuery;
+                 }
 
             }
 
@@ -418,8 +416,6 @@ class ProductRepository
 
             }
 
-            $breadcrumbs = [];
-
             if ($category['parent_id'] > 0) {
                 $categoryCatChild = $this->category->where('category_id', $category['parent_id'])->first();
                 $quCatChild = 'category_id=' . $categoryCatChild['category_id'];
@@ -487,7 +483,6 @@ class ProductRepository
                         'url' => '/' . $urlAliasCat['keyword']],
                 ];
             }
-
 
             $categoryData = [
                 'id' => $category['category_id'],

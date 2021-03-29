@@ -81,6 +81,7 @@ export default {
     */
     css: [
         //'element-ui/lib/theme-chalk/index.css'
+        // 'bootstrap-slider/dist/css/bootstrap-slider.css'
     ],
     router: {
         //trailingSlash: true,
@@ -113,6 +114,7 @@ export default {
     modules: [
         // Doc: https://axios.nuxtjs.org/usage
         '@nuxtjs/axios',
+        'nuxt-bootstrap-slider',
         //'cookie-universal-nuxt',
     ],
     /*
