@@ -33,8 +33,8 @@
                                 <div class="range__title">
                                     Страна:
                                 </div>
-                                <select @change="setCountry">
-                                    <option>Выбрать</option>
+                                <select v-model="selectCountry">
+                                    <option value="">Выбрать</option>
                                     <option
                                         v-for="item in countries"
                                         :key="item.value"
@@ -48,7 +48,7 @@
                                 <div class="range__title">
                                     Материал:
                                 </div>
-                                <select @change="setMaterial">
+                                <select v-model="selectMaterial">
                                     <option value="">Выбрать</option>
                                     <option
                                         v-for="item in materials"
@@ -85,8 +85,7 @@
                                                        v-model="rangeValue"
                                                        range
                                                        :min="0"
-                                                       :max="1000"
-                                                       @slide-stop="slideStop"></b-form-slider>
+                                                       :max="1000"></b-form-slider>
                                     </div>
                                     <div class="text-center">
                                         <span>от</span>
@@ -106,6 +105,9 @@
                             </a>
                         </div>
                     </form>
+                    <div class="text-left" style="margin-left: 10px">
+                        Найдено {{ totalProducts }} товаров
+                    </div>
                 </div>
 
                 <div class="catalog">
@@ -152,6 +154,7 @@
                         </div>
                     </div>
 
+
                     <div v-observe-visibility="currentPage !== lastPage ? visibilityChanged : false"></div>
 
                 </div>
@@ -165,46 +168,43 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
 export default {
     components: {},
-    props: ['categories', 'subCategories', 'products', 'category', 'breadcrumbs', 'currentPage', 'lastPage'],
+    props: ['categories', 'subCategories', 'products', 'category', 'breadcrumbs', 'currentPage', 'lastPage', 'totalProducts'],
 
     data() {
         return {
             rangeValue: [0, 1000],
             apiWebUrl: process.env.apiWebUrl,
             isMobile: this.$parent.isMobile,
-            query: {
-                price_min: '',
-                price_max: '',
-                country: '',
-                material: '',
-            },
+            selectCountry: '',
+            selectMaterial: '',
+            query: [],
             mainCat: '',
             showChildren: 'display: block;',
 
             materials: [
                 {
-                    value: 'Майолика',
-                    label: 'Майолика',
+                    value: 'Фарфор',
+                    label: 'Фарфор',
                 },
                 {
-                    value: 'Металл / Эмаль',
-                    label: 'Металл / Эмаль',
+                    value: 'Стекло',
+                    label: 'Стекло',
                 },
                 {
-                    value: 'Фарвор',
-                    label: 'Фарвор',
+                    value: 'Медь',
+                    label: 'Медь',
                 },
                 {
-                    value: 'фарфор / металл',
-                    label: 'фарфор / металл',
+                    value: 'Бронза',
+                    label: 'Бронза',
                 },
                 {
-                    value: 'Фаянс',
-                    label: 'Фаянс',
+                    value: 'Хрусталь',
+                    label: 'Хрусталь',
                 },
                 {
-                    value: 'Фарфар',
-                    label: 'Фарфар',
+                    value: 'Латунь',
+                    label: 'Латунь',
                 },
             ],
 
@@ -298,39 +298,44 @@ export default {
             }
         },
 
-        slideStop() {
+        setQuery(event) {
+            event.preventDefault()
             this.query = {
                 price_min: this.rangeValue[0],
                 price_max: this.rangeValue[1],
+                country: this.selectCountry,
+                material: this.selectMaterial,
             }
-        },
-
-        setQuery(event) {
-            event.preventDefault()
             this.$emit('queryProducts', this.query)
         },
 
         clearQuery(event) {
             event.preventDefault()
-            this.query = {
-                price_min: '',
-                price_max: '',
-                country: '',
-                material: '',
-            }
+            this.query = []
+            this.selectCountry = ''
+            this.selectMaterial = ''
+            this.rangeValue = [0, 1000]
             this.$emit('queryProducts', this.query)
         },
 
-        setCountry() {
-            this.query = {
-                country: '',
-            }
-        },
-        setMaterial() {
-            this.query = {
-                material: '',
-            }
-        },
+        // setPrice() {
+        //     this.query = {
+        //         price_min: this.rangeValue[0],
+        //         price_max: this.rangeValue[1],
+        //     }
+        // },
+        //
+        // setCountry() {
+        //     this.query = {
+        //         country: this.selectCountry,
+        //     }
+        // },
+        //
+        // setMaterial() {
+        //     this.query = {
+        //         material: this.selectMaterial,
+        //     }
+        // },
 
         visibilityChanged(currentPage) {
             this.currentPage = currentPage + 1

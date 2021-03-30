@@ -33,6 +33,7 @@
                         :category="typeData"
                         :breadcrumbs="breadcrumbs"
                         :lastPage="pagination.lastPage"
+                        :totalProducts="pagination.total"
                         :currentPage="pagination.currentPage"
                         @queryProducts="queryProducts($event)"
                         @visibilityChanged="visibilityChanged($event)"
@@ -89,6 +90,8 @@ export default {
                 page: 1,
                 price_min: '',
                 price_max: '',
+                country: '',
+                material: '',
             },
 
             pagination: {
@@ -166,6 +169,8 @@ export default {
             this.query.page = 1
             this.query.price_min = e.price_min
             this.query.price_max = e.price_max
+            this.query.country = e.country
+            this.query.material = e.material
 
             this.products = []
             this.checkType()

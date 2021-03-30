@@ -91,7 +91,7 @@ class ProductRepository
     {
         $product = $this->product->with('description')->where('product_id', $request->input('product_id'))->first();
         $products = $this->product
-            ->whereHas('description', function($query) use ($product){
+            ->whereHas('description', function ($query) use ($product) {
                 return $query->where('tag', $product->description->tag);
             })
             ->where('status', 'active')
@@ -314,37 +314,24 @@ class ProductRepository
                 $categoryUrl = $urlAliasCat['keyword'];
             }
 
-            //if($url === $categoryUrl) {
-
-
-            $pCat = \App\Models\Product\OcProductToCategory::where('category_id', $category->category_id)->get();
-            //->where('main_category', 1)
-            //if(isset($pCat[0])) {
-            $ppp = [];
-            foreach ($pCat as $pItem) {
-                $ppp[] = $pItem['product_id'];
-                 $productQuery = $this->product->where('product_id', $pItem['product_id']);
-                 if($priceMin) {
-                     $productQuery = $productQuery->where('price', '>=', $priceMin);
-                 }
-                 if($priceMax) {
-                     $productQuery = $productQuery->where('price', '<=', $priceMax);
-                 }
-
-                 $productQuery = $productQuery->first();
-
-                 if(isset($productQuery->product_id)) {
-                     $productCat[] = $productQuery;
-                 }
-
-            }
-
-            $productCat = $this->product->whereIn('product_id', $ppp);
+            $productCat = $this->product->whereHas('categories', function ($query) use ($category) {
+                return $query->where('category_id', $category->category_id);
+            });
             if ($priceMin) {
                 $productCat = $productCat->where('price', '>=', $priceMin);
             }
             if ($priceMax) {
                 $productCat = $productCat->where('price', '<=', $priceMax);
+            }
+            if ($country) {
+                $productCat = $productCat->whereHas('attributes', function ($query) use ($country) {
+                    return $query->where('text', $country);
+                });
+            }
+            if ($material) {
+                $productCat = $productCat->whereHas('attributes', function ($query) use ($material) {
+                    return $query->where('text', $material);
+                });
             }
             $productCat = $productCat->paginate($length);
 
