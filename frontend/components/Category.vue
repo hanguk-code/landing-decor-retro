@@ -24,9 +24,9 @@
 
                 <div class="range" v-if="subCategories.length < 1">
                     <form action="">
-                        <h3 class="text-left">
-                            Выбор по параметрам
-                        </h3>
+<!--                        <h3 class="text-left">-->
+<!--                            Выбор по параметрам-->
+<!--                        </h3>-->
                         <div class="range__select">
 
                             <div class="range__top">
@@ -37,9 +37,9 @@
                                     <option value="">Выбрать</option>
                                     <option
                                         v-for="item in countries"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
+                                        :key="item.text"
+                                        :label="item.text"
+                                        :value="item.text">
                                     </option>
                                 </select>
                             </div>
@@ -52,9 +52,9 @@
                                     <option value="">Выбрать</option>
                                     <option
                                         v-for="item in materials"
-                                        :key="item.value"
-                                        :label="item.label"
-                                        :value="item.value">
+                                        :key="item.text"
+                                        :label="item.text"
+                                        :value="item.text">
                                     </option>
                                 </select>
                             </div>
@@ -84,14 +84,14 @@
                                         <b-form-slider ref="range"
                                                        v-model="rangeValue"
                                                        range
-                                                       :min="0"
-                                                       :max="1000"></b-form-slider>
+                                                       :min="min_price"
+                                                       :max="max_price"></b-form-slider>
                                     </div>
                                     <div class="text-center">
                                         <span>от</span>
-                                        <input type="text" v-model="this.rangeValue[0]"/>
+                                        <input type="text" v-model="rangeValue[0]"/>
                                         <span>до</span>
-                                        <input type="text" v-model="this.rangeValue[1]"/>
+                                        <input type="text" v-model="rangeValue[1]"/>
                                     </div>
                                 </div>
                             </div>
@@ -168,11 +168,25 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
 export default {
     components: {},
-    props: ['categories', 'subCategories', 'products', 'category', 'breadcrumbs', 'currentPage', 'lastPage', 'totalProducts'],
+    props: [
+        'categories',
+        'subCategories',
+        'products',
+        'category',
+        'breadcrumbs',
+        'currentPage',
+        'lastPage',
+        'totalProducts',
+        'countries',
+        'materials',
+        'min_price',
+        'max_price',
+    ],
 
     data() {
         return {
-            rangeValue: [0, 1000],
+            rangeValue: [this.min_price, this.max_price],
+            // rangeValue: [30, 882],
             apiWebUrl: process.env.apiWebUrl,
             isMobile: this.$parent.isMobile,
             selectCountry: '',
@@ -180,88 +194,6 @@ export default {
             query: [],
             mainCat: '',
             showChildren: 'display: block;',
-
-            materials: [
-                {
-                    value: 'Фарфор',
-                    label: 'Фарфор',
-                },
-                {
-                    value: 'Стекло',
-                    label: 'Стекло',
-                },
-                {
-                    value: 'Медь',
-                    label: 'Медь',
-                },
-                {
-                    value: 'Бронза',
-                    label: 'Бронза',
-                },
-                {
-                    value: 'Хрусталь',
-                    label: 'Хрусталь',
-                },
-                {
-                    value: 'Латунь',
-                    label: 'Латунь',
-                },
-            ],
-
-            countries: [
-                {
-                    value: 'Англия',
-                    label: 'Англия'
-                },
-                {
-                    value: 'Бельгия',
-                    label: 'Бельгия'
-                },
-                {
-                    value: 'Венгрия',
-                    label: 'Венгрия'
-                },
-                {
-                    value: 'Германия',
-                    label: 'Германия'
-                },
-                {
-                    value: 'Голландия',
-                    label: 'Голландия'
-                },
-                {
-                    value: 'Дания',
-                    label: 'Дания'
-                },
-                {
-                    value: 'Италия',
-                    label: 'Италия'
-                },
-                {
-                    value: 'Китай',
-                    label: 'Китай'
-                },
-                {
-                    value: 'Португалия',
-                    label: 'Португалия'
-                },
-                {
-                    value: 'СССР',
-                    label: 'СССР'
-                },
-                {
-                    value: 'Франция',
-                    label: 'Франция'
-                },
-                {
-                    value: 'Чехословакия',
-                    label: 'Чехословакия'
-                },
-                {
-                    value: 'Япония',
-                    label: 'Япония'
-                },
-            ],
         };
     },
 
@@ -314,28 +246,9 @@ export default {
             this.query = []
             this.selectCountry = ''
             this.selectMaterial = ''
-            this.rangeValue = [0, 1000]
+            this.rangeValue = [this.min_price, this.max_price],
             this.$emit('queryProducts', this.query)
         },
-
-        // setPrice() {
-        //     this.query = {
-        //         price_min: this.rangeValue[0],
-        //         price_max: this.rangeValue[1],
-        //     }
-        // },
-        //
-        // setCountry() {
-        //     this.query = {
-        //         country: this.selectCountry,
-        //     }
-        // },
-        //
-        // setMaterial() {
-        //     this.query = {
-        //         material: this.selectMaterial,
-        //     }
-        // },
 
         visibilityChanged(currentPage) {
             this.currentPage = currentPage + 1

@@ -30,6 +30,10 @@
                         :categories="categories"
                         :subCategories="subCategories"
                         :products="products"
+                        :countries="countries"
+                        :materials="materials"
+                        :min_price="parseInt(price_limit.min_price)"
+                        :max_price="parseInt(price_limit.max_price)"
                         :category="typeData"
                         :breadcrumbs="breadcrumbs"
                         :lastPage="pagination.lastPage"
@@ -93,7 +97,9 @@ export default {
                 country: '',
                 material: '',
             },
-
+            countries: [],
+            materials: [],
+            price_limit: [],
             pagination: {
                 lastPage: '',
                 currentPage: '',
@@ -151,6 +157,12 @@ export default {
                 }
 
                 this.breadcrumbs = data.data.breadcrumbs
+                if (data.data.pagination.current_page === 1) {
+                    this.countries = data.data.countries
+                    this.materials = data.data.materials
+                    this.price_limit = data.data.price_limit
+                }
+                console.log('this.price_limit', this.price_limit)
 
                 this.configPagination(data.data.pagination);
             }

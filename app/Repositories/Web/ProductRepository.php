@@ -10,7 +10,10 @@ use App\Models\Category\OcCategory;
 //use App\Models\Reference\Tag;
 use App\Models\Attribute\OcAttribute;
 use App\Models\OcUrlAlias;
+use App\Models\Product\OcProductAttribute;
 use App\Models\Product\OcProductToCategory;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class ProductRepository
 {
@@ -317,6 +320,7 @@ class ProductRepository
             $productCat = $this->product->whereHas('categories', function ($query) use ($category) {
                 return $query->where('category_id', $category->category_id);
             });
+
             if ($priceMin) {
                 $productCat = $productCat->where('price', '>=', $priceMin);
             }
@@ -359,6 +363,7 @@ class ProductRepository
 
                     }
                 }
+                $productIds[] = $productItemCat['product_id'];
 
                 $productCatData[] = [
                     'id' => $productItemCat['product_id'],
@@ -478,12 +483,40 @@ class ProductRepository
                 'url' => $urlAliasCat['keyword']
             ];
 
+            $priceLimit = Cache::rememberForever('price_limit_' . $category['category_id'], function () use ($category) {
+                return $this->product
+                    ->select(\DB::raw('MIN(round(price)) AS min_price, MAX(round(price)) AS max_price'))
+                    ->whereHas('categories', function ($query) use ($category) {
+                        return $query->where('category_id', $category['category_id']);
+                    })
+                    ->first();
+            });
+
+            $countries = Cache::rememberForever('categories_' . $category['category_id'], function () use ($category) {
+                return OcProductAttribute::where('attribute_id', 12)
+                    ->leftJoin('oc_product_to_category', 'oc_product_to_category.product_id', '=', 'oc_product_attribute.product_id')
+                    ->where('oc_product_to_category.category_id', $category['category_id'])
+                    ->groupBy(DB::raw("TRIM(text)"))
+                    ->get();
+            });
+
+            $materials = Cache::rememberForever('materials_' . $category['category_id'], function () use ($category) {
+                return OcProductAttribute::where('attribute_id', 13)
+                    ->leftJoin('oc_product_to_category', 'oc_product_to_category.product_id', '=', 'oc_product_attribute.product_id')
+                    ->where('oc_product_to_category.category_id', $category['category_id'])
+                    ->groupBy(DB::raw("TRIM(text)"))
+                    ->get();
+            });
+
             return [
                 'type' => 'category',
                 'sub_categories' => $subCategoryData,
                 'products' => $productCatData,
                 'category' => $categoryData,
                 'breadcrumbs' => $breadcrumbs,
+                'countries' => $countries,
+                'materials' => $materials,
+                'price_limit' => $priceLimit,
                 'pagination' => [
                     'total' => $productCat->total(),
                     //per_page' => $productCat->perPage(),
