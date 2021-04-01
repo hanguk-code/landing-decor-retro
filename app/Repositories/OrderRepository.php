@@ -93,4 +93,12 @@ class OrderRepository
         ];
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function update($request, int $orderId)
+    {
+        $this->order->where('id', $orderId)->update(['status' => $request['order']['status']]);
+    }
+
 }

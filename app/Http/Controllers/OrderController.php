@@ -55,4 +55,11 @@ class OrderController extends Controller
         return new JResource($this->orderRepository->find($categoryId));
     }
 
+    public function update(Request $request, $categoryId)
+    {
+        $this->orderRepository->update($request->all(), $categoryId);
+
+        return (new JResource(['status' => 'success', 'id' => $categoryId]));
+    }
+
 }
