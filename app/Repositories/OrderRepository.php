@@ -28,14 +28,14 @@ class OrderRepository
             return $this->order->all();
         }
 
-        $columns = ['id', 'product_id', 'name', 'phone', 'email', 'comment'];
+        $columns = ['id', 'product_id', 'name', 'phone', 'email', 'comment', 'status', 'created_at'];
 
         $length = $request->input('length');
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = $this->order->select('id', 'product_id', 'name', 'phone', 'email', 'comment')
+        $query = $this->order->select('id', 'product_id', 'name', 'phone', 'email', 'comment', 'status', 'created_at')
             ->orderBy($columns[$column], $dir);
 
         if ($searchValue) {
@@ -51,12 +51,12 @@ class OrderRepository
         $data = $query->paginate($length);
         $columns = [
             ['width' => '33%', 'label' => 'Id', 'name' => 'id'],
-//            ['width' => '33%', 'label' => 'Товар', 'name' => 'product_id', 'type' => 'product_id'],
+            ['width' => '33%', 'label' => 'Статус', 'name' => 'status'],
             ['width' => '33%', 'label' => 'Имя', 'name' => 'name'],
             ['width' => '33%', 'label' => 'Телефон', 'name' => 'phone'],
             ['width' => '33%', 'label' => 'Почта', 'name' => 'email'],
-            ['width' => '33%', 'label' => 'Комментарий', 'name' => 'comment']
-            //array('width' => '33%', 'label' => 'Даты',  'name' => 'dates')
+            ['width' => '33%', 'label' => 'Комментарий', 'name' => 'comment'],
+            ['width' => '33%', 'label' => 'Дата заказа',  'name' => 'created_at'],
         ];
 
         // $statusClass = array (

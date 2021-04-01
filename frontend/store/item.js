@@ -16,6 +16,11 @@ export const getters = {
 
 // mutations
 export const mutations = {
+    CLEAR_BASKET(state) {
+        state.basket = []
+        state.totalPrice = 0
+        state.cartData = null
+    },
     SET_CART_ITEM(state, cartData) {
         state.basket.push(cartData)
         state.totalPrice += parseFloat(cartData.price)
@@ -64,5 +69,8 @@ export const actions = {
     },
     removeFromBasket({commit, dispatch}, {index}) {
         commit('REMOVE_FROM_BASKET', index)
+    },
+    clearBasket({commit}) {
+        commit('CLEAR_BASKET')
     },
 }
