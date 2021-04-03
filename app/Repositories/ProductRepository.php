@@ -182,7 +182,7 @@ class ProductRepository
 
         foreach ($product->gallery as $image) {
             $images[] = [
-                'path' => $image->image,
+                'path' => env('API_WEB_URL') . '/image/' . $image->image,
                 'default' => 1,
                 'highlight' => 1,
             ];
