@@ -173,10 +173,23 @@ class ProductRepository
     public function find(int $productId)
     {
 //        return $this->product->with(['categories:id,name', 'tags:id,name', 'attributes'])->findOrFail($productId);
-        return $this->product
+        $product = $this->product
             ->with(['categories:product_id,category_id,main_category', 'description', 'attributes', 'gallery'])
             ->leftJoin('oc_url_alias', 'query', DB::raw('\'product_id=' . $productId . '\''))
             ->findOrFail($productId);
+
+        $product->description->description = html_entity_decode($product->description->description);
+
+        foreach ($product->gallery as $image) {
+            $images[] = [
+                'path' => $image->image,
+                'default' => 1,
+                'highlight' => 1,
+            ];
+        }
+        $product->images = $images ?? [];
+
+        return $product;
     }
 
 
