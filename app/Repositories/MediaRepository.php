@@ -31,9 +31,9 @@ class MediaRepository
     {
         $itemType = $request->input('item_type');
 
-        if($itemType == 'product') {
-             $model      = new $this->productGallery;
-             $itemColumn = 'product_id';
+        if ($itemType == 'product') {
+            $model = new $this->productGallery;
+            $itemColumn = 'product_id';
         }
 
         $id = null;
@@ -43,7 +43,8 @@ class MediaRepository
             $response = $model::findOrFail($id);
         } else {
             $files = $model::where($itemColumn, $pID)
-            ->orderBy('sort_order', 'asc')->paginate(6); //->paginate($recordsPerPage);
+                ->orderBy('sort_order', 'asc')
+                ->paginate(6);
 
             $response = [
                 'pagination' => [
@@ -67,20 +68,20 @@ class MediaRepository
         $itemType = $request['media_data']['item_type'];
         $mediaData = $request['media_data'];
 
-        if($itemType == 'product') {
-             $model = new $this->productGallery;
-             $sorted = $this->productGallery->where('product_id', $mediaData['item_id'])->orderBy('id', 'DESC')->first();
-              $input['product_id'] = $mediaData['item_id'];
+        if ($itemType == 'product') {
+            $model = new $this->productGallery;
+            $sorted = $this->productGallery->where('product_id', $mediaData['item_id'])->orderBy('id', 'DESC')->first();
+            $input['product_id'] = $mediaData['item_id'];
         }
 
         $input['image_url'] = $mediaData['path'];
         $input['name'] = $mediaData['name'];
-        if( isset($sorted->sort_order) ) {
+        if (isset($sorted->sort_order)) {
             $input['sort_order'] = $sorted->sort_order + 1;
         } else {
             $input['sort_order'] = 1;
         }
-         $model->create($input);
+        $model->create($input);
     }
 
 
@@ -88,7 +89,7 @@ class MediaRepository
     {
         $itemType = $request->input('item_type');
 
-        if($itemType == 'product') {
+        if ($itemType == 'product') {
             $this->productGallery->find($id)->delete();
         }
     }
@@ -99,9 +100,9 @@ class MediaRepository
         $itemType = $request->input('item_type');
 
         $position = $request['files'];
-        $i=1;
-        foreach($position as $pos){
-            if($itemType == 'product') {
+        $i = 1;
+        foreach ($position as $pos) {
+            if ($itemType == 'product') {
                 $productMedia = $this->productGallery->find($pos['id']);
             }
 
@@ -133,9 +134,9 @@ class MediaRepository
 
         //\File::makeDirectory(public_path('m/product/'.$estId.'/'.$type.'/'), 0755, true, true);
 
-        if(Storage::disk('media')->put($path.'/'.$filename,  File::get($file))) {
+        if (Storage::disk('media')->put($path . '/' . $filename, File::get($file))) {
 
-            $fullPath = \Config::get('app.url').'/m/'.$path.'/'.$nativeFileName.'.'.$originalExt;
+            $fullPath = \Config::get('app.url') . '/m/' . $path . '/' . $nativeFileName . '.' . $originalExt;
 
             $data = ['media_data' => [
                 'path' => $fullPath,
@@ -156,12 +157,12 @@ class MediaRepository
     public function deleteFile($request)
     {
         //[0] = http, [2] = server name, [3] = base media folder, [4] = item name folder, [5] = item id folder, [6] = item type folder, [7] = item name with extension
-        $path = explode( '/', $request->post('path'));
+        $path = explode('/', $request->post('path'));
         $name = explode('.', $path[7]);
 
         $productID = $path[5];
         $folder = $path[4];
-        $localPath = $path[3].'/'.$path[4].'/'.$path[5].'/'.$path[6];
+        $localPath = $path[3] . '/' . $path[4] . '/' . $path[5] . '/' . $path[6];
 
         $file = $this->productGallery::where('name', $name[0])->where('product_id', $path[5])->where('path', $localPath)->firstOrFail();
 

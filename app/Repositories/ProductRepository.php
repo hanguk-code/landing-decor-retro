@@ -10,12 +10,15 @@ use App\Models\Category\OcCategory;
 //use App\Models\Reference\Tag;
 use App\Models\Attribute\OcAttribute;
 use App\Models\OcUrlAlias;
+use App\Models\Product\OcProductAttribute;
+use App\Models\Product\ProductAttribute;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ProductRepository
 {
     protected $product;
-    //protected $productAttribute;
+    protected $productAttribute;
     protected $category;
     //protected $tag;
     protected $attribute;
@@ -24,13 +27,14 @@ class ProductRepository
     /**
      * ItemRepository constructor.
      * @param OcProduct $product
+     * @param ProductAttribute $productAttribute
      * @param OcCategory $category
      * @param OcAttribute $attribute
      * @param OcUrlAlias $urlAlias
      */
     public function __construct(
         OcProduct $product,
-        //ProductAttribute $productAttribute,
+        OcProductAttribute $productAttribute,
         OcCategory $category,
         //Tag              $tag,
         OcAttribute $attribute,
@@ -38,7 +42,7 @@ class ProductRepository
     )
     {
         $this->product = $product;
-        //$this->productAttribute = $productAttribute;
+        $this->productAttribute = $productAttribute;
         $this->category = $category;
 //        $this->tag = $tag;
         $this->attribute = $attribute;
@@ -180,14 +184,9 @@ class ProductRepository
 
         $product->description->description = html_entity_decode($product->description->description);
 
-        foreach ($product->gallery as $image) {
-            $images[] = [
-                'path' => env('API_WEB_URL') . '/image/' . $image->image,
-                'default' => 1,
-                'highlight' => 1,
-            ];
+        foreach ($product->gallery as $key => $image) {
+            $product->gallery[$key]['image'] = env('API_WEB_URL') . '/image/' . $product->gallery[$key]['image'];
         }
-        $product->images = $images ?? [];
 
         return $product;
     }
@@ -198,51 +197,39 @@ class ProductRepository
      */
     public function update(array $request, int $productId)
     {
-        $this->product->find($productId)->update($request['product']);
+        $product = $this->product->find($productId);
+        $product->description()->update($request['product']['description']);
 
         if (isset($request['product']['categories'])) {
-            $this->product->find($productId)->categories()->sync($request['product']['categories']);
-        }
-
-
-        if (isset($request['photo'])) {
-            if ($request['photo'] !== $request['product']['image']) {
-                $this->savePhoto($request['photo'], $productId, $imageExist = null);
+            $product->categories()->where(['product_id' => $productId])->delete();
+            foreach ($request['product']['categories'] as $item) {
+                $product->categories()->updateOrInsert(
+                    ['product_id' => $productId, 'category_id' => $item]
+                );
             }
+            $product->categories()->updateOrInsert(
+                ['product_id' => $productId, 'category_id' => $request['product']['main_category_id']],
+                ['main_category' => true]
+            );
         }
 
         $attr = $request['product']['attributes'];
         if ($attr) {
             foreach ($attr as $item) {
-
-                $a = $this->attribute->where('name', $item['name'])->first();
-                if (!isset($a->id)) {
-                    $this->attribute->create(['name' => $item['name']]);
-                }
-
-                if (isset($item['id'])) {
-                    $this->productAttribute->find($item['id'])->update($item);
-                } else {
-                    $this->product->find($productId)->attributes()->create($item);
-                }
+                $this->productAttribute->updateOrInsert(
+                    ['product_id' => $productId, 'attribute_id' => $item['attribute_id'], 'language_id' => 2],
+                    ['text' => $item['text']]
+                );
             }
-
         }
 
-        if ($request['product']['tags']) {
-            $tag = [];
-            foreach ($request['product']['tags'] as $tagName) {
-                if (is_int($tagName)) {
-                    $tag[] = $tagName;
-                } else {
-                    $t = $this->tag->create(['name' => $tagName]);
-                    $tag[] = $t->id;
-                }
+
+        if (isset($request['photo'])) {
+            if (strpos($request['photo'], $request['product']['image']) === false) {
+                $this->savePhoto($request['photo'], $productId, $imageExist = null);
             }
-            $this->product->find($productId)->tags()->sync($tag);
-        } else {
-            $this->product->find($productId)->tags()->sync([]);
         }
+
     }
 
     /**
@@ -260,16 +247,33 @@ class ProductRepository
         $productAttribute->delete();
     }
 
-    public function savePhoto($logoDataImage, $id, $imageExist)
+//    public function savePhoto($logoDataImage, $id, $imageExist)
+//    {
+//        $filename = time() . '.' . explode('/', explode(':', substr($logoDataImage, 0, strpos($logoDataImage, ';')))[1])[1];
+//        $path = 'img/product/' . $id . '/photo/';
+//
+//        \File::makeDirectory(public_path('img/product/' . $id . '/photo/'), 0755, true, true);
+//        \Image::make($logoDataImage)->save(public_path('img/product/' . $id . '/photo/') . $filename);
+//
+//        $photo = config('app.url') . '/' . $path . $filename;
+//        $this->product::find($id)->update(['image' => $photo]);
+//    }
+
+    public function savePhoto($logoDataImage, $id)
     {
         $filename = time() . '.' . explode('/', explode(':', substr($logoDataImage, 0, strpos($logoDataImage, ';')))[1])[1];
-        $path = 'img/product/' . $id . '/photo/';
+        $path = public_path('image/product/' . $id . '/');
 
-        \File::makeDirectory(public_path('img/product/' . $id . '/photo/'), 0755, true, true);
-        \Image::make($logoDataImage)->save(public_path('img/product/' . $id . '/photo/') . $filename);
+        if (!File::exists($path)) {
+            File::makeDirectory($path, 0755, true);
+        }
 
-        $photo = config('app.url') . '/' . $path . $filename;
-        $this->product::find($id)->update(['image' => $photo]);
+        $image = $logoDataImage;  // your base64 encoded
+        $image = str_replace('data:image/png;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+        File::put($path . $filename, base64_decode($image));
+
+        $this->product::find($id)->update(['image' => 'product/' . $id . '/' . $filename]);
     }
 
 

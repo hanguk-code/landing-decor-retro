@@ -9,7 +9,7 @@ class ProductAttribute extends Model
     protected $table = 'product_attribute';
 
     protected $dateFormat = 'Y-m-d H:i:s';
-    
+
     /**
      * The attributes that are mass assignable.
      *
