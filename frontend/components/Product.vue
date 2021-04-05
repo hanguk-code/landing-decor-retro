@@ -91,7 +91,7 @@
                 </div>
             </div>
 
-            <div class="col-12">
+            <div class="col-12" v-if="relatedProducts.length">
                 <h2>ПОХОЖИЕ ТОВАРЫ</h2>
                 <div class="slider slider-related">
                     <div class="swiper-container swiper2">

@@ -134,7 +134,7 @@ export default {
                 // await this.getCategories()
             }
             if (this.type === 'product') {
-                await this.getRelatedProducts()
+                // await this.getRelatedProducts()
                 //await this.getProduct()
             }
         }
