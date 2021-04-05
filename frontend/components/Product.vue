@@ -145,6 +145,8 @@ export default {
         },
 
         swiper2() {
+            // this.zoom_01()
+            
             let swiper2 = new Swiper('.swiper2', {
                 slidesPerView: 4,
                 spaceBetween: 15,
@@ -166,7 +168,7 @@ export default {
                 },
             });
 
-            this.zoom_01()
+
         },
 
         swiper() {
