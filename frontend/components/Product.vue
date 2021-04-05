@@ -91,28 +91,29 @@
                 </div>
             </div>
 
-            <!--            <div class="col-12">-->
-            <!--                <div class="slider slider-related">-->
-            <!--                    <div class="swiper-container swiper2 gallery-thumbs">-->
-            <!--                        <div class="swiper-wrapper">-->
-            <!--                            <div class="swiper-slide" v-for="item in relatedProducts">-->
-            <!--                                <n-link :to="item.url">-->
-            <!--                                    <img-->
-            <!--                                        :src="apiWebUrl + '/image/'+item.image_url"-->
-            <!--                                        :title="item.name"-->
-            <!--                                        :alt="item.name"-->
-            <!--                                        @error="imageUrlAlt"-->
-            <!--                                        class="zoom_01"-->
-            <!--                                    >-->
-            <!--                                    <span v-html="item.name"></span>-->
-            <!--                                </n-link>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                        <div class="swiper-button-prev swiper-button-prev2"></div>-->
-            <!--                        <div class="swiper-button-next swiper-button-next2"></div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
+            <div class="col-12">
+                <h2>ПОХОЖИЕ ТОВАРЫ</h2>
+                <div class="slider slider-related">
+                    <div class="swiper-container swiper2">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" v-for="item in relatedProducts">
+                                <n-link :to="item.url">
+                                    <img
+                                        :src="apiWebUrl + '/image/'+item.image_url"
+                                        :title="item.name"
+                                        :alt="item.name"
+                                        @error="imageUrlAlt"
+                                        class="zoom_01"
+                                    >
+                                    <div class="swiper-product-name" v-html="item.name"></div>
+                                </n-link>
+                            </div>
+                        </div>
+                        <div class="swiper-button-prev swiper-button-prev2"></div>
+                        <div class="swiper-button-next swiper-button-next2"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -126,14 +127,16 @@ export default {
         return {
             apiWebUrl: process.env.apiWebUrl,
             isMobile: isMobileOnly,
-            relatedProducts: []
         }
     },
-    props: ['product'],
+    props: ['product', 'relatedProducts'],
+
+    async fetch() {
+    },
 
     mounted() {
         this.swiper()
-        // this.getRelatedProducts()
+        this.swiper2()
     },
 
     methods: {
@@ -141,29 +144,29 @@ export default {
             event.target.src = this.apiWebUrl + "/image/no_image.jpg"
         },
 
-        async getRelatedProducts() {
-            const request = await this.$axios.$get(`/related/products`, {params: {product_id: this.product.id}})
-            this.relatedProducts = request.data
-            await this.swiper2()
-        },
-
         swiper2() {
-            this.zoom_01()
-
-            return new Swiper('.swiper2', {
+            let swiper2 = new Swiper('.swiper2', {
                 slidesPerView: 4,
-                spaceBetween: 5,
+                spaceBetween: 15,
+                cssMode: true,
                 zoom: true,
                 loop: true,
+                // lazy: true,
                 freeMode: true,
-                grabCursor: true,
+                grabCursor: false,
                 watchSlidesVisibility: true,
                 watchSlidesProgress: true,
+                autoplay: {
+                    delay: 1500,
+                    disableOnInteraction: false,
+                },
                 navigation: {
                     prevEl: '.swiper-button-prev2',
                     nextEl: '.swiper-button-next2',
                 },
             });
+
+            this.zoom_01()
         },
 
         swiper() {
@@ -183,9 +186,7 @@ export default {
                 }
             });
 
-            this.zoom_04()
-
-            return new Swiper('.swiper1', {
+            new Swiper('.swiper1', {
                 slidesPerView: 4,
                 spaceBetween: 5,
                 zoom: true,
@@ -199,6 +200,8 @@ export default {
                     nextEl: '.swiper-button-next1',
                 },
             });
+
+            this.zoom_04()
         },
 
         zoom_01() {

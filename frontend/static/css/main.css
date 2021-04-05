@@ -770,6 +770,21 @@ input[type='text'], input[type='phone'], input[type='password'], input[type='ema
     height: 100%;
 }
 
+.slider-related .swiper-wrapper {
+    width: 90%;
+}
+
+.swiper-button-prev2, .swiper-button-next2 {
+    margin-top: -120px;
+}
+
+.swiper-product-name {
+    text-align: center;
+    padding: 10px 10px;
+    color: #4C2011;
+    line-height: 1.2;
+}
+
 /*.slider-related .swiper-slide {*/
 /*    background-size: cover;*/
 /*    background-position: center;*/

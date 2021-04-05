@@ -45,7 +45,8 @@
                 </template>
 
                 <template v-if="type === 'product'">
-                    <Product :product="product"/>
+                    <Product :product="product"
+                             :relatedProducts="relatedProducts"/>
                 </template>
             </div>
         </div>
@@ -82,6 +83,7 @@ export default {
         return {
             isMobile: isMobileOnly,
             product: {},
+            relatedProducts: [],
 
             // categories: [],
             subCategories: [],
@@ -132,12 +134,18 @@ export default {
                 // await this.getCategories()
             }
             if (this.type === 'product') {
+                await this.getRelatedProducts()
                 //await this.getProduct()
             }
         }
     },
 
     methods: {
+        async getRelatedProducts() {
+            const request = await this.$axios.$get(`/related/products`, {params: {product_id: this.product.id}})
+            this.relatedProducts = request.data
+        },
+
         async checkType() {
             const {data} = await this.$axios.get(
                 `/type/${this.$route.params.pathMatch}`, {params: this.query}
