@@ -43,6 +43,7 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
+
         $this->mediaRepository->storeMedia($request);
 
         return (new JResource(['status' => 'success']))

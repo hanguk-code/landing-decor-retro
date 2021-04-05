@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Product\OcProductImage;
 use App\Models\Product\ProductGallery;
 
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\File;
@@ -70,12 +71,12 @@ class MediaRepository
 
         if ($itemType == 'product') {
             $model = new $this->productGallery;
-            $sorted = $this->productGallery->where('product_id', $mediaData['item_id'])->orderBy('id', 'DESC')->first();
+            $sorted = $this->productGallery->where('product_id', $mediaData['item_id'])->orderBy('sort_order', 'DESC')->first();
             $input['product_id'] = $mediaData['item_id'];
         }
 
         $input['image_url'] = $mediaData['path'];
-        $input['name'] = $mediaData['name'];
+        $input['image'] = $mediaData['name'];
         if (isset($sorted->sort_order)) {
             $input['sort_order'] = $sorted->sort_order + 1;
         } else {
@@ -116,9 +117,10 @@ class MediaRepository
 
     public function storeMedia($request)
     {
-        $file = $request->file('file');
-        $estId = $request->get('id');
-        $folder = $request->get('item_type');
+        $file = $request->file;
+        $estId = $request->id;
+        $folder = $request->item_type;
+
         $filename = $file->getClientOriginalName();
 
         $productMedia = new $this->productGallery; //for image types
@@ -130,17 +132,17 @@ class MediaRepository
         $filenameWithoutExtension = explode($getExt, $filename);
         $nativeFileName = mb_substr($filenameWithoutExtension[0], 0, -1);
 
-        $path = $folder . '/' . $estId . '/' . $type;
+        $path = public_path('image/' . $folder . '/' . $estId . '/');
 
-        //\File::makeDirectory(public_path('m/product/'.$estId.'/'.$type.'/'), 0755, true, true);
+        if (!File::exists($path)) {
+            File::makeDirectory($path, 0755, true);
+        }
 
-        if (Storage::disk('media')->put($path . '/' . $filename, File::get($file))) {
-
-            $fullPath = \Config::get('app.url') . '/m/' . $path . '/' . $nativeFileName . '.' . $originalExt;
-
+        if (File::put($path . $nativeFileName . '.' . $originalExt, File::get($file))) {
+            $fullPath = $path . $nativeFileName . '.' . $originalExt;
             $data = ['media_data' => [
                 'path' => $fullPath,
-                'name' => $nativeFileName,
+                'name' => $folder . '/' . $estId . '/' . $nativeFileName . '.' . $originalExt,
                 'type' => $type,
                 'item_type' => $folder,
                 'extension' => $originalExt,
