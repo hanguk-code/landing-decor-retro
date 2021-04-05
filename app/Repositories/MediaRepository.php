@@ -100,16 +100,13 @@ class MediaRepository
     {
         $itemType = $request->input('item_type');
 
-        $position = $request['files'];
-        $i = 1;
-        foreach ($position as $pos) {
-            if ($itemType == 'product') {
-                $productMedia = $this->productGallery->find($pos['id']);
-            }
-
+        $files = $request['files'];
+        $position = $this->productGallery->find($files[0]['product_image_id']);
+        $i = $position->sort_order;
+        foreach ($files as $file) {
+            $productMedia = $this->productGallery->find($file['product_image_id']);
             $productMedia->sort_order = $i;
             $productMedia->save();
-
             $i++;
         }
 
