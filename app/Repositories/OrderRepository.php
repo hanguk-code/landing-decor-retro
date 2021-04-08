@@ -101,4 +101,12 @@ class OrderRepository
         $this->order->where('id', $orderId)->update(['status' => $request['order']['status']]);
     }
 
+    public function deleteChecked($request)
+    {
+        $checkedItems = $request->get('checkedItems');
+
+        foreach ($checkedItems as $item) {
+            $this->order->where('product_id', $item)->delete();
+        }
+    }
 }

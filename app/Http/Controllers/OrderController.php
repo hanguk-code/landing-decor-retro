@@ -62,4 +62,10 @@ class OrderController extends Controller
         return (new JResource(['status' => 'success', 'id' => $categoryId]));
     }
 
+    public function deleteChecked(Request $request)
+    {
+        $this->orderRepository->deleteChecked($request);
+
+        return (new JResource(['status' => 'success']));
+    }
 }
