@@ -106,7 +106,7 @@ class OrderRepository
         $checkedItems = $request->get('checkedItems');
 
         foreach ($checkedItems as $item) {
-            $this->order->where('product_id', $item)->delete();
+            $this->order->where('id', $item)->delete();
         }
     }
 }
