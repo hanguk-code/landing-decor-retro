@@ -11,6 +11,8 @@ use App\Models\Category\OcCategory;
 use App\Models\Attribute\OcAttribute;
 use App\Models\OcUrlAlias;
 use App\Models\Product\OcProductAttribute;
+use App\Models\Product\OcProductDescription;
+use App\Models\Product\OcProductImage;
 use App\Models\Product\ProductAttribute;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
@@ -23,14 +25,16 @@ class ProductRepository
     //protected $tag;
     protected $attribute;
     protected $urlAlias;
+    private $productGallery;
 
     /**
      * ItemRepository constructor.
      * @param OcProduct $product
-     * @param ProductAttribute $productAttribute
+     * @param OcProductAttribute $productAttribute
      * @param OcCategory $category
      * @param OcAttribute $attribute
      * @param OcUrlAlias $urlAlias
+     * @param OcProductImage $productGallery
      */
     public function __construct(
         OcProduct $product,
@@ -38,7 +42,8 @@ class ProductRepository
         OcCategory $category,
         //Tag              $tag,
         OcAttribute $attribute,
-        OcUrlAlias $urlAlias
+        OcUrlAlias $urlAlias,
+        OcProductImage $productGallery
     )
     {
         $this->product = $product;
@@ -47,6 +52,7 @@ class ProductRepository
 //        $this->tag = $tag;
         $this->attribute = $attribute;
         $this->urlAlias = $urlAlias;
+        $this->productGallery = $productGallery;
     }
 
     /**
@@ -85,7 +91,7 @@ class ProductRepository
             $dataItem[] = [
                 'id' => $item->product_id,
                 'image' => $item->image,
-                'name' => $item->description->name,
+                'name' => $item->description->name ?? '',
                 //'status' => $item->status,
                 'dates' => $item->dates,
             ];
@@ -135,37 +141,38 @@ class ProductRepository
         }
 
         $product = $this->product->create($request['product'] + ['sort_order' => $sortOrder]);
+        $product->description()->create($request['product']['description']);
+        OcUrlAlias::create([
+            'query' => DB::raw('\'product_id=' . $product->product_id . '\''),
+            'keyword' => $request['product_slug'],
+            'language_id' => 0,
+        ]);
+
         if (isset($request['product']['categories'])) {
-            $product->categories()->sync($request['product']['categories']);
+            $product->categories()->where(['product_id' => $product->product_id])->delete();
+            foreach ($request['product']['categories'] as $item) {
+                $product->categories()->updateOrInsert(
+                    ['product_id' => $product->product_id, 'category_id' => $item]
+                );
+            }
+            $product->categories()->updateOrInsert(
+                ['product_id' => $product->product_id, 'category_id' => $request['product']['category_id']],
+                ['main_category' => true]
+            );
         }
 
         if (isset($request['photo'])) {
-            $this->savePhoto($request['photo'], $product->id, $imageExist = null);
+            $this->savePhoto($request['photo'], $product->product_id);
         }
 
-        if ($request['product']['attributes']) {
-
-            foreach ($request['product']['attributes'] as $attrName) {
-                $attr = $this->attribute->where('name', $attrName['name'])->first();
-                if (!isset($attr->id)) {
-                    $this->attribute->create(['name' => $attrName['name']]);
-                }
+        $attr = $request['product']['attributes'];
+        if ($attr) {
+            foreach ($attr as $item) {
+                $this->productAttribute->updateOrInsert(
+                    ['product_id' => $product->product_id, 'attribute_id' => $item['attribute_id'], 'language_id' => 2],
+                    ['text' => $item['text']]
+                );
             }
-
-            $product->attributes()->createMany($request['product']['attributes']);
-        }
-
-        if ($request['product']['tags']) {
-            $tag = [];
-            foreach ($request['product']['tags'] as $tagName) {
-                if (is_int($tagName)) {
-                    $tag[] = $tagName;
-                } else {
-                    $t = $this->tag->create(['name' => $tagName]);
-                    $tag[] = $t->id;
-                }
-            }
-            $product->tags()->sync($tag);
         }
 
         return $product;
@@ -199,6 +206,11 @@ class ProductRepository
     {
         $product = $this->product->find($productId);
         $product->description()->update($request['product']['description']);
+        OcUrlAlias::create([
+            'query' => DB::raw('\'product_id=' . $product->product_id . '\''),
+            'keyword' => $request['product_slug'],
+            'language_id' => 0,
+        ]);
 
         if (isset($request['product']['categories'])) {
             $product->categories()->where(['product_id' => $productId])->delete();
@@ -226,7 +238,7 @@ class ProductRepository
 
         if (isset($request['photo'])) {
             if (strpos($request['photo'], $request['product']['image']) === false) {
-                $this->savePhoto($request['photo'], $productId, $imageExist = null);
+                $this->savePhoto($request['photo'], $productId);
             }
         }
 
@@ -246,18 +258,6 @@ class ProductRepository
         $productAttribute = $this->productAttribute->find($id);
         $productAttribute->delete();
     }
-
-//    public function savePhoto($logoDataImage, $id, $imageExist)
-//    {
-//        $filename = time() . '.' . explode('/', explode(':', substr($logoDataImage, 0, strpos($logoDataImage, ';')))[1])[1];
-//        $path = 'img/product/' . $id . '/photo/';
-//
-//        \File::makeDirectory(public_path('img/product/' . $id . '/photo/'), 0755, true, true);
-//        \Image::make($logoDataImage)->save(public_path('img/product/' . $id . '/photo/') . $filename);
-//
-//        $photo = config('app.url') . '/' . $path . $filename;
-//        $this->product::find($id)->update(['image' => $photo]);
-//    }
 
     public function savePhoto($logoDataImage, $id)
     {
@@ -280,6 +280,9 @@ class ProductRepository
     public function optionsData()
     {
 //        $tag = $this->tag->select('id', 'name')->get();
+        $tags = OcProductDescription::select('tag')->groupBy('tag')->get();
+
+        $lastArticle = $this->product->max('product_id');
 
         $attributes = $this->attribute->select('attribute_id', 'attribute_id as label')
             ->with('description')
@@ -322,7 +325,8 @@ class ProductRepository
         }
 
         return [
-//            'tags' => $tag,
+            'new_article' => ++$lastArticle,
+            'tags' => $tags,
             'attributes' => $attribute,
             'categories' => $treeSelect ?? []
         ];
@@ -333,9 +337,7 @@ class ProductRepository
         $checkedItems = $request->get('checkedItems');
 
         foreach ($checkedItems as $item) {
-            $product = $this->product->find($item);
-            $product->delete();
-
+            $this->product->where('product_id', $item)->delete();
             $this->productAttribute->where('product_id', $item)->delete();
             $this->productGallery->where('product_id', $item)->delete();
         }
