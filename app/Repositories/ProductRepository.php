@@ -205,6 +205,7 @@ class ProductRepository
     public function update(array $request, int $productId)
     {
         $product = $this->product->find($productId);
+        $product->update($request['product']);
         $product->description()->update($request['product']['description']);
         OcUrlAlias::create([
             'query' => DB::raw('\'product_id=' . $product->product_id . '\''),
