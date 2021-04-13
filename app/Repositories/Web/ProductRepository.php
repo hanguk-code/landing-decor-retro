@@ -59,8 +59,8 @@ class ProductRepository
         $limit = $request->input('limit') ?? 15;
         $products = $this->product
             ->with('description')
-            ->where('status', 'active')
-//            ->orderBy('sort_order', 'desc')
+            ->where('status', true)
+            ->orderBy('date_modified', 'desc')
             ->paginate($limit);
 
         return [
@@ -82,8 +82,8 @@ class ProductRepository
         $products = $this->product
             ->with('description')
             ->where('upc', 'new')
-            ->where('status', 'active')
-            ->orderBy('product_id', 'asc')
+            ->where('status', true)
+            ->orderBy('date_modified', 'desc')
             ->limit($limit)
             ->get();
 
@@ -92,14 +92,23 @@ class ProductRepository
 
     public function related($request)
     {
-        $product = $this->product->with('description')->where('product_id', $request->input('product_id'))->first();
-        $products = $this->product
-            ->whereHas('description', function ($query) use ($product) {
-                return $query->where('tag', $product->description->tag);
-            })
-            ->where('status', 'active')
-//            ->orderBy('product_id', 'asc')
-            ->get();
+        $products = Cache::remember('related_products_' . $request->input('product_id'), 60, function () use ($request) {
+            $product = $this->product->with('description')->where('product_id', $request->input('product_id'))->first();
+            return $this->product
+                ->whereHas('description', function ($query) use ($product) {
+                    return $query->where('tag', $product->description->tag);
+                })
+                ->where('status', true)
+                ->paginate(24);
+        });
+
+//        $products = $this->product
+//            ->whereHas('description', function ($query) use ($product) {
+//                return $query->where('tag', $product->description->tag);
+//            })
+//            ->where('status', true)
+////            ->orderBy('product_id', 'asc')
+//            ->get();
 
         return self::parseProducts($products);
     }
@@ -111,8 +120,8 @@ class ProductRepository
             ->with('description')
 //            ->inRandomOrder()
             ->where('upc', 'new')
-            ->where('status', 'active')
-//            ->orderBy('sort_order', 'asc')
+            ->where('status', true)
+            ->orderBy('date_modified', 'desc')
             ->paginate($length);
 
         return [
@@ -134,8 +143,9 @@ class ProductRepository
         $length = $request->input('page') ?? 12;
         $products = $this->product
             ->with('description')
-            ->where('quantity', '<', 0)
-//            ->where('status', 'active')
+//            ->where('quantity', '<', 0)
+//            ->where('status', true)
+            ->where('status', false)
             ->orderBy('sort_order', 'asc')
             ->paginate($length);
 
@@ -167,7 +177,11 @@ class ProductRepository
     {
         $tag = $this->tag->select('id', 'name')->get();
         $attribute = $this->attribute->select('id', 'name')->get();
-        $category = $this->category->select('id', 'name as label', 'parent_id')->where('parent_id', NULL)->with('children')->where('status', 'active')->get();
+        $category = $this->category->select('id', 'name as label', 'parent_id')
+            ->where('parent_id', NULL)
+            ->with('children')
+            ->where('status', 'active')
+            ->get();
 
         $data = [
             'tags' => $tag,
@@ -198,8 +212,10 @@ class ProductRepository
 
         if ($itemType == 'product_id') {
             //$product = $this->product->where('status', 'active')->orderBy('sort_order', 'asc')->get();
-            $product = $this->product->with(['gallery', 'attributes', 'mainCategory'])->where('product_id', $expUrlAlias[1])->first();
-            //dd($product);
+            $product = $this->product->with(['gallery', 'attributes', 'mainCategory'])
+                ->where('product_id', $expUrlAlias[1])
+                ->first();
+//            dd($product);
 
             if (isset($product->product_id)) {
 
@@ -279,7 +295,7 @@ class ProductRepository
                     'name' => $product['description']['name'],
                     'image_url' => $product['image'],
                     'url' => '/' . $productUrl,
-                    'price' => $product['price'],
+                    'price' => self::priceFormat($product['price']),
                     'article' => $product['sku'],
                     'description' => htmlspecialchars_decode($product['description']['description']),
                     'breadcrumbs' => $breadcrumbs,
@@ -337,7 +353,7 @@ class ProductRepository
                     return $query->where('text', $material);
                 });
             }
-            $productCat = $productCat->paginate($length);
+            $productCat = $productCat->orderby('date_modified', 'desc')->paginate($length);
 
             $productCatData = [];
             foreach ($productCat as $productItemCat) {
@@ -370,7 +386,7 @@ class ProductRepository
                     'name' => $productItemCat['description']['name'],
                     'image_url' => $productItemCat['image'],
                     'url' => $totalUrl,
-                    'price' => $productItemCat['price'],
+                    'price' => self::priceFormat($productItemCat['price']),
                     'article' => $productItemCat['sku'],
                 ];
             }
@@ -483,7 +499,7 @@ class ProductRepository
                 'url' => $urlAliasCat['keyword']
             ];
 
-            $priceLimit = Cache::rememberForever('price_limit_' . $category['category_id'], function () use ($category) {
+            $priceLimit = Cache::remember('price_limit_' . $category['category_id'], 60, function () use ($category) {
                 return $this->product
                     ->select(\DB::raw('MIN(round(price)) AS min_price, MAX(round(price)) AS max_price'))
                     ->whereHas('categories', function ($query) use ($category) {
@@ -492,7 +508,7 @@ class ProductRepository
                     ->first();
             });
 
-            $countries = Cache::rememberForever('categories_' . $category['category_id'], function () use ($category) {
+            $countries = Cache::remember('categories_' . $category['category_id'], 60, function () use ($category) {
                 return OcProductAttribute::where('attribute_id', 12)
                     ->leftJoin('oc_product_to_category', 'oc_product_to_category.product_id', '=', 'oc_product_attribute.product_id')
                     ->where('oc_product_to_category.category_id', $category['category_id'])
@@ -500,7 +516,7 @@ class ProductRepository
                     ->get();
             });
 
-            $materials = Cache::rememberForever('materials_' . $category['category_id'], function () use ($category) {
+            $materials = Cache::remember('materials_' . $category['category_id'], 60, function () use ($category) {
                 return OcProductAttribute::where('attribute_id', 13)
                     ->leftJoin('oc_product_to_category', 'oc_product_to_category.product_id', '=', 'oc_product_attribute.product_id')
                     ->where('oc_product_to_category.category_id', $category['category_id'])
@@ -558,7 +574,7 @@ class ProductRepository
                 'name' => $item['description']['name'],
                 'image_url' => $item['image'],
                 'url' => $urlAlias['keyword'],
-                'price' => $item['price'],
+                'price' => self::priceFormat($item['price']),
                 'article' => $item['sku'],
             ];
         }
@@ -570,13 +586,21 @@ class ProductRepository
     public function search($request)
     {
         $search = $request->input('search');
+        $limit = $request->input('limit') ?? 6;
 
-        $productQuery = $this->product->with('description')
-            ->where('product_id', $search)
-            ->orWhere('sku', $search)
-            ->get();
+        if (is_numeric($search)) {
+            $productQuery = $this->product
+                ->with('description')
+                ->where('sku', 'like', "{$search}%");
+        } else {
+            $productQuery = $this->product
+                ->whereHas('description', function ($query) use ($search) {
+                    return $query->where('name', 'like', "{$search}%");
+                });
+        }
 
-        return self::parseProducts($productQuery);
+
+        return self::parseProducts($productQuery->limit($limit)->get());
     }
 
     /**
@@ -615,12 +639,17 @@ class ProductRepository
                 'description' => strip_tags(html_entity_decode($item['description']['description'])),
                 'image_url' => $item['image'],
                 'url' => $url ?? '',
-                'price' => number_format($item['price'], 2),
+                'price' => self::priceFormat($item['price']),
                 'article' => $item['sku'],
             ];
         }
 
         return $productData ?? null;
+    }
+
+    protected function priceFormat($price)
+    {
+        return number_format($price, 0, '.', ' ');
     }
 
 }

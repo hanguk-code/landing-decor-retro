@@ -25,7 +25,7 @@
                                     >
                                 </div>
                                 <div class="product__price">
-                                    <span>{{ product.price }}</span>
+                                    <span>{{ product.price }} р.</span>
                                     <span>Арт: {{ product.article }}</span>
                                 </div>
                                 <div class="product__link">

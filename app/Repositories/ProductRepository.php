@@ -140,7 +140,11 @@ class ProductRepository
             $sortOrder = 1;
         }
 
-        $product = $this->product->create($request['product'] + ['sort_order' => $sortOrder]);
+        $product = $this->product->create($request['product'] + [
+                'sort_order' => $sortOrder,
+                'upc' => 'new',
+                'upc_date' => date('Y-m-d')
+            ]);
         $product->description()->create($request['product']['description']);
         OcUrlAlias::create([
             'query' => DB::raw('\'product_id=' . $product->product_id . '\''),

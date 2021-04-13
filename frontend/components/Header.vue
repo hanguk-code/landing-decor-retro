@@ -23,13 +23,16 @@
 
                     <div class="search">
                         <el-select
-                            value
+                            value=""
                             filterable
                             remote
                             reserve-keyword
                             placeholder="Поиск"
                             :remote-method="remoteMethod"
-                            no-data-text=""
+                            no-data-text="Не найдено"
+                            loading-text="..."
+                            :loading="loading"
+                            v-on:focus="clearProducts"
                         >
                             <el-option
                                 v-for="product in searchProduct"
@@ -65,13 +68,19 @@ export default {
             apiWebUrl: process.env.apiWebUrl,
             isMobile: isMobileOnly,
             searchProduct: [],
+            loading: false,
         }
     },
 
     methods: {
         async remoteMethod(query) {
+            this.loading = true
             const products = await this.$axios.$get('/search/products', {params: {search: query}})
             this.searchProduct = products.data
+            this.loading = false
+        },
+        clearProducts(){
+            this.searchProduct = []
         }
     }
 

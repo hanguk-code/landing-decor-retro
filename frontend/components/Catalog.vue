@@ -156,7 +156,7 @@
                         </div>
                         <div class="product__price">
 							<span>
-								{{ product.price }}Р
+								{{ product.price }} р.
 							</span>
                             <span>
 								Арт: {{ product.article }}

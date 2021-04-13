@@ -141,7 +141,7 @@
                         </div>
                         <div class="product__price">
 							<span>
-								{{ product.price }}Р
+								{{ product.price }} р.
 							</span>
                             <span>
 								Арт: {{ product.article }}
@@ -251,6 +251,7 @@ export default {
         },
 
         visibilityChanged(currentPage) {
+            $('.product:last').after('<div class="ajaxblock"><img src="/img/loader.gif" /></div>');
             this.currentPage = currentPage + 1
             let nextPage = currentPage + 1
             this.$emit('visibilityChanged', nextPage)

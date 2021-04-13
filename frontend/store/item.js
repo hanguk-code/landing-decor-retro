@@ -22,6 +22,17 @@ export const mutations = {
         state.cartData = null
     },
     SET_CART_ITEM(state, cartData) {
+        let twice = false
+        state.basket.forEach(function (value) {
+            if (value.article === cartData.article) {
+                twice = true
+            }
+        })
+
+        if(twice){
+            return false
+        }
+
         state.basket.push(cartData)
         state.totalPrice += parseFloat(cartData.price)
         state.cartData = null
@@ -44,7 +55,7 @@ export const mutations = {
     REMOVE_FROM_BASKET(state, index) {
         state.basket.splice(index, 1)
         let tPrice = 0
-        state.basket.forEach(function(value, index) {
+        state.basket.forEach(function (value, index) {
             tPrice += parseFloat(value.price)
         })
         state.totalPrice = parseFloat(tPrice)

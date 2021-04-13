@@ -23,7 +23,7 @@
                             </n-link>
                         </div>
                         <div class="product__price">
-                            <span>{{ product.price }}</span>
+                            <span>{{ product.price }} р.</span>
                             <span>Арт: {{ product.article }}</span>
                         </div>
                         <div class="product__link">
@@ -88,11 +88,13 @@ export default {
             this.products = this.products.concat(request.data.products)
             await this.zoom1()
             this.configPagination(request.data.pagination)
+            $('.ajaxblock').remove()
         },
 
         visibilityChanged(e) {
             let vm = this
             if (vm.query.page !== 1 && vm.pagination.currentPage < vm.pagination.lastPage) {
+                $('.product:last').after('<div class="ajaxblock"><img src="/img/loader.gif" /></div>');
                 vm.getProducts()
             }
             vm.query.page = vm.query.page + 1

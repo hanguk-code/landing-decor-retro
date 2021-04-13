@@ -100,6 +100,7 @@ export default {
         //{ src: '~plugins/vue-star-rating', ssr: false },
         //{ src: '~plugins/vue-image-crop-upload', ssr: false },
         {src: '~plugins/persistedstate.js'}, //vuex save after page reload in ssr mode
+        {src: '~/plugins/vue-notifications.js', ssr: false},
     ],
     components: true,
     /*

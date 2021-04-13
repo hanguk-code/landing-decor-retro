@@ -243,6 +243,12 @@ export default {
             this.$store.dispatch('item/saveCartItem', {
                 cartData: this.product
             })
+            this.$notify({
+                type: 'success',
+                group: 'basket',
+                // title: 'Сообщение',
+                text: 'Товар добавлен в корзину'
+            });
         }
     }
 }

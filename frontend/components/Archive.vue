@@ -21,7 +21,7 @@
                         </div>
                         <div class="product__price">
 							<span>
-								{{ product.price }}Р
+								{{ product.price }} р.
 							</span>
                             <span>
 								Арт: {{ product.article }}
@@ -31,7 +31,6 @@
                             <n-link :to="product.url" v-html="product.name"></n-link>
                         </div>
                     </div>
-
                     <div v-observe-visibility="visibilityChanged"></div>
                 </div>
             </div>
@@ -80,6 +79,7 @@ export default {
             this.products = this.products.concat(request.data.products)
             await this.zoom3()
             this.configPagination(request.data.pagination)
+            $('.ajaxblock').remove()
         },
 
         zoom3() {
@@ -99,7 +99,9 @@ export default {
         visibilityChanged(e) {
             let vm = this
             if (vm.query.page !== 1 && vm.pagination.currentPage < vm.pagination.lastPage) {
+                $('.product:last').after('<div class="ajaxblock"><img src="/img/loader.gif" /></div>');
                 vm.getProducts()
+                this.zoom3()
             }
             vm.query.page = vm.query.page + 1
         },

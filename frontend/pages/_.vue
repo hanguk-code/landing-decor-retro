@@ -50,6 +50,7 @@
                 </template>
             </div>
         </div>
+        <notifications position="top center" group="basket" />
     </section>
 </template>
 
@@ -134,7 +135,7 @@ export default {
                 // await this.getCategories()
             }
             if (this.type === 'product') {
-                // await this.getRelatedProducts()
+                await this.getRelatedProducts()
                 //await this.getProduct()
             }
         }
@@ -170,11 +171,10 @@ export default {
                     this.materials = data.data.materials
                     this.price_limit = data.data.price_limit
                 }
-                console.log('this.price_limit', this.price_limit)
 
                 this.configPagination(data.data.pagination);
             }
-
+            $('.ajaxblock').remove()
         },
         async getCategories() {
             const {data} = await this.$axios.get(

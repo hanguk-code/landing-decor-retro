@@ -25,7 +25,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div v-show="tPrice">
+                    <div v-show="tPrice">\
                         <div class="table-responsive">
                             <table class="tableheader tableheader500 table table-bordered">
                                 <thead>
@@ -110,6 +110,7 @@
                 </div>
             </div>
         </div>
+        <notifications position="top center" group="basket" />
     </section>
 </template>
 
@@ -121,12 +122,13 @@ import Menu from '~/components/Menu/Menu'
 import Vector from '~/components/Partials/Vector'
 import LeftMenu from '~/components/Menu/LeftMenu'
 
+
 export default {
     components: {
         MenuMobile,
         Menu,
         Vector,
-        LeftMenu
+        LeftMenu,
     },
     head: {
         bodyAttrs: {
@@ -158,6 +160,15 @@ export default {
     },
 
     methods: {
+        doNotify(type, text){
+            this.$notify({
+                type: type,
+                group: 'basket',
+                // title: 'Сообщение',
+                text: text
+            });
+        },
+
         order() {
             this.loading = true;
 
@@ -168,7 +179,7 @@ export default {
                 .then(response => {
                     let data = response.data;
                     if (data.status === 'success') {
-                        alert('Вы успешно оформили заказ!')
+                        this.doNotify('success', 'Вы успешно оформили заказ!')
 
                         this.userForm = {}
                         window.localStorage.clear()
@@ -177,6 +188,7 @@ export default {
                     }
                 })
                 .catch(error => {
+                    this.doNotify('error', error)
                     console.log(error)
                 })
                 .finally(() => {
@@ -185,20 +197,21 @@ export default {
         },
 
         removeFromCart(index) {
-            if (index === this.basket.length) {
-                this.$store.dispatch('item/saveCartItem', {
-                    cartData: null,
-                    basket: null,
-                    totalPrice: 0,
-                })
-                return true
-            }
+            // if (index === this.basket.length) {
+            //     this.$store.dispatch('item/saveCartItem', {
+            //         cartData: null,
+            //         basket: null,
+            //         totalPrice: 0,
+            //     })
+            //     return true
+            // }
             this.$store.dispatch('item/removeFromBasket', {
                 index: index
             })
             if (window.localStorage.getItem('basket')) {
                 this.tPrice = parseFloat(window.localStorage.totalPrice)
             }
+            this.doNotify('success', 'Товар удален из корзины')
         }
     }
 }
