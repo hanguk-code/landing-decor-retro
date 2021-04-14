@@ -29,7 +29,7 @@
                             reserve-keyword
                             placeholder="Поиск"
                             :remote-method="remoteMethod"
-                            no-data-text="Не найдено"
+                            no-data-text="Товар не найден"
                             loading-text="..."
                             :loading="loading"
                             v-on:focus="clearProducts"

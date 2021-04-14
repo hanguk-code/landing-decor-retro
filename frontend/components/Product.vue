@@ -81,8 +81,8 @@
                         <table class="attribute">
                             <tbody>
                             <tr v-for="attribute in product.attributes">
-                                <td>{{ attribute.name }}</td>
                                 <td>{{ attribute.description }}</td>
+                                <td>{{ attribute.name }}</td>
                             </tr>
                             </tbody>
                         </table>
@@ -148,18 +148,37 @@ export default {
             // this.zoom_01()
 
             let swiper2 = new Swiper('.swiper2', {
-                slidesPerView: 4,
+                // slidesPerView: 4,
+                breakpoints: {
+                    320: {
+                        slidesPerView: 1,
+                        spaceBetween: 20
+                    },
+                    425: {
+                        slidesPerView: 2,
+                        spaceBetween: 30
+                    },
+                    768: {
+                        slidesPerView: 3,
+                        spaceBetween: 40
+                    },
+                    1024: {
+                        slidesPerView: 4,
+                        spaceBetween: 40
+                    },
+                },
                 spaceBetween: 15,
                 cssMode: true,
                 zoom: true,
                 loop: true,
                 // lazy: true,
                 freeMode: true,
-                grabCursor: false,
-                watchSlidesVisibility: true,
-                watchSlidesProgress: true,
+                grabCursor: true,
+                // watchSlidesVisibility: true,
+                // watchSlidesProgress: true,
+                allowTouchMove: true,
                 autoplay: {
-                    delay: 1500,
+                    delay: 2500,
                     disableOnInteraction: false,
                 },
                 navigation: {
