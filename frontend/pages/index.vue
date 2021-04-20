@@ -93,7 +93,8 @@
                             и
                             прочувствовать дух тех времён.
                         </p>
-                        <a class="readmore-link" href="#" v-if="!readMoreActivated" @click="activateReadMore">Читать далее</a>
+                        <a class="readmore-link" href="#" v-if="!readMoreActivated" @click="activateReadMore">Читать
+                            далее</a>
                         <span v-if="readMoreActivated">
                             <p>
                                 Старинные предметы интерьера могут с лёгкость создать особый стиль и шик Вашего дома,
@@ -168,17 +169,34 @@ export default {
     },
 
     async fetch() {
-        // await this.getCategories()
         await this.getNewProducts()
+        console.log('2 - ', this.newProducts.length)
+        if(this.newProducts.length){
+            this.zoom_01()
+        }
+    },
+
+    mounted() {
+        console.log('1 - ', this.newProducts.length)
+        if(this.newProducts.length){
+            this.zoom_01()
+        }
     },
 
     methods: {
-        // async getCategories() {
-        //     const request = await this.$axios.$get(`categories`)
-        //     if (request) {
-        //         this.categories = request.data
-        //     }
-        // },
+        zoom_01() {
+            console.log('zoom')
+            if (!this.isMobile) {
+                $('.zoomContainer').remove()
+                $(".zoom_01").elevateZoom({
+                    zoomWindowWidth: 300,
+                    zoomWindowHeight: 300,
+                    zoomWindowPosition: 1,
+                    zoomWindowOffetx: 15,
+                    cursor: 'pointer',
+                });
+            }
+        },
 
         activateReadMore(event) {
             event.preventDefault()

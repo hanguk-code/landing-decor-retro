@@ -1,14 +1,14 @@
 export default {
-    mode: 'universal',
-    target: 'server',
+    ssr: false,
     srcDir: __dirname,
+    target: 'server',
 
     env: {
         appUrl: process.env.APP_URL,
         apiUrl: process.env.API_URL,
         apiWebUrl: process.env.API_WEB_URL,
-        appName: process.env.APP_NAME || 'Декор Ретро',
-        appLocale: process.env.APP_LOCALE || 'ru'
+        appName: process.env.APP_NAME,
+        appLocale: process.env.APP_LOCALE
     },
     server: {
         port: 3000, // default: 3000
