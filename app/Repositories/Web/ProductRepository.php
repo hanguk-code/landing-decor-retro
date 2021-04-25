@@ -145,10 +145,11 @@ class ProductRepository
             ->with('description')
 //            ->where('quantity', '<', 0)
 //            ->where('status', true)
-            ->where('status', false)
-            ->orderBy('upc_date', 'desc')
+            ->where('manufacturer_id', 8)
+            ->orderBy('date_available', 'desc')
             ->paginate($length)
         ;
+
 
         return [
             'products' => self::parseProducts($products),
