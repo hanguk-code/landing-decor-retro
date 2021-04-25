@@ -140,14 +140,15 @@ class ProductRepository
 
     public function archiveAll($request)
     {
-        $length = $request->input('page') ?? 12;
+        $length = $request->input('limit') ?? 12;
         $products = $this->product
             ->with('description')
 //            ->where('quantity', '<', 0)
 //            ->where('status', true)
             ->where('status', false)
-            ->orderBy('sort_order', 'asc')
-            ->paginate($length);
+            ->orderBy('upc_date', 'desc')
+            ->paginate($length)
+        ;
 
         return [
             'products' => self::parseProducts($products),

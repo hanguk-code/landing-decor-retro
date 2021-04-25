@@ -56,7 +56,9 @@ export default {
             products: [],
 
             query: {
-                page: 1
+                page: 1,
+                price_min: '',
+                price_max: '',
             },
 
             pagination: {
@@ -75,11 +77,28 @@ export default {
 
     methods: {
         async getProducts() {
-            const request = await this.$axios.$get(`/archive`)
+            const request = await this.$axios.$get(`/archive`, {params: this.query})
             this.products = this.products.concat(request.data.products)
             await this.zoom3()
             this.configPagination(request.data.pagination)
             $('.ajaxblock').remove()
+        },
+
+        visibilityChanged(e) {
+            let vm = this
+            if (vm.query.page !== 1 && vm.pagination.currentPage < vm.pagination.lastPage) {
+                $('.product:last').after('<div class="ajaxblock"><img src="/img/loader.gif" /></div>');
+                vm.getProducts()
+            }
+            vm.query.page = vm.query.page + 1
+        },
+
+        configPagination(data) {
+            this.pagination.lastPage = data.last_page;
+            this.pagination.currentPage = data.current_page;
+            this.pagination.total = data.total;
+            this.pagination.from = data.from;
+            this.pagination.to = data.to;
         },
 
         zoom3() {
@@ -94,24 +113,6 @@ export default {
                     cursor: 'pointer',
                 });
             }
-        },
-
-        visibilityChanged(e) {
-            let vm = this
-            if (vm.query.page !== 1 && vm.pagination.currentPage < vm.pagination.lastPage) {
-                $('.product:last').after('<div class="ajaxblock"><img src="/img/loader.gif" /></div>');
-                vm.getProducts()
-                this.zoom3()
-            }
-            vm.query.page = vm.query.page + 1
-        },
-
-        configPagination(data) {
-            this.pagination.lastPage = data.last_page;
-            this.pagination.currentPage = data.current_page;
-            this.pagination.total = data.total;
-            this.pagination.from = data.from;
-            this.pagination.to = data.to;
         },
     }
 }
