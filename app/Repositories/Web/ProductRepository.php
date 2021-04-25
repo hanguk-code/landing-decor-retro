@@ -599,8 +599,7 @@ class ProductRepository
                 });
         }
 
-
-        return self::parseProducts($productQuery->limit($limit)->get());
+        return self::parseProducts($productQuery->where('status', true)->limit($limit)->get());
     }
 
     /**
