@@ -121,7 +121,7 @@ class ProductRepository
 //            ->inRandomOrder()
             ->where('upc', 'new')
             ->where('status', true)
-            ->orderBy('date_modified', 'desc')
+            ->orderBy('upc_date', 'desc')
             ->paginate($length);
 
         return [
