@@ -83,7 +83,7 @@ class ProductRepository
             ->with('description')
             ->where('upc', 'new')
             ->where('status', true)
-            ->orderBy('date_modified', 'desc')
+            ->orderBy('upc_date', 'desc')
             ->limit($limit)
             ->get();
 
