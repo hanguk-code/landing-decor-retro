@@ -499,7 +499,7 @@ class ProductRepository
                 'url' => $urlAliasCat['keyword']
             ];
 
-            $priceLimit = Cache::remember('price_limit_' . $category['category_id'], 60, function () use ($category) {
+            $priceLimit = Cache::remember('price_limit__' . $category['category_id'], 60, function () use ($category) {
                 return $this->product
                     ->select(\DB::raw('MIN(round(price)) AS min_price, MAX(round(price)) AS max_price'))
                     ->whereHas('categories', function ($query) use ($category) {
@@ -508,7 +508,7 @@ class ProductRepository
                     ->first();
             });
 
-            $countries = Cache::remember('categories_' . $category['category_id'], 60, function () use ($category) {
+            $countries = Cache::remember('categories__' . $category['category_id'], 60, function () use ($category) {
                 return OcProductAttribute::where('attribute_id', 12)
                     ->leftJoin('oc_product_to_category', 'oc_product_to_category.product_id', '=', 'oc_product_attribute.product_id')
                     ->where('oc_product_to_category.category_id', $category['category_id'])
@@ -516,7 +516,7 @@ class ProductRepository
                     ->get();
             });
 
-            $materials = Cache::remember('materials_' . $category['category_id'], 60, function () use ($category) {
+            $materials = Cache::remember('materials__' . $category['category_id'], 60, function () use ($category) {
                 return OcProductAttribute::where('attribute_id', 13)
                     ->leftJoin('oc_product_to_category', 'oc_product_to_category.product_id', '=', 'oc_product_attribute.product_id')
                     ->where('oc_product_to_category.category_id', $category['category_id'])
