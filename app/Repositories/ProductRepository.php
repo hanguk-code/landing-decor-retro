@@ -274,8 +274,10 @@ class ProductRepository
         }
 
         $image = $logoDataImage;  // your base64 encoded
-        $image = str_replace('data:image/png;base64,', '', $image);
+//        $image = str_replace('data:image/png;base64,', '', $image);
+        $image = preg_replace('#^data:image/\w+;base64,#i', '', $image);
         $image = str_replace(' ', '+', $image);
+
         File::put($path . $filename, base64_decode($image));
 
         $this->product::find($id)->update(['image' => 'product/' . $id . '/' . $filename]);
