@@ -148,8 +148,10 @@ export default {
         bodyAttrs: {
             class: 'main-page'
         },
-        title: 'Главная Декор Ретро',
-        meta: [],
+        title: 'Антикварный интернет-магазин "Декор Ретро"',
+        meta: [
+            {hid: 'description', name: 'description', content: 'Большой выбор изделий антиквариата - лучшие цены, удобный способ заказа и доставки!'}
+        ],
     },
     computed: {
         ...mapGetters({
@@ -171,14 +173,14 @@ export default {
     async fetch() {
         await this.getNewProducts()
         console.log('2 - ', this.newProducts.length)
-        if(this.newProducts.length){
+        if (this.newProducts.length) {
             this.zoom_01()
         }
     },
 
     mounted() {
         console.log('1 - ', this.newProducts.length)
-        if(this.newProducts.length){
+        if (this.newProducts.length) {
             this.zoom_01()
         }
     },
