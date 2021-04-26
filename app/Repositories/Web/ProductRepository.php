@@ -355,7 +355,7 @@ class ProductRepository
                     return $query->where('text', $material);
                 });
             }
-            $productCat = $productCat->orderby('date_modified', 'desc')->paginate($length);
+            $productCat = $productCat->where('manufacturer_id', '<>', 8)->orderby('date_modified', 'desc')->paginate($length);
 
             $productCatData = [];
             foreach ($productCat as $productItemCat) {
