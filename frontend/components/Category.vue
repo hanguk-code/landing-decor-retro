@@ -255,6 +255,7 @@ export default {
             this.currentPage = currentPage + 1
             let nextPage = currentPage + 1
             this.$emit('visibilityChanged', nextPage)
+            $('.ajaxblock').remove()
             this.zoom1()
         }
     }

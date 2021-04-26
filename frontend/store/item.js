@@ -56,7 +56,7 @@ export const mutations = {
         state.basket.splice(index, 1)
         let tPrice = 0
         state.basket.forEach(function (value, index) {
-            tPrice += parseFloat(value.price)
+            tPrice += parseFloat(value.price.replace(/ /g, ''))
         })
         state.totalPrice = parseFloat(tPrice)
         if (process.browser) {
