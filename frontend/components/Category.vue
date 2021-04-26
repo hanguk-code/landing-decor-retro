@@ -127,7 +127,7 @@
                         </div>
                     </div>
 
-                    <div class="product" v-for="product in products">
+                    <div class="product" v-for="product in products" v-if="subCategories.length < 1">
                         <div class="product__content">
                             <n-link :to="product.url">
                                 <img :src="apiWebUrl+'/image/'+product.image_url"
