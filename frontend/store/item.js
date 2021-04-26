@@ -34,7 +34,7 @@ export const mutations = {
         }
 
         state.basket.push(cartData)
-        state.totalPrice += parseFloat(cartData.price)
+        state.totalPrice += parseFloat(cartData.price.replace(/ /g, ''))
         state.cartData = null
 
         if (process.browser) {
