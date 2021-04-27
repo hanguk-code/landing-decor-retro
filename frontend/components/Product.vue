@@ -14,6 +14,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="product-select">
+                    <i class="prod"></i>
                     <div class="slider">
                         <div class="slider__zoom">
                             <a ref="mainPhotoHref" data-fancybox="gallery"

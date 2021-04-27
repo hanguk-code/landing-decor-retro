@@ -267,10 +267,12 @@ i.pos-3 {
 }
 
 i.prod {
+    position: absolute;
     width: 90px;
     height: 90px;
-    right: -16px;
-    top: -43px;
+    left: 415px;
+    top: -40px;
+    z-index: 99;
     background: url(../img/prod2.png) 0 0 no-repeat;
 }
 
