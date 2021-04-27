@@ -64,23 +64,32 @@ class ProductRepository
             return $this->product->all();
         }
 
-        $columns = ['product_id', 'name', 'image', 'status', 'date_modified'];
+        $columns = ['sku', 'name', 'image', 'status', 'date_modified'];
 
-        $length = $request->input('length');
+        $length = $request->input('length') ?? 10;
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
 
-        $query = $this->product->with('description')->orderBy($columns[$column], $dir);
+//        $query = $this->product->with('description');
+        $query = $this->product;
 
         if ($searchValue) {
-            $query->where(function ($query) use ($searchValue) {
-                $query->where('product_id', 'like', '%' . $searchValue . '%')
-                    //->orWhere('name',       'like', '%' . $searchValue . '%')
-                    ->orWhere('status', 'like', '%' . $searchValue . '%')
-                    ->orWhere('date_added', 'like', '%' . $searchValue . '%')
-                    ->orWhere('date_modified', 'like', '%' . $searchValue . '%');
-            });
+            $query = $query->where('sku', 'like', $searchValue . '%');
+//                ->where(function ($query) use ($searchValue) {
+//                    $query->where('product_id', 'like', '%' . $searchValue)
+//                        ->orWhere('sku', 'like', '%' . $searchValue . '');
+//                    ->orWhere('name',       'like', '%' . $searchValue . '')
+//                        ->orWhere('status', 'like', '%' . $searchValue . '')
+//                    ->orWhere('date_added', 'like', '%' . $searchValue . '')
+//                    ->orWhere('date_modified', 'like', '%' . $searchValue . '');
+//                });
+        }
+
+        if ($column) {
+            $query = $query->orderBy($columns[$column], $dir);
+        } else {
+            $query = $query->orderBy('sku', 'desc');
         }
 
         $data = $query->paginate($length);
@@ -90,25 +99,27 @@ class ProductRepository
         foreach ($data as $item) {
             $dataItem[] = [
                 'id' => $item->product_id,
+                'sku' => $item->sku,
                 'image' => $item->image,
                 'name' => $item->description->name ?? '',
-                //'status' => $item->status,
-                'dates' => $item->dates,
+                'status' => $item->status,
+//                'dates' => $item->dates,
             ];
         }
 
-        $columns = array(
-            array('width' => '33%', 'label' => 'Id', 'name' => 'id'),
-            array('width' => '33%', 'label' => 'Фото', 'name' => 'image', 'type' => 'image'),
-            array('width' => '33%', 'label' => 'Наименование', 'name' => 'name'),
-            //array('width' => '33%', 'label' => 'Статус',   'name' => 'status'),
-            array('width' => '33%', 'label' => 'Даты', 'name' => 'dates')
-        );
+        $columns = [
+//            array('width' => '33%', 'label' => 'Id', 'name' => 'id'),
+            ['width' => '33%', 'label' => 'Артикул', 'name' => 'sku'],
+            ['width' => '33%', 'label' => 'Фото', 'name' => 'image', 'type' => 'image'],
+            ['width' => '33%', 'label' => 'Наименование', 'name' => 'name'],
+            ['width' => '33%', 'label' => 'Статус', 'name' => 'status'],
+//            array('width' => '33%', 'label' => 'Даты', 'name' => 'dates')
+        ];
 
-        $statusClass = array(
-            array('status' => '0', 'badge' => 'kt-badge--danger'),
-            array('status' => '1', 'badge' => 'kt-badge--success')
-        );
+        $statusClass = [
+            ['status' => '0', 'badge' => 'kt-badge--danger'],
+            ['status' => '1', 'badge' => 'kt-badge--success']
+        ];
 
         $sortKey = 'id';
 
