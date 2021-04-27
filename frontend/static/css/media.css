@@ -341,6 +341,12 @@
 }
 
 @media (max-width: 768px) {
+    i.prod {
+        right: -1px;
+        top: -40px;
+        left: inherit;
+    }
+
     .slider-related .swiper-wrapper {
         width: 100%;
     }
