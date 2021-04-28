@@ -4,6 +4,7 @@
 /public/hot
 /public/storage
 /public/image
+/public/_nuxt
 /storage/*.key
 /storage/api-docs
 /node_modules
