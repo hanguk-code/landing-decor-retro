@@ -302,7 +302,8 @@ class ProductRepository
                     'description' => htmlspecialchars_decode($product['description']['description']),
                     'breadcrumbs' => $breadcrumbs,
                     'gallery' => $gallery,
-                    'attributes' => $attribute
+                    'attributes' => $attribute,
+                    'archive' => $product['manufacturer_id'] === 8,
                 ];
 
                 //dd($productData);
@@ -390,6 +391,7 @@ class ProductRepository
                     'url' => $totalUrl,
                     'price' => self::priceFormat($productItemCat['price']),
                     'article' => $productItemCat['sku'],
+                    'archive' => $productItemCat['manufacturer_id'] === 8,
                 ];
             }
 
