@@ -266,6 +266,16 @@ i.pos-3 {
     background: url(../img/new-st-1.png) 0 0 no-repeat;
 }
 
+i.archive {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    right: -30px;
+    top: -30px;
+    z-index: 99;
+    background: url(../img/prod2.png) 0 0 no-repeat;
+}
+
 i.prod {
     position: absolute;
     width: 90px;

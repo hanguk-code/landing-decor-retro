@@ -13,6 +13,7 @@
                     <div class="product" v-for="product in products">
                         <div class="product__content">
                             <n-link :to="product.url">
+                                <i class="archive"></i>
                                 <img :src="apiWebUrl+'/image/'+product.image_url" alt="" class="zoom_03"
                                      :data-image="apiWebUrl+'/image/'+product.image_url"
                                      :data-zoom-image="apiWebUrl+'/image/'+product.image_url">
