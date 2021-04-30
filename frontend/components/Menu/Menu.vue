@@ -16,11 +16,11 @@
                     Новинки
                 </n-link>
             </li>
-            <li>
-                <n-link to="/archive">
-                    Архив
-                </n-link>
-            </li>
+<!--            <li>-->
+<!--                <n-link to="/archive">-->
+<!--                    Архив-->
+<!--                </n-link>-->
+<!--            </li>-->
             <li>
                 <n-link to="/delivery">
                     Доставка
