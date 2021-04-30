@@ -3,6 +3,7 @@
 namespace App\Repositories\Web;
 
 use App\Models\Order\Order;
+use Illuminate\Support\Facades\Mail;
 
 class OrderRepository
 {
@@ -33,6 +34,9 @@ class OrderRepository
             'email' => $request['userForm']['email'],
             'comment' => $request['userForm']['comment'],
         ]);
+
+        Mail::to(env($request['userForm']['email']))->send(new SendOrderForm($request));
+        Mail::to(env('EMAIL_ORDER', 'enot70@yandex.ru'))->send(new SendOrderForm($request));
 
     }
 
