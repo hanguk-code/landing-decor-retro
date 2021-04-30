@@ -35,7 +35,7 @@ class OrderRepository
             'comment' => $request['userForm']['comment'],
         ]);
 
-        Mail::to(env($request['userForm']['email']))->send(new SendOrderForm($request));
+        Mail::to($request['userForm']['email'])->send(new SendOrderForm($request));
         Mail::to(env('EMAIL_ORDER', 'enot70@yandex.ru'))->send(new SendOrderForm($request));
 
     }
