@@ -16,9 +16,9 @@
                 <template v-if="linkType === 'products/new'">
                     <ProductNew/>
                 </template>
-                <template v-if="linkType === 'archive'">
-                    <Archive/>
-                </template>
+<!--                <template v-if="linkType === 'archive'">-->
+<!--                    <Archive/>-->
+<!--                </template>-->
                 <template v-if="linkType === 'delivery'">
                     <Delivery/>
                 </template>
