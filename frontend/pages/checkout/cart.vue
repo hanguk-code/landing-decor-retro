@@ -157,6 +157,7 @@ export default {
         if (window.localStorage.getItem('basket')) {
             this.tPrice = parseFloat(window.localStorage.totalPrice)
         }
+        $('.zoomContainer').remove()
     },
 
     methods: {
