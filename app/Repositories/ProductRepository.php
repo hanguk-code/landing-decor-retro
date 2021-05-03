@@ -316,7 +316,8 @@ class ProductRepository
             }
         }
 
-        $categories = $this->category->select('category_id', 'parent_id', 'category_id as label')
+        $categories = $this->category
+            ->select('category_id', 'parent_id', 'category_id as label')
             ->with('description')
             ->with('children')
             ->where('status', true)
@@ -324,12 +325,39 @@ class ProductRepository
             ->get();
 
         foreach ($categories as $category) {
+
             if (!empty($category->children)) {
                 foreach ($category->children as $child) {
-                    $children[] = [
-                        'id' => $child->category_id,
-                        'label' => $child->description->name,
-                    ];
+                    $subChildren = $child
+                        ->select('category_id', 'parent_id', 'category_id as label')
+                        ->with('description')
+                        ->where('status', true)
+                        ->where('parent_id', $child->category_id)
+                        ->get();
+
+                    if (!empty($subChildren)) {
+                        foreach ($subChildren as $item) {
+                            $subChild[] = [
+                                'id' => $item->category_id,
+                                'label' => $item->description->name,
+                            ];
+                        }
+                    }
+
+                    if (!empty($subChild)) {
+                        $children[] = [
+                            'id' => $child->category_id,
+                            'label' => $child->description->name,
+                            'children' => $subChild ?? []
+                        ];
+                    } else {
+                        $children[] = [
+                            'id' => $child->category_id,
+                            'label' => $child->description->name,
+                        ];
+                    }
+
+                    unset($subChild);
                 }
             }
 
@@ -345,7 +373,7 @@ class ProductRepository
         return [
             'new_article' => ++$lastArticle,
             'tags' => $tags,
-            'attributes' => $attribute,
+            'attributes' => $attribute ?? [],
             'categories' => $treeSelect ?? []
         ];
     }
