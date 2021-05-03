@@ -347,6 +347,11 @@
 }
 
 @media (max-width: 768px) {
+    i.sticker-pos-4 {
+        left: inherit;
+        right: 7px;
+    }
+
     i.prod {
         right: -1px;
         top: -40px;
@@ -439,7 +444,6 @@
     /*.slider-related .swiper-wrapper {*/
     /*    width: 100%;*/
     /*}*/
-
     .footer-mobile {
         display: flex;
     }
@@ -602,6 +606,7 @@
     }
 
 }
+
 @media (max-width: 320px) {
     .slider .swiper-slide img {
         width: 95%;

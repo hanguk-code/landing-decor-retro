@@ -14,7 +14,7 @@
                         <div class="product" v-for="product in newProducts">
                             <n-link :to="product.url" v-show="showImage">
                                 <div class="product__content">
-                                    <i class="pos-3"></i>
+                                    <i :class="'pos-' + product.jan"></i>
                                     <img
                                         :src="apiWebUrl + '/image/' + product.image_url" alt=""
                                         @error="imageUrlAlt"

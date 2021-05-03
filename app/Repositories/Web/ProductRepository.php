@@ -82,6 +82,7 @@ class ProductRepository
         $products = $this->product
             ->with('description')
             ->where('upc', 'new')
+            ->where('manufacturer_id', '<>>', 8)
             ->where('status', true)
             ->orderBy('upc_date', 'desc')
             ->limit($limit)
@@ -304,6 +305,7 @@ class ProductRepository
                     'gallery' => $gallery,
                     'attributes' => $attribute,
                     'archive' => $product['manufacturer_id'] === 8,
+                    'jan' => $product['jan'],
                 ];
 
                 //dd($productData);
@@ -647,6 +649,7 @@ class ProductRepository
                 'url' => $url ?? '',
                 'price' => self::priceFormat($item['price']),
                 'article' => $item['sku'],
+                'jan' => $item['jan'],
             ];
         }
 

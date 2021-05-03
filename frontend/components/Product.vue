@@ -14,6 +14,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="product-select">
+                    <i :class="'sticker-pos-' + product.jan" v-if="product.jan && !archive"></i>
                     <i class="prod" v-if="archive"></i>
                     <div class="slider">
                         <div class="slider__zoom">
