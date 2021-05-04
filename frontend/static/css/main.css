@@ -271,7 +271,8 @@ i.pos-2 {
     width: 103px;
     height: 87px;
     top: -10px;
-    right: -12px;
+    right: inherit;
+    left: -13px;
     background: url(../img/new-st-1.png) 0 0 no-repeat;
 }
 
@@ -279,7 +280,8 @@ i.pos-3 {
     width: 103px;
     height: 87px;
     top: -10px;
-    right: -12px;
+    right: inherit;
+    left: -13px;
     background: url(../img/new-st-1.png) 0 0 no-repeat;
 }
 
