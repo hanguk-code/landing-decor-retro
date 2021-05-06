@@ -261,19 +261,18 @@ button, button:hover, button:focus, button:active {
 i.pos-1 {
     width: 100px;
     height: 100px;
-    top: -10px;
+    top: 130px;
     right: inherit;
-    left: -13px;
+    left: -20px;
     background: url(../img/new-st-1.png) 0 0 no-repeat;
 }
 
 i.pos-2 {
     width: 103px;
     height: 87px;
-    top: -10px;
-    right: inherit;
-    left: -13px;
-    background: url(../img/new-st-1.png) 0 0 no-repeat;
+    top: 130px;
+    right: -20px;
+    background: url(../img/new-st-2.png) 0 0 no-repeat;
 }
 
 i.pos-3 {
@@ -282,7 +281,7 @@ i.pos-3 {
     top: -10px;
     right: inherit;
     left: -13px;
-    background: url(../img/new-st-1.png) 0 0 no-repeat;
+    background: url(../img/new-st-3.png) 0 0 no-repeat;
 }
 
 i.pos-4 {
@@ -298,7 +297,7 @@ i.sticker-pos-1 {
     z-index: 99;
     width: 100px;
     height: 100px;
-    top: -10px;
+    top: 378px;
     left: 3px;
     background: url(../img/new-st-1.png) 0 0 no-repeat;
 }
@@ -308,9 +307,9 @@ i.sticker-pos-2 {
     z-index: 99;
     width: 103px;
     height: 87px;
-    top: -10px;
-    left: 373px;
-    background: url(../img/new-st-4.png) 0 0 no-repeat;
+    top: 378px;
+    left: 378px;
+    background: url(../img/new-st-2.png) 0 0 no-repeat;
 }
 
 i.sticker-pos-3 {
@@ -319,8 +318,8 @@ i.sticker-pos-3 {
     width: 103px;
     height: 87px;
     top: -10px;
-    left: 373px;
-    background: url(../img/new-st-4.png) 0 0 no-repeat;
+    left: 7px;
+    background: url(../img/new-st-3.png) 0 0 no-repeat;
 }
 
 i.sticker-pos-4 {
