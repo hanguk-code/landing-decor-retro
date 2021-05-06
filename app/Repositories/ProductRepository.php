@@ -74,7 +74,7 @@ class ProductRepository
 //        $query = $this->product->with('description');
         $query = $this->product;
 
-        if ($searchValue) {
+        if (is_numeric($searchValue)) {
             $query = $query->where('sku', 'like', $searchValue . '%');
 //                ->where(function ($query) use ($searchValue) {
 //                    $query->where('product_id', 'like', '%' . $searchValue)
@@ -84,6 +84,10 @@ class ProductRepository
 //                    ->orWhere('date_added', 'like', '%' . $searchValue . '')
 //                    ->orWhere('date_modified', 'like', '%' . $searchValue . '');
 //                });
+        } else {
+            $query = $query->whereHas('description', function ($query) use ($searchValue) {
+                return $query->where('name', 'like', '%'. $searchValue . '%');
+            });
         }
 
         if (isset($columns[$column])) {
