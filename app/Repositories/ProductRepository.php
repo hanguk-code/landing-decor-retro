@@ -86,7 +86,7 @@ class ProductRepository
 //                });
         }
 
-        if ($column) {
+        if (isset($columns[$column])) {
             $query = $query->orderBy($columns[$column], $dir);
         } else {
             $query = $query->orderBy('sku', 'desc');
