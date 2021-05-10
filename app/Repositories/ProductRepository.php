@@ -86,7 +86,7 @@ class ProductRepository
 //                });
         } else {
             $query = $query->whereHas('description', function ($query) use ($searchValue) {
-                return $query->where('name', 'like', '%'. $searchValue . '%');
+                return $query->where('name', 'like', '%' . $searchValue . '%');
             });
         }
 
@@ -397,75 +397,60 @@ class ProductRepository
     {
         $productId = $request['id'];
 
-        $productCopy = $this->product->with(['categories', 'tags', 'attributes', 'gallery'])->find($productId);
+        $productCopy = $this->product->with('description', 'categories', 'attributes', 'gallery')->find($productId);
 
-        $sorted = $this->product->orderBy('sort_order', 'DESC')->first();
+        $urlAlias = OcUrlAlias::where('query', 'product_id=' . $productId)->first();
 
-        if (isset($sorted->id)) {
-            $sortOrder = $sorted->sort_order + 1;
-        } else {
-            $sortOrder = 1;
-        }
+//        $sorted = $this->product->orderBy('sort_order', 'DESC')->first();
+//        if (isset($sorted->id)) {
+//            $sortOrder = $sorted->sort_order + 1;
+//        } else {
+//            $sortOrder = 1;
+//        }
 
-        $product = $this->product->create([
-            'sort_order' => $sortOrder,
-            'name' => $productCopy->name . '-копия',
-            'slug' => $productCopy->slug . '-kopiya',
-            'article' => $productCopy->article,
-            'category_id' => $productCopy->category_id,
-            'url' => $productCopy->url,
-            'image' => $productCopy->image,
-            'description' => $productCopy->description,
-            'price' => $productCopy->price,
-            'html_h1' => $productCopy->html_h1,
-            'seo_title' => $productCopy->seo_title,
-            'seo_description' => $productCopy->seo_description,
-            'seo_keywords' => $productCopy->seo_keywords,
-            'sticker' => $productCopy->sticker,
-            'sticker_position' => $productCopy->sticker_position,
-            'sort_order' => $productCopy->sort_order,
-            'is_booked' => $productCopy->is_booked,
-            'status' => $productCopy->status
+        $productArray = $productCopy->toArray();
+        unset($productArray['product_id']);
+
+        $product = $this->product->create($productArray);
+
+        $productArray['description']['name'] = $productArray['description']['name'] . '-копия';
+        $product->description()->create($productArray['description']);
+
+        OcUrlAlias::create([
+            'query' => DB::raw('\'product_id=' . $product->product_id . '\''),
+            'keyword' => $urlAlias['keyword'] . '-kopiya',
+            'language_id' => 0,
         ]);
 
-        if (isset($productCopy->categories)) {
-            $category = [];
-            foreach ($productCopy->categories as $item) {
-                $category[] = $item['pivot']['category_id'];
-            }
-            $product->categories()->sync($category);
-        }
-
-
-        if ($productCopy->attributes) {
-            foreach ($productCopy->attributes as $item) {
-                $product->attributes()->create([
-                    'product_id' => $item['product_id'],
-                    'name' => $item['name'],
-                    'description' => $item['description'],
-                    'sort_order' => $item['sort_order'],
+        if (!empty($productArray['categories'])) {
+            foreach ($productArray['categories'] as $item) {
+                $product->categories()->create([
+                    'product_id' => $product->product_id,
+                    'category_id' => $item['category_id'],
+                    'main_category' => $item['main_category'],
                 ]);
             }
-
         }
 
-        if ($productCopy->gallery) {
-            foreach ($productCopy->gallery as $item) {
+        if (!empty($productArray['attributes'])) {
+            foreach ($productArray['attributes'] as $item) {
+                $product->attributes()->create([
+                    'product_id' => $product->product_id,
+                    'attribute_id' => $item['attribute_id'],
+                    'language_id' => $item['language_id'],
+                    'text' => $item['text']
+                ]);
+            }
+        }
+
+        if (!empty($productArray['gallery'])) {
+            foreach ($productArray['gallery'] as $item) {
                 $product->gallery()->create([
-                    'product_id' => $item['product_id'],
-                    'name' => $item['name'],
+                    'product_id' => $product->product_id,
                     'image' => $item['image'],
                     'sort_order' => $item['sort_order'],
                 ]);
             }
-        }
-
-        if ($productCopy->tags) {
-            $tag = [];
-            foreach ($productCopy['tags'] as $item) {
-                $tag[] = $item['pivot']['tag_id'];
-            }
-            $product->tags()->sync($tag);
         }
 
         return $product;
