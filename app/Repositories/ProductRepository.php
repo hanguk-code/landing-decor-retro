@@ -453,6 +453,8 @@ class ProductRepository
             }
         }
 
+        $product->id = $product->product_id;
+        $product->name = $productArray['description']['name'];
         return $product;
     }
 
