@@ -17,7 +17,7 @@
             <div class="col-sm-4 col-md-3">
                 <LeftMenu/>
             </div>
-            <div class="col-sm-8 col-md-9">
+            <div class="col-sm-8 col-md-12 col-lg-9">
                 <h2 class="catalog-title">
                     {{ category.name }}
                 </h2>

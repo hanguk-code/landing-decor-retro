@@ -3,11 +3,11 @@
         <div class="container" v-if="!$fetchState.pending">
             <Vector/>
             <MenuMobile/>
-            <div class="row d-none d-lg-flex" v-if="!isMobile">
+            <div class="row d-none d-lg-flex">
                 <Menu/>
             </div>
             <div class="row">
-                <div class="col-sm-4 col-md-3">
+                <div class="col-sm-4 col-md-12 col-lg-3">
                     <LeftMenu/>
                     <div class="left-news">
                         <h2>Новинки</h2>
@@ -35,7 +35,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-8 col-md-9">
+                <div class="col-sm-8 col-md-12 col-lg-9">
                     <n-link to="/products/all" class="all-catalog">
                         Показать весь ассортимент товара
                     </n-link>

@@ -3,7 +3,7 @@
         <div class="container">
             <Vector/>
             <MenuMobile/>
-            <div class="row d-none d-lg-flex" v-if="!isMobile">
+            <div class="row d-none d-lg-flex">
                 <Menu/>
             </div>
             <div v-if="!$fetchState.pending">
