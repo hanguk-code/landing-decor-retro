@@ -256,10 +256,10 @@ class ProductRepository
         }
 
 
-        if (isset($request['photo'])) {
-            if (strpos($request['photo'], $request['product']['image']) === false) {
+        if (isset($request['photo']) && strpos($request['photo'], 'data:image') !== false) {
+//            if (strpos($request['photo'], $request['product']['image']) === false) {
                 $this->savePhoto($request['photo'], $productId);
-            }
+//            }
         }
 
     }
