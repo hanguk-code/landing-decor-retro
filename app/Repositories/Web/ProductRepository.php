@@ -121,6 +121,7 @@ class ProductRepository
             ->with('description')
 //            ->inRandomOrder()
             ->where('upc', 'new')
+            ->where('jan', '>', 0)
             ->where('status', true)
             ->orderBy('upc_date', 'desc')
             ->paginate($length);
