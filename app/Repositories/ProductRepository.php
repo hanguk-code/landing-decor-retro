@@ -226,11 +226,18 @@ class ProductRepository
         $product = $this->product->find($productId);
         $product->update($request['product']);
         $product->description()->update($request['product']['description']);
-        OcUrlAlias::create([
-            'query' => DB::raw('\'product_id=' . $product->product_id . '\''),
-            'keyword' => $request['product_slug'],
-            'language_id' => 0,
-        ]);
+        $urlAlias = OcUrlAlias::where('query', DB::raw('\'product_id=' . $product->product_id . '\''))->first();
+
+        if (!$urlAlias) {
+            OcUrlAlias::create([
+                'query' => DB::raw('\'product_id=' . $product->product_id . '\''),
+                'keyword' => $request['product_slug'],
+                'language_id' => 0,
+            ]);
+        } else {
+            $urlAlias->keyword = $request['product_slug'];
+            $urlAlias->save();
+        }
 
         if (isset($request['product']['categories'])) {
             $product->categories()->where(['product_id' => $productId])->delete();
@@ -258,7 +265,7 @@ class ProductRepository
 
         if (isset($request['photo']) && strpos($request['photo'], 'data:image') !== false) {
 //            if (strpos($request['photo'], $request['product']['image']) === false) {
-                $this->savePhoto($request['photo'], $productId);
+            $this->savePhoto($request['photo'], $productId);
 //            }
         }
 
