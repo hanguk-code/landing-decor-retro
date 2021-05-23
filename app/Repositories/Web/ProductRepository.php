@@ -366,7 +366,7 @@ class ProductRepository
             $productCatData = [];
             foreach ($productCat as $productItemCat) {
                 $quCatProd = 'product_id=' . $productItemCat['product_id'];
-                $urlAliasProd = $this->urlAlias->where('query', $quCatProd)->first();
+                $urlAliasProd = $this->urlAlias->where('query', $quCatProd)->orderBy('url_alias_id', 'desc')->first();
 
                 if (!$urlAliasProd) {
                     continue;
