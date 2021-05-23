@@ -211,6 +211,10 @@ class ProductRepository
 
         //$qu = 'category_id='.$item['category_id'];
         $urlAlias = $this->urlAlias->where('keyword', $lastUrl)->first();
+        if(!$urlAlias){
+            return [];
+        }
+        
         $expUrlAlias = explode('=', $urlAlias['query']);
         $itemType = $expUrlAlias[0];
 
