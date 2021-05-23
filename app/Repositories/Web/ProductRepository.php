@@ -306,6 +306,7 @@ class ProductRepository
                     'attributes' => $attribute,
                     'archive' => $product['manufacturer_id'] === 8,
                     'jan' => $product['jan'],
+                    'upc' => $product['upc'],
                 ];
 
                 //dd($productData);
@@ -394,6 +395,8 @@ class ProductRepository
                     'name' => $productItemCat['description']['name'],
                     'image_url' => $productItemCat['image'],
                     'url' => $totalUrl,
+                    'upc' => $productItemCat['upc'],
+                    'jan' => $productItemCat['jan'],
                     'price' => self::priceFormat($productItemCat['price']),
                     'article' => $productItemCat['sku'],
                     'archive' => $productItemCat['manufacturer_id'] === 8,

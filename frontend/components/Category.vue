@@ -129,6 +129,7 @@
 
                     <div class="product" v-for="product in products" v-if="subCategories.length < 1">
                         <div class="product__content">
+                            <i :class="'pos-' + product.jan" v-if="product.jan && product.upc && !product.archive"></i>
                             <n-link :to="product.url">
                                 <img :src="apiWebUrl+'/image/'+product.image_url"
                                      :data-image="apiWebUrl+'/image/'+product.image_url"
