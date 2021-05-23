@@ -172,14 +172,12 @@ export default {
 
     async fetch() {
         await this.getNewProducts()
-        console.log('2 - ', this.newProducts.length)
         if (this.newProducts.length) {
             this.zoom_01()
         }
     },
 
     mounted() {
-        console.log('1 - ', this.newProducts.length)
         if (this.newProducts.length) {
             this.zoom_01()
         }
@@ -187,7 +185,6 @@ export default {
 
     methods: {
         zoom_01() {
-            console.log('zoom')
             if (!this.isMobile) {
                 $('.zoomContainer').remove()
                 $(".zoom_01").elevateZoom({

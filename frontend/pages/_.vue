@@ -151,8 +151,13 @@ export default {
             const {data} = await this.$axios.get(
                 `/type/${this.$route.params.pathMatch}`, {params: this.query}
             ).catch(() => {
-                //this.$nuxt.error({statusCode: 404, message: 'Oops! Something went wrong!'})
+                // this.$nuxt.error({statusCode: 404, message: 'Oops! Something went wrong!'})
             });
+
+            if(data.data.length < 1){
+                window.location.href = '/';
+            }
+
             this.type = data.data.type
             this.product = data.data.product
             if (data.data.type === 'category') {
