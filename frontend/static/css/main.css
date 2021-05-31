@@ -955,6 +955,7 @@ input[type='text'], input[type='phone'], input[type='password'], input[type='ema
     font-style: italic;
     font-weight: normal;
     margin: 10px 0;
+    text-align: left;
 }
 
 .product-select__content span.product-select__price {
