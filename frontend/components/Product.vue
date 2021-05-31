@@ -77,7 +77,7 @@
                         <span class="product-select__price">
 							{{ product.price }} руб.
 						</span>
-                        <a href="#" class="product-select__link" @click="addToCart">
+                        <a href="#" class="product-select__link" @click="addToCart" v-if="!archive">
                             Добавить в корзину
                         </a>
                         <table class="attribute">
