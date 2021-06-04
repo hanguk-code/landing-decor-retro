@@ -31,7 +31,7 @@ Route::get('adm/categories/options/data', 'CategoryController@optionsData');
 Route::post('adm/categories/delete/checked', 'CategoryController@deleteChecked');
 
 Route::apiResource('adm/products', 'ProductController');
-Route::delete('adm/products/attribute/delete/{id}', 'ProductController@destroyProductAttribute');
+Route::delete('adm/products/attribute/delete/{id}/{attr}', 'ProductController@destroyProductAttribute');
 Route::post('adm/products/gallery/save', 'ProductController@galleryStore');
 Route::get('adm/products/options/data', 'ProductController@optionsData');
 Route::post('adm/products/delete/checked', 'ProductController@deleteChecked');

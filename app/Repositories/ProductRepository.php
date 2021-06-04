@@ -280,10 +280,9 @@ class ProductRepository
         $product->delete();
     }
 
-    public function destroyProductAttribute(int $id)
+    public function destroyProductAttribute(int $id, int $attr)
     {
-        $productAttribute = $this->productAttribute->find($id);
-        $productAttribute->delete();
+        $this->productAttribute->where('product_id', $id)->where('attribute_id', $attr)->delete();
     }
 
     public function savePhoto($logoDataImage, $id)

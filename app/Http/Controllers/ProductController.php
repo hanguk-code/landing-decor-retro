@@ -79,9 +79,9 @@ class ProductController extends Controller
         return response(null, Response::HTTP_NO_CONTENT);
     }
 
-    public function destroyProductAttribute(int $id)
+    public function destroyProductAttribute(int $id, int $attr)
     {
-         $this->productRepository->destroyProductAttribute($id);
+         $this->productRepository->destroyProductAttribute($id, $attr);
 
         return response(null, Response::HTTP_NO_CONTENT);
     }
