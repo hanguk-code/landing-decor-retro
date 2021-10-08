@@ -2,9 +2,12 @@
 
 namespace App\Repositories;
 
+use App\Mail\OrderNotification;
+use App\Mail\OrderNotificationAdmin;
 use App\Models\Order\Order;
 use App\Models\Product\OcProduct;
 use App\Models\Product\Product;
+use Illuminate\Support\Facades\Mail;
 
 class OrderRepository
 {
@@ -98,7 +101,11 @@ class OrderRepository
      */
     public function update($request, int $orderId)
     {
-        $this->order->where('id', $orderId)->update(['status' => $request['order']['status']]);
+        if($request['order']['status'] == 2) {
+            Mail::to($request['order']['email'])->send(new OrderNotification($request['order']));
+            Mail::to(env('MAIL_ADMIN'))->send(new OrderNotificationAdmin($request['order']));
+        }
+        $this->order->update(['status' => $request['order']['status']]);
     }
 
     public function deleteChecked($request)

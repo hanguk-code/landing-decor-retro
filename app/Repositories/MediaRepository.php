@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\JResource;
 use App\Models\Product\OcProductImage;
 use App\Models\Product\ProductGallery;
 
@@ -171,6 +172,21 @@ class MediaRepository
             }
         }
 
+        return response()->json(false);
+    }
+
+    public function deleteGallery($product_id) {
+        $files = $this->productGallery::where('product_id', $product_id);
+        if($files->count() > 0) {
+            foreach($files->get() as $file) {
+                if (File::exists('image/'.$file->image)) {
+                    if (File::delete('image/'.$file->image)) {
+                        $file->delete();
+                    }
+                }
+            }
+            return response()->json(true);
+        }
         return response()->json(false);
     }
 
