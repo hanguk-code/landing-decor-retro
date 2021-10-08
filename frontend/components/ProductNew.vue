@@ -13,7 +13,7 @@
                     <div class="product" v-for="product in products">
                         <div class="product__content">
                             <n-link :to="product.url">
-                                <i :class="'pos-' + product.jan"></i>
+                                <i :class="'pos-' + product.jan + ' ' + product.upc"></i>
                                 <img :src="apiWebUrl + '/image/'+product.image_url"
                                      :data-image="apiWebUrl + '/image/'+product.image_url"
                                      :data-zoom-image="apiWebUrl + '/image/'+product.image_url"

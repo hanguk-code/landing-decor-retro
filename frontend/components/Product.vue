@@ -14,7 +14,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="product-select">
-                    <i :class="'sticker-pos-' + product.jan" v-if="product.jan && product.upc && !archive"></i>
+                    <i :class="'sticker-pos-' + product.jan + ' ' + product.upc " v-if="product.jan && product.upc && !archive"></i>
                     <i class="prod" v-if="archive"></i>
                     <div class="slider">
                         <div class="slider__zoom">
@@ -77,8 +77,12 @@
                         <span class="product-select__price">
 							{{ product.price }} руб.
 						</span>
-                        <a href="#" class="product-select__link" @click="addToCart" v-if="!archive">
+                        <a href="#" class="product-select__link" @click="addToCart" v-if="!archive && product.upc !== 'reserve'">
                             Добавить в корзину
+                        </a>
+
+                        <a href="#" class="product-select__link" v-if="product.upc === 'reserve'">
+                            Товар забронирован
                         </a>
                         <table class="attribute">
                             <tbody>
