@@ -295,6 +295,7 @@ i.pos-4 {
 
 i.pos-1.reserve {
     background: url(../img/sticker_bron.png) 0 0 no-repeat!important;
+    left: 25px;
 }
 
 i.pos-2.reserve {
@@ -303,10 +304,14 @@ i.pos-2.reserve {
 
 i.pos-3.reserve {
     background: url(../img/sticker_bron.png) 0 0 no-repeat!important;
+    top: 10px;
+    left: 25px;
 }
 
 i.pos-4.reserve {
     background: url(../img/sticker_bron.png) 0 0 no-repeat!important;
+    top: 10px;
+    left: 380px;
 }
 
 i.sticker-pos-1 {
@@ -351,6 +356,7 @@ i.sticker-pos-4 {
 
 i.sticker-pos-1.reserve {
     background: url(../img/sticker_bron.png) 0 0 no-repeat;
+    left: 25px;
 }
 
 i.sticker-pos-2.reserve {
@@ -359,10 +365,14 @@ i.sticker-pos-2.reserve {
 
 i.sticker-pos-3.reserve {
     background: url(../img/sticker_bron.png) 0 0 no-repeat;
+    top: 10px;
+    left: 25px;
 }
 
 i.sticker-pos-4.reserve {
     background: url(../img/sticker_bron.png) 0 0 no-repeat;
+    top: 10px;
+    left: 380px;
 }
 
 i.archive {
