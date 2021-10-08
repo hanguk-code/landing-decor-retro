@@ -1,15 +1,15 @@
-@font-face {
-    font-family: 'Harrington';
-    src: url('../fonts/Harrington.eot');
-    src: url('../fonts/Harrington.eot?#iefix') format('embedded-opentype'),
-    url('../fonts/Harrington.woff2') format('woff2'),
-    url('../fonts/Harrington.woff') format('woff'),
-    url('../fonts/Harrington.ttf') format('truetype'),
-    url('../fonts/Harrington.svg#Harrington') format('svg');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
-}
+/*@font-face {*/
+/*    font-family: 'Harrington';*/
+/*    src: url('../fonts/Harrington.eot');*/
+/*    src: url('../fonts/Harrington.eot?#iefix') format('embedded-opentype'),*/
+/*    url('../fonts/Harrington.woff2') format('woff2'),*/
+/*    url('../fonts/Harrington.woff') format('woff'),*/
+/*    url('../fonts/Harrington.ttf') format('truetype'),*/
+/*    url('../fonts/Harrington.svg#Harrington') format('svg');*/
+/*    font-weight: normal;*/
+/*    font-style: normal;*/
+/*    font-display: swap;*/
+/*}*/
 
 @font-face {
     font-family: 'HeinrichScript';
@@ -39,7 +39,7 @@
 
 
 body {
-    /*font: 500 14px 'Harrington', sans-serif;*/
+    /*font: 500 14px sans-serif;*/
     padding: 0;
     margin: 0;
     color: #fff;
@@ -48,7 +48,7 @@ body {
 }
 
 p {
-    font: 500 14px 'Harrington', sans-serif;
+    font: 500 14px sans-serif;
     line-height: 1.6em;
     letter-spacing: 0
 }
@@ -258,19 +258,97 @@ button, button:hover, button:focus, button:active {
     /*right: -12px;*/
 }
 
+i.pos-1 {
+    width: 100px;
+    height: 100px;
+    top: 130px;
+    right: inherit;
+    left: -20px;
+    background: url(../img/new-st-1.png) 0 0 no-repeat;
+}
+
+i.pos-2 {
+    width: 103px;
+    height: 87px;
+    top: 130px;
+    right: -20px;
+    background: url(../img/new-st-2.png) 0 0 no-repeat;
+}
+
 i.pos-3 {
     width: 103px;
     height: 87px;
     top: -10px;
+    right: inherit;
+    left: -13px;
+    background: url(../img/new-st-3.png) 0 0 no-repeat;
+}
+
+i.pos-4 {
+    width: 103px;
+    height: 87px;
+    top: -10px;
     right: -12px;
+    background: url(../img/new-st-4.png) 0 0 no-repeat;
+}
+
+i.sticker-pos-1 {
+    position: absolute;
+    z-index: 99;
+    width: 100px;
+    height: 100px;
+    top: 378px;
+    left: 3px;
     background: url(../img/new-st-1.png) 0 0 no-repeat;
 }
 
-i.prod {
+i.sticker-pos-2 {
+    position: absolute;
+    z-index: 99;
+    width: 103px;
+    height: 87px;
+    top: 378px;
+    left: 378px;
+    background: url(../img/new-st-2.png) 0 0 no-repeat;
+}
+
+i.sticker-pos-3 {
+    position: absolute;
+    z-index: 99;
+    width: 103px;
+    height: 87px;
+    top: -10px;
+    left: 7px;
+    background: url(../img/new-st-3.png) 0 0 no-repeat;
+}
+
+i.sticker-pos-4 {
+    position: absolute;
+    z-index: 99;
+    width: 103px;
+    height: 87px;
+    top: -10px;
+    left: 373px;
+    background: url(../img/new-st-4.png) 0 0 no-repeat;
+}
+
+i.archive {
+    position: absolute;
     width: 90px;
     height: 90px;
-    right: -16px;
-    top: -43px;
+    right: -30px;
+    top: -30px;
+    z-index: 99;
+    background: url(../img/prod2.png) 0 0 no-repeat;
+}
+
+i.prod {
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    left: 415px;
+    top: -40px;
+    z-index: 99;
     background: url(../img/prod2.png) 0 0 no-repeat;
 }
 
@@ -281,7 +359,7 @@ i.prod {
 .menu {
     display: flex;
     justify-content: space-between;
-    padding: 0 15px;
+    padding: 0 70px;
     margin: 20px 5px;
 }
 
@@ -877,6 +955,7 @@ input[type='text'], input[type='phone'], input[type='password'], input[type='ema
     font-style: italic;
     font-weight: normal;
     margin: 10px 0;
+    text-align: left;
 }
 
 .product-select__content span.product-select__price {

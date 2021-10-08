@@ -1,23 +1,42 @@
-<h1>Ваш заказ принят - ожидайте звонка, с вами обязательно свяжется наш менеджер!</h1>
-
-<ul>
+<p>Добрый день! Вами был оформлен заказ в нашем интернет магазине,<br />
+в ближайшее время с Вами свяжется наш сотрудник для уточнения и окончательного оформления данного заказа!</p>
+<h1>Заказ № {{ $iddata }}</h1>
+<table style="border: none; border-collapse: collapse;">
+	<tbody>
+		<tr>
+			<th>№</th>
+			<th>Изображение</th>
+			<th>артикул</th>
+			<th>Наименование товара</th>
+			<th>Цена</th></tr>
+			@php $inumb =0;@endphp
     @foreach($fields['cartData'] as $cart)
-        @php $total += (int) str_replace(' ', '', $cart['price']); @endphp
-        <li>
-            <a href="https://decor-retro.ru{{ $cart['url'] }}">
-                {{ $cart['name'] }}
-            </a>
-            <br>
-            Артикул: {{ $cart['article'] }}
-            <br>
-            Цена: {{ $cart['price'] }}
-        </li>
-    @endforeach
-</ul>
-Общая стоимость: {{ number_format($total, 0, '.', ' ') }}
-
-<div>Имя:{{ $fields['userForm']['name'] }}</div>
-<div>Телефон:{{ $fields['userForm']['phone'] }}</div>
-<div>Комментарий:
+	@php $total += (int) str_replace(' ', '', $cart['price']); $inumb ++;@endphp
+        <tr>
+			<td>{{ $inumb }}</td>
+			<td><img src="https://decor-retro.ru/image/{{ $cart['image_url'] }}" width="100"/></td>
+			<td>{{ $cart['article'] }}</td>
+			<td><a href="https://decor-retro.ru{{ $cart['url'] }}">
+					{{ $cart['name'] }}
+			</a></td>
+			<td>{{ $cart['price'] }}</td>     
+        </tr>
+    @endforeach	
+            <tr><td colspan="3"></td>
+			<td style="text-align:right">ИТОГО общая сумма заказа:</td>
+			<td>{{ number_format($total, 0, '.', ' ') }}</td></tr> 
+	</tbody>
+</table> 
+<p>Заказ - N {{ $iddata }}</p> 
+<p>Имя: {{ $fields['userForm']['name'] }}</p>
+<p>Телефон: <a href="tel:{{ $fields['userForm']['phone'] }}">{{ $fields['userForm']['phone'] }}</a></p>
+<p>Комментарий:
     {{ $fields['userForm']['comment'] }}
-</div>
+</p>  
+    
+ <p>&nbsp;</p>
+ <p>С уважением, ДЕКОР-РЕТРО. +7(985)272-77-80</p>
+
+ 
+
+

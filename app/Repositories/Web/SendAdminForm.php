@@ -3,15 +3,16 @@
 
 namespace App\Repositories\Web;
 
-
+use App\Models\Order\Order;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendOrderForm extends Mailable
+class SendAdminForm extends Mailable
 {
     use Queueable, SerializesModels;
 
+	protected $order;
     public $fields;
     public $total;
 
@@ -38,10 +39,12 @@ class SendOrderForm extends Mailable
      */
     public function build()
     {
+		//$ordid=Order::orderby('id', 'desc')->first();
+		
         return $this
 //            ->to('angelorlov@gmail.com')
             ->from(env('EMAIL_FROM'))
-			->subject('ДЕКОР - РЕТРО - заказ N '.$this->iddata.' от '.$this->fields['userForm']['name'])
-            ->view('mails.order')->with('iddata', $this->iddata);
+			->subject('ДЕКОР - РЕТРО - копия заказа N '.$this->iddata.' от '.$this->fields['userForm']['name'])
+            ->view('mails.order_adm')->with('iddata', $this->iddata);
     }
 }
