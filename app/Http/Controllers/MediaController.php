@@ -93,12 +93,11 @@ class MediaController extends Controller
         return (new JResource(['status' => 'success']));
     }
 
-    public function deleteGallery(Request $request) {
-        $id = $request->id;
+    public function deleteGallery($id) {
         if(!$id) {
             return (new JResource(['status' => 'fail']));
         }
-        return $this->mediaRepository->deleteGallery($id);
+        $this->mediaRepository->deleteGallery($id);
         return (new JResource(['status' => 'success']));
     }
 }

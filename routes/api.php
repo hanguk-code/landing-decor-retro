@@ -43,7 +43,7 @@ Route::post('adm/orders/delete/checked', 'OrderController@deleteChecked');
 
 Route::apiResource('adm/media', 'MediaController');
 Route::post('adm/media/sort', 'MediaController@sort');
-Route::post('adm/media/delete-gallery', 'MediaController@deleteGallery');
+Route::delete('adm/media/delete-gallery/{id}', 'MediaController@deleteGallery');
 Route::post('adm/upload/media', 'MediaController@uploadProductMedia');
 Route::post('adm/files/delete', 'MediaController@deleteFile');
 
