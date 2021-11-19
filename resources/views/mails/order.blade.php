@@ -1,7 +1,7 @@
 <p>Добрый день! Вами был оформлен заказ в нашем интернет магазине,<br />
 в ближайшее время с Вами свяжется наш сотрудник для уточнения и окончательного оформления данного заказа!</p>
 <h1>Заказ № {{ $iddata }}</h1>
-<table style="border: none; border-collapse: collapse;">
+<table>
 	<tbody>
 		<tr>
 			<th>№</th>
@@ -27,12 +27,12 @@
 			<td>{{ number_format($total, 0, '.', ' ') }}</td></tr> 
 	</tbody>
 </table> 
-<p>Заказ - N {{ $iddata }}</p> 
+{{--<p>Заказ - N {{ $iddata }}</p>
 <p>Имя: {{ $fields['userForm']['name'] }}</p>
 <p>Телефон: <a href="tel:{{ $fields['userForm']['phone'] }}">{{ $fields['userForm']['phone'] }}</a></p>
 <p>Комментарий:
     {{ $fields['userForm']['comment'] }}
-</p>  
+</p>  --}}
     
  <p>&nbsp;</p>
  <p>С уважением, ДЕКОР-РЕТРО. +7(985)272-77-80</p>

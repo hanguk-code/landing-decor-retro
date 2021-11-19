@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use App\Repositories\OrderRepository;
 use App\Http\Resources\JResource;
 
+use App\Models\Order\Orders;
+
 /**
  *
  * Class OrderController
@@ -43,6 +45,13 @@ class OrderController extends Controller
         return new JResource($order);
     }
 
+    public function ordersList(Request $request)
+    {
+        $order = $this->orderRepository->orderslist($request);
+
+        return new JResource($order);
+    }
+
     public function optionsData(Request $request)
     {
         $data = $this->orderRepository->optionsData($request);
@@ -66,6 +75,26 @@ class OrderController extends Controller
     {
         $this->orderRepository->deleteChecked($request);
 
+        return (new JResource(['status' => 'success']));
+    }
+
+    public function deleteCheckedList(Request $request)
+    {
+        $this->orderRepository->deleteCheckedList($request);
+
+        return (new JResource(['status' => 'success']));
+    }
+
+    public function sell(Request $params, $id) {
+        $request = (object) $params->all()['order'];
+        Orders::create([
+            'email' => $request->email,
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'type' => $request->type,
+            'order_id' => $request->order_id,
+            'product_id' => $id
+        ]);
         return (new JResource(['status' => 'success']));
     }
 }

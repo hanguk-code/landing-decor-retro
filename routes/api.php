@@ -31,13 +31,18 @@ Route::get('adm/categories/options/data', 'CategoryController@optionsData');
 Route::post('adm/categories/delete/checked', 'CategoryController@deleteChecked');
 
 Route::apiResource('adm/products', 'ProductController');
+Route::patch('adm/products/{id}/sell', 'ProductController@sell');
+Route::patch('adm/products/{id}/reset', 'ProductController@reset');
 Route::delete('adm/products/attribute/delete/{id}/{attr}', 'ProductController@destroyProductAttribute');
 Route::post('adm/products/gallery/save', 'ProductController@galleryStore');
 Route::get('adm/products/options/data', 'ProductController@optionsData');
 Route::post('adm/products/delete/checked', 'ProductController@deleteChecked');
 Route::post('adm/products/c/copy', 'ProductController@copy');
 
+Route::post('adm/orders/{id}/create', 'OrderController@sell');
 Route::apiResource('adm/orders', 'OrderController');
+Route::get('adm/orders-list', 'OrderController@ordersList');
+Route::post('adm/orders-orders/delete/checked', 'OrderController@deleteCheckedList');
 Route::get('adm/orders/options/data', 'OrderController@optionsData');
 Route::post('adm/orders/delete/checked', 'OrderController@deleteChecked');
 

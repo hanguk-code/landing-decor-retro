@@ -6,6 +6,7 @@ use App\Models\Product\OcProduct;
 
 //use App\Models\Product\ProductAttribute;
 use App\Models\Category\OcCategory;
+use App\Models\Category\OcCategoryDescription;
 
 //use App\Models\Reference\Tag;
 use App\Models\Attribute\OcAttribute;
@@ -14,8 +15,12 @@ use App\Models\Product\OcProductAttribute;
 use App\Models\Product\OcProductDescription;
 use App\Models\Product\OcProductImage;
 use App\Models\Product\ProductAttribute;
+use App\Models\Product\OcProductToCategory;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
+use App\Models\Order\Orders;
 
 class ProductRepository
 {
@@ -70,12 +75,14 @@ class ProductRepository
         $column = $request->input('column'); //Index
         $dir = $request->input('dir');
         $searchValue = $request->input('search');
+        $searchByCategory = $request->input('search_by_category');
 
 //        $query = $this->product->with('description');
         $query = $this->product;
 
-        if (is_numeric($searchValue)) {
-            $query = $query->where('sku', 'like', $searchValue . '%');
+        if(!isset($searchByCategory) || empty($searchByCategory)){
+            if (is_numeric($searchValue)) {
+                $query = $query->where('sku', 'like', $searchValue . '%');
 //                ->where(function ($query) use ($searchValue) {
 //                    $query->where('product_id', 'like', '%' . $searchValue)
 //                        ->orWhere('sku', 'like', '%' . $searchValue . '');
@@ -84,11 +91,20 @@ class ProductRepository
 //                    ->orWhere('date_added', 'like', '%' . $searchValue . '')
 //                    ->orWhere('date_modified', 'like', '%' . $searchValue . '');
 //                });
+            } else {
+                $query = $query->whereHas('description', function ($query) use ($searchValue) {
+                    return $query->where('name', 'like', '%' . $searchValue . '%');
+                });
+            }
         } else {
-            $query = $query->whereHas('description', function ($query) use ($searchValue) {
-                return $query->where('name', 'like', '%' . $searchValue . '%');
-            });
+
+
+                $query = $query->join('oc_product_to_category', 'oc_product_to_category.product_id', '=', 'oc_product.product_id')
+                ->where('oc_product_to_category.category_id', $searchByCategory);
+                //$productsByCategory = OcProductToCategory::where('category_id', $sCategoryData->category_id)->get();
+
         }
+
 
         if (isset($columns[$column])) {
             $query = $query->orderBy($columns[$column], $dir);
@@ -96,7 +112,18 @@ class ProductRepository
             $query = $query->orderBy('sku', 'desc');
         }
 
+
         $data = $query->paginate($length);
+/*        if(!$productsByCategory) {
+            $data = $query->paginate($length);
+        } else {
+            foreach($productsByCategory as $prod) {
+                $data = [];
+                $prodId = $prod['product_id'];
+                array_push($data, OcProduct::where('product_id', $prodId)->first());
+            }
+        }*/
+
 
         $dataItem = [];
 
@@ -415,6 +442,9 @@ class ProductRepository
 //        }
 
         $productArray = $productCopy->toArray();
+
+
+        $tempOriginalProductId = $productArray['product_id'];
         unset($productArray['product_id']);
 
         $product = $this->product->create($productArray);
@@ -449,11 +479,17 @@ class ProductRepository
             }
         }
 
+
         if (!empty($productArray['gallery'])) {
             foreach ($productArray['gallery'] as $item) {
+                $oldPath = public_path('image/product/' . $tempOriginalProductId . '/');
+                $newPath = public_path('image/product/' . $product->product_id . '/');
+                $this->rcopy($oldPath, $newPath);
+                $image = str_replace($tempOriginalProductId, $product->product_id, $item['image']);
                 $product->gallery()->create([
                     'product_id' => $product->product_id,
-                    'image' => $item['image'],
+                    /*'image' => $item['image'],*/
+                    'image' => $image,
                     'sort_order' => $item['sort_order'],
                 ]);
             }
@@ -462,6 +498,35 @@ class ProductRepository
         $product->id = $product->product_id;
         $product->name = $productArray['description']['name'];
         return $product;
+    }
+
+    public function rcopy($src, $dst) {
+        if (is_dir($src)) {
+            if(!file_exists($dst)) {
+                mkdir($dst);
+            }
+
+            $files = scandir($src);
+            foreach ($files as $file)
+                if ($file != "." && $file != "..") $this->rcopy("$src/$file", "$dst/$file");
+        }
+        else if (file_exists($src)) copy($src, $dst);
+    }
+
+
+    public function sell($id) {
+        OcProduct::where('product_id', $id)->update([
+            'manufacturer_id' => 8,
+        ]);
+        return;
+    }
+
+    public function reset($id) {
+        OcProduct::where('product_id', $id)->update([
+            'manufacturer_id' => 0,
+        ]);
+        Orders::where('product_id', $id)->delete();
+        return;
     }
 
 }

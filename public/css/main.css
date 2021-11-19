@@ -292,6 +292,28 @@ i.pos-4 {
     background: url(../img/new-st-4.png) 0 0 no-repeat;
 }
 
+
+i.pos-1.reserve {
+    background: url(../img/sticker_bron.png) 0 0 no-repeat!important;
+    left: 25px;
+}
+
+i.pos-2.reserve {
+    background: url(../img/sticker_bron.png) 0 0 no-repeat!important;
+}
+
+i.pos-3.reserve {
+    background: url(../img/sticker_bron.png) 0 0 no-repeat!important;
+    top: 10px;
+    left: 25px;
+}
+
+i.pos-4.reserve {
+    background: url(../img/sticker_bron.png) 0 0 no-repeat!important;
+    top: 10px;
+    left: 380px;
+}
+
 i.sticker-pos-1 {
     position: absolute;
     z-index: 99;
@@ -330,6 +352,27 @@ i.sticker-pos-4 {
     top: -10px;
     left: 373px;
     background: url(../img/new-st-4.png) 0 0 no-repeat;
+}
+
+i.sticker-pos-1.reserve {
+    background: url(../img/sticker_bron.png) 0 0 no-repeat;
+    left: 25px;
+}
+
+i.sticker-pos-2.reserve {
+    background: url(../img/sticker_bron.png) 0 0 no-repeat;
+}
+
+i.sticker-pos-3.reserve {
+    background: url(../img/sticker_bron.png) 0 0 no-repeat;
+    top: 10px;
+    left: 25px;
+}
+
+i.sticker-pos-4.reserve {
+    background: url(../img/sticker_bron.png) 0 0 no-repeat;
+    top: 10px;
+    left: 380px;
 }
 
 i.archive {

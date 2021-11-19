@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\DB;
 
 //use App\Models\Attribute\OcAttribute;
 //use App\Models\Reference\Tag;
+use App\Models\Product\OcProductToCategory;
 
 class OcProduct extends Model
 {
@@ -102,4 +103,9 @@ class OcProduct extends Model
     // {
     //     return $this->belongsToMany(Tag::class, 'product_tag', 'product_id', 'tag_id');
     // }
+
+    public function productByCategory() {
+        return $this->belongsTo(OcProductToCategory::class, 'product_id', 'product_id');
+    }
+
 }

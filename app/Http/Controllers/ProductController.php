@@ -45,7 +45,7 @@ class ProductController extends Controller
     {
         $product = $this->productRepository->create($request->all());
 
-        return (new JResource(['status' => 'success', 'item_id' => $product->id]))
+        return (new JResource(['status' => 'success', 'item_id' => $product->product_id]))
             ->response()
             ->setStatusCode(Response::HTTP_CREATED);
     }
@@ -107,6 +107,28 @@ class ProductController extends Controller
         return new JResource(['status' => 'success', 'product' => $product]);
     }
 
+
+    /**
+     * @param Request $request
+     * @return JResource
+     */
+    public function sell(Request $request, $id)
+    {
+        $this->productRepository->sell( $id);
+
+        return (new JResource(['status' => 'success', 'id' => request()->route('bouquets')]));
+    }
+
+    /**
+     * @param Request $request
+     * @return JResource
+     */
+    public function reset(Request $request, $id)
+    {
+        $this->productRepository->reset( $id);
+
+        return (new JResource(['status' => 'success', 'id' => request()->route('bouquets')]));
+    }
 
 }
 

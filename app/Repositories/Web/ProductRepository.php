@@ -60,6 +60,7 @@ class ProductRepository
         $products = $this->product
             ->with('description')
             ->where('status', true)
+            ->where('manufacturer_id', 0)
             ->orderBy('date_modified', 'desc')
             ->paginate($limit);
 
@@ -100,6 +101,7 @@ class ProductRepository
                     return $query->where('tag', $product->description->tag);
                 })
                 ->where('status', true)
+                ->where('manufacturer_id', 0)
                 ->paginate(24);
         });
 
@@ -123,6 +125,7 @@ class ProductRepository
             ->where('upc', 'new')
             ->where('jan', '>', 0)
             ->where('status', true)
+            ->where('manufacturer_id', 0)
             ->orderBy('upc_date', 'desc')
             ->paginate($length);
 
@@ -146,7 +149,7 @@ class ProductRepository
         $products = $this->product
             ->with('description')
 //            ->where('quantity', '<', 0)
-//            ->where('status', true)
+            ->where('status', true)
             ->where('manufacturer_id', 8)
             ->orderBy('date_available', 'desc')
             ->paginate($length)
@@ -365,7 +368,7 @@ class ProductRepository
                 });
             }
             $productCat = $productCat
-                ->where('manufacturer_id', '<>', 8)
+                ->where('manufacturer_id', 0)
                 ->where('status', true)
                 ->orderby('date_modified', 'desc')->paginate($length);
 

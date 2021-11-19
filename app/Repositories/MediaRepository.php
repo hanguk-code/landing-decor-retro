@@ -180,10 +180,9 @@ class MediaRepository
         if($files->count() > 0) {
             foreach($files->get() as $file) {
                 if (File::exists('image/'.$file->image)) {
-                    if (File::delete('image/'.$file->image)) {
-                        $file->delete();
-                    }
+                    File::delete('image/'.$file->image);
                 }
+                $file->delete();
             }
             return response()->json(true);
         }

@@ -3,6 +3,7 @@
 namespace App\Models\Product;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Product\OcProduct;
 
 class OcProductToCategory extends Model
 {
@@ -21,5 +22,9 @@ class OcProductToCategory extends Model
         'category_id',
         'main_category',
     ];
+
+    public function productsCategoryData() {
+        return $this->hasOne(OcProduct::class, 'product_id', 'product_id');
+    }
 
 }
